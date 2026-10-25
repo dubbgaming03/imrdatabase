@@ -8,7 +8,7 @@ const PATCH_PL="PLRdESMN0nrsOcf9IO8kleh8MLM2bI3Kdb";
 const PINNED=["vHGSVR0yq7Q","Faw9orkaGRk"];
 const V=window.YT_ROWS.trim().split("\n").map(l=>{const a=l.split("|");return{id:a[0],d:a[1],v:+a[2],s:+a[3],t:a.slice(4).join("|").trim()}});
 const BYID={};V.forEach(v=>BYID[v.id]=v);
-const RU={"Home":"Главная","Heroes":"Герои","Spirit Beasts":"Звери-духи","Arcane Gems":"Камни мага","Bracket Challenge":"Турнирная сетка","Database: News, videos and guides":"Новости, видео и руководства","Follow me on:":"Я в соцсетях:","Official IMR Discord":"Официальный Discord IMR","Subscribe":"Подписаться","Latest news":"Последние новости","Latest patch notes":"Последние патч-ноуты","Watch":"Смотреть","All Patch Note HYPE videos":"Все видео Patch Note HYPE","Recents":"Новые видео","Latest 5 videos":"5 последних видео","Popular":"Популярное","Playlists":"Плейлисты","Watch playlist":"Смотреть плейлист","videos":"видео","views":"просмотров","Follow Dubb_Gaming":"Подписывайтесь на Dubb_Gaming","Videos":"Видео","Watch on YouTube":"Смотреть на YouTube","Most-viewed videos from the last 90 days, plus the guides to start with.":"Самые просматриваемые видео за 90 дней и руководства для старта.","Video list and view counts are a snapshot from":"Список видео и просмотры на","Pinned":"Закреплено"};
+const RU={"Home":"Главная","Heroes":"Герои","Spirit Beasts":"Звери-духи","Arcane Gems":"Камни мага","Bracket Challenge":"Турнирная сетка","Database: News, videos and guides":"Новости, видео и руководства","Follow me on:":"Я в соцсетях:","Official IMR Discord":"Официальный Discord IMR","Subscribe":"Подписаться","Latest news":"Последние новости","Latest patch notes":"Последние патч-ноуты","Watch":"Смотреть","All Patch Note HYPE videos":"Все видео Patch Note HYPE","Recents":"Новые видео","Latest 5 videos":"5 последних видео","Popular":"Популярное","Playlists":"Плейлисты","Watch playlist":"Смотреть плейлист","videos":"видео","views":"просмотров","Follow Dubb_Gaming":"Подписывайтесь на Dubb_Gaming","Videos":"Видео","Watch on YouTube":"Смотреть на YouTube","Most-viewed videos from the last 90 days, plus the guides to start with.":"Самые просматриваемые видео за 90 дней и руководства для старта.","Video list and view counts are a snapshot from":"Список видео и просмотры на","Pinned":"Закреплено","Featured":"Рекомендуем"};
 const ru=()=>typeof LANG!=="undefined"&&LANG==="ru";
 const t=s=>ru()&&RU[s]?RU[s]:s;
 const fv=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e4?Math.round(n/1e3)+"K":n>=1e3?(n/1e3).toFixed(1).replace(".0","")+"K":String(n);
@@ -38,12 +38,12 @@ function build(){
  $("htop").replaceChildren(followRow(true));
  /* News */
  const N=$("hnews");N.replaceChildren();const ns=section(t("Latest news"));
- const feat=V.find(v=>/^patch note hype/i.test(v.t));
+ const FEATURED="DAAhfW1pi0E";const patch=V.find(v=>/^patch note hype/i.test(v.t));const feat=BYID[FEATURED]||patch;const isPatch=feat===patch;
  if(feat){const f=el("div","hfeat");f.appendChild(link("hfthumb",yurl(feat.id),[thumb(feat)]));
-  const b=el("div","hfbody");b.appendChild(el("span","hbadge",t("Latest patch notes")));b.appendChild(el("h3",null,feat.t));b.appendChild(el("div","hvm",fv(feat.v)+" "+t("views")+" · "+fd(feat.d)));
-  const row=el("div","hrow");row.appendChild(link("hbtn",yurl(feat.id),[el("span",null,"▶ "+t("Watch"))]));row.appendChild(link("hbtn alt","https://www.youtube.com/playlist?list="+PATCH_PL,[el("span",null,t("All Patch Note HYPE videos"))]));b.appendChild(row);f.appendChild(b);ns.appendChild(f)}
- const NEWS=/patch note|leak|event|update|roadmap|message|discount|top up|vip|reward|login|packs|hotfix|anniversary|lte|festival|gift|mall|pass|servers|rework/i;
- const feed=V.filter(v=>v!==feat&&!/^patch note hype/i.test(v.t)&&NEWS.test(v.t)).slice(0,8);
+  const b=el("div","hfbody");b.appendChild(el("span","hbadge",t(isPatch?"Latest patch notes":"Featured")));b.appendChild(el("h3",null,feat.t));b.appendChild(el("div","hvm",fv(feat.v)+" "+t("views")+" · "+fd(feat.d)));
+  const row=el("div","hrow");row.appendChild(link("hbtn",yurl(feat.id),[el("span",null,"▶ "+t("Watch"))]));if(isPatch)row.appendChild(link("hbtn alt","https://www.youtube.com/playlist?list="+PATCH_PL,[el("span",null,t("All Patch Note HYPE videos"))]));b.appendChild(row);f.appendChild(b);ns.appendChild(f)}
+ const NEWS=/patch note|leak|event|update|roadmap|message|discount|top up|vip|reward|login|packs|hotfix|anniversary|lte|festival|gift|mall|pass|servers|rework|bracket challenge/i;
+ const feed=V.filter(v=>v!==feat&&(v===patch||!/^patch note hype/i.test(v.t))&&NEWS.test(v.t)).slice(0,8);
  const g=el("div","hgrid");feed.forEach(v=>g.appendChild(vcard(v)));ns.appendChild(g);N.appendChild(ns);
  /* Popular */
  const P=$("hpop");P.replaceChildren();const ps=section(t("Popular"),t("Most-viewed videos from the last 90 days, plus the guides to start with."));
