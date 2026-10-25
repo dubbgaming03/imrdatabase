@@ -13,7 +13,7 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
  const br=await chromium.launch();const pg=await br.newPage({viewport:{width:1280,height:900}});
  const errs=[];pg.on("pageerror",e=>errs.push(e.message));
  await pg.goto(`http://localhost:${PORT}/`,{waitUntil:"networkidle"});
- const routes=await pg.evaluate(()=>{const s=SLUG2,k=["home","heroes","pets","gems"];
+ const routes=await pg.evaluate(()=>{const s=SLUG2,k=["home","overview","heroes","pets","gems"];
   H.map(h=>h.n).sort().forEach(n=>k.push(n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")));
   Object.keys(PET_SLUGS).forEach(id=>k.push("pet-"+id));Object.keys(GEM_SLUGS).forEach(id=>k.push("gem-"+id));
   D.forEach(d=>k.push("fac:"+d[0]));[...new Set(Object.values(X).flatMap(v=>v[1]))].filter(Boolean).filter(t=>H.some(h=>X[h.n]&&X[h.n][1].includes(t))).forEach(t=>k.push("dt:"+t));
