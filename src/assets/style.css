@@ -135,3 +135,4 @@ a.nvb{color:var(--ink)}
 .ovcall.gold{border-color:#d9a93a;background:color-mix(in srgb,#d9a93a 14%,transparent)}
 .ovsrc.hnote{color:var(--mute);text-shadow:none}
 @media (max-width:600px){.ovtbl{min-width:0}.ovtbl tr:first-child{display:none}.ovtbl tr{display:block;border-top:1px solid var(--line);padding:8px 0}.ovtbl th,.ovtbl td{display:block;border:0;padding:2px 2px}.ovtbl td::before{content:attr(data-l) ": ";font-weight:600;color:var(--mute)}.ovsec{padding:14px}}
+.ovml{margin:6px 0 0;padding-left:18px;font-size:14px;line-height:1.55}
