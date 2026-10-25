@@ -85,7 +85,7 @@ function meta(k){
  if(k==="notfound")return{t:"Page not found | Infinite Magicraid Database",d:"",nf:1};
  const h=H.find(x=>sl(x.n)===k||x.n===k);
  if(h){const x=X[h.n]||[],tags=(x[1]||[]).join(", "),tier=x[0]?` ${x[0]} tier.`:"";
-  return{t:`${h.n} – Skills, Kit, Tier & Build | Infinite Magicraid`,d:clip(`${h.n} is a ${h.r} ${h.f} hero in Infinite Magicraid.${tier}${tags?" Damage: "+tags+".":""} Full skills, exclusive gear, stats, buffs, debuffs and recommended build.`,158)}}
+  return{t:`${h.n} – Skills, Kit, Tier & Build | Infinite Magicraid`,d:clip(`${h.n} is ${/^[AEIOU]/.test(h.r)?"an":"a"} ${h.r} ${h.f} hero in Infinite Magicraid.${tier}${tags?" Damage: "+tags+".":""} Full skills, exclusive gear, stats, buffs, debuffs and recommended build.`,158)}}
  return{t:BRAND,d:""}}
 function setTag(sel,attr,key,val){let e=document.head.querySelector(sel);if(!e){e=document.createElement(sel.startsWith("link")?"link":"meta");const [a,b]=key;e.setAttribute(a,b);document.head.appendChild(e)}e.setAttribute(attr,val)}
 window.PAGEMETA=meta;
