@@ -31,7 +31,8 @@ function sameText(a, b) {
   for (let i = 0; i < a.length; i++) x |= a.charCodeAt(i) ^ b.charCodeAt(i);
   return x === 0;
 }
-const isAdmin = (req, env) => !!env.BRACKET_ADMIN_KEY && sameText(req.headers.get("x-admin-key") || "", env.BRACKET_ADMIN_KEY);
+const adminSecret = (env) => String(env.BRACKET_ADMIN_KEY || "").trim();
+const isAdmin = (req, env) => !!adminSecret(env) && sameText((req.headers.get("x-admin-key") || "").trim(), adminSecret(env));
 
 async function getKV(db, k, fallback) {
   const row = await db.prepare("SELECT v FROM bracket_kv WHERE k = ?").bind(k).first();
@@ -115,6 +116,7 @@ async function handleApi(req, env, url) {
 
   // ----- admin -----
   if (path.startsWith("admin/")) {
+    if (!adminSecret(env)) return fail("The admin password isn't set up on the server yet (BRACKET_ADMIN_KEY is missing).", 503);
     if (!admin) return fail("Admin password is wrong.", 401);
     const what = path.slice(6);
     if (req.method === "GET" && what === "check") return json({ ok: true });

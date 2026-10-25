@@ -296,7 +296,7 @@ function renderAdmin(main) {
   if (!S.isAdmin) {
     const pw = h("input", { id: "a-key", type: "password", autocomplete: "current-password", placeholder: "Admin password" });
     const go = async () => {
-      S.adminKey = pw.value; 
+      S.adminKey = pw.value.trim();
       try { await api("admin/check"); LS.set("bcc-admin", S.adminKey); toast("Signed in"); await refresh(); }
       catch (e) { S.adminKey = ""; toast(e.status === 401 ? "That password isn't right." : e.message); }
     };
