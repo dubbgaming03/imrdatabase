@@ -12,7 +12,7 @@ const idx=p=>(parseInt((/(\d+)/.exec(p.img)||[0,1])[1],10)||1)-1;
 /* ---- shared tab row ---- */
 const TABS=[];
 window.IM_TABS=function(logo,cur){if(!logo)return;const d=el("div","ptabs");
- [["home","Home","home"],["o","Game Overview","overview"],["h","Heroes","heroes"],["p","Spirit Beasts","pets"],["g","Arcane Gems","gems"]].forEach(([k,lab,h])=>{const b=el("a",k===cur?"on":"",lab);b.href=PATH(h);b.dataset.l=lab;b.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV(h)};d.appendChild(b)});
+ [["home","Home","home"],["h","Heroes","heroes"],["p","Spirit Beasts","pets"],["g","Arcane Gems","gems"]].forEach(([k,lab,h])=>{const b=el("a",k===cur?"on":"",lab);b.href=PATH(h);b.dataset.l=lab;b.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV(h)};d.appendChild(b)});
  {const b=el("a","",t("Bracket Challenge"));b.href="/bracket/";b.dataset.l="Bracket Challenge";d.appendChild(b)}
  let sb=logo.nextElementSibling;while(sb&&sb.tagName==="H1")sb=sb.nextElementSibling;(sb&&sb.matches(".sub,.psub")?sb:logo).after(d);TABS.push(d)};
 function tabsRu(){TABS.forEach(d=>d.querySelectorAll("button").forEach(b=>b.textContent=t(b.dataset.l)))}

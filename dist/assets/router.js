@@ -19,7 +19,6 @@ window.ROUTEKEY=function(){
  if(!seg.length)return "home";
  const [a,b]=seg;
  if(a==="heroes")return b?b:"heroes";
- if(a==="game-overview"&&!b)return "overview";
  if(a==="spirit-beasts"){if(!b)return "pets";const x=PBY[b];return x?"pet-"+x.id:"pets"}
  if(a==="arcane-gems"){if(!b)return "gems";const x=GBY[b];return x?"gem-"+x.id:"gems"}
  if(a==="factions"&&b){const f=facBySlug(b);return f?"fac:"+f:"heroes"}
@@ -30,7 +29,6 @@ window.ROUTEKEY=function(){
 window.PATH=function(k){
  if(!k||k==="home")return "/";
  if(k==="heroes")return "/heroes/";
- if(k==="overview")return "/game-overview/";
  if(k==="pets")return "/spirit-beasts/";
  if(k==="gems")return "/arcane-gems/";
  let m;
@@ -56,7 +54,7 @@ window.LISTR=function(k){
   if(k==="notfound"){showNF();return true}
   hideNF();return false}
  hideNF();
- ["HOMER","GEMR","PETR","OVR"].forEach(f=>window[f]&&window[f]("__none"));
+ ["HOMER","GEMR","PETR"].forEach(f=>window[f]&&window[f]("__none"));
  MSI.forEach(i=>SEL[i].clear());
  const v=fac?k.slice(4):k.slice(3);
  if(fac)SEL.fac.add(v);else SEL.dtag.add(v);
@@ -69,7 +67,7 @@ window.LISTR=function(k){
  const a=document.createElement("a");a.href="/heroes/";a.textContent="← All heroes";a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV("heroes")};h.appendChild(a);
  window.scrollTo(0,0);return true};
 
-function showNF(){["list","detail","home","pets","pdetail","gems","gdetail","overview"].forEach(i=>{const e=document.getElementById(i);if(e)e.hidden=true});let n=document.getElementById("nf");if(!n){n=document.createElement("div");n.id="nf";n.className="nf";n.innerHTML='<h1>Page not found</h1><p>That page doesn’t exist. Try the <a href="/heroes/">hero list</a>, <a href="/spirit-beasts/">Spirit Beasts</a> or <a href="/arcane-gems/">Arcane Gems</a>.</p>';document.querySelector("main").appendChild(n)}n.hidden=false}
+function showNF(){["list","detail","home","pets","pdetail","gems","gdetail"].forEach(i=>{const e=document.getElementById(i);if(e)e.hidden=true});let n=document.getElementById("nf");if(!n){n=document.createElement("div");n.id="nf";n.className="nf";n.innerHTML='<h1>Page not found</h1><p>That page doesn’t exist. Try the <a href="/heroes/">hero list</a>, <a href="/spirit-beasts/">Spirit Beasts</a> or <a href="/arcane-gems/">Arcane Gems</a>.</p>';document.querySelector("main").appendChild(n)}n.hidden=false}
 function hideNF(){const n=document.getElementById("nf");if(n)n.hidden=true}
 
 /* ---- meta ---- */
@@ -78,7 +76,6 @@ function meta(k){
  const pth=PATH(k);let m;
  if(k==="home")return{t:"Infinite Magicraid Database – Heroes, Tier List, Spirit Beasts & Arcane Gems",d:"Fan-made Infinite Magicraid database: every hero with skills, tier, damage tags and builds, plus Spirit Beasts, Arcane Gems, guides and videos by Dubb."};
  if(k==="heroes")return{t:"All Heroes & Tier List | Infinite Magicraid Database",d:"Browse every Infinite Magicraid hero. Filter by faction, rarity, tier, class, damage tag, buffs and debuffs, and open any hero for skills and builds."};
- if(k==="overview")return{t:"Infinite Magicraid Game Overview – LTEs vs Legendaries, Priorities & Resources",d:"New to Infinite Magicraid? What the game is, how LTEs differ from Legendaries, what to prioritize, and how to manage Miracle Runes, Diamonds and Dragon Eyes."};
  if(k==="pets")return{t:"Spirit Beasts (Pets) – Skills, Stars & Equipment | Infinite Magicraid",d:"All Infinite Magicraid Spirit Beasts with star-by-star skills, damage tags, how to obtain them and recommended Sorcery Orb, Hallow Crystal and Divinity Stone."};
  if(k==="gems")return{t:"Arcane Gems – Effects, Cooldowns & Best Heroes | Infinite Magicraid",d:"Every Infinite Magicraid Arcane Gem with full effects by star, cooldowns and which heroes should use them."};
  if((m=/^pet-(\d+)$/.exec(k))){const p=PETL.find(x=>x.id==m[1]);if(p){const s=(p.skills&&p.skills[0]&&p.skills[0].en)||"";return{t:`${p.en} – Spirit Beast Skills, Stars & Best Equipment | Infinite Magicraid`,d:clip(`${p.en} (${p.q} Spirit Beast) in Infinite Magicraid: ${s} Star upgrades, damage tags and recommended equipment.`,158)}}}
