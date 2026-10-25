@@ -43,7 +43,7 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
   if(r.k!=="notfound")urls.push(SITE+r.p);n++;
  }
  await br.close();srv.kill();
- urls.push(SITE+"/privacy/");
+ urls.push(SITE+"/privacy/");urls.push(SITE+"/bracket/");
  const today=new Date().toISOString().slice(0,10);
  fs.writeFileSync(path.join(DIST,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`<url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")+"\n</urlset>\n");
  fs.writeFileSync(path.join(DIST,"robots.txt"),`User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
