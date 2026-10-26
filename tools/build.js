@@ -6,6 +6,9 @@ const ROOT=path.resolve(__dirname,".."),SRC=path.join(ROOT,"src"),DIST=path.join
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(a)){const s=path.join(a,f),d=path.join(b,f);if(fs.statSync(s).isDirectory())cp(s,d);else fs.copyFileSync(s,d)}}
 (async()=>{
+ /* publish date (New York time) -> "Last updated" on the Hero Tier List */
+ const BD=new Date().toLocaleDateString("en-CA",{timeZone:"America/New_York"});
+ fs.writeFileSync(path.join(SRC,"assets","buildinfo.js"),`window.BUILD_DATE="${BD}";\n`);
  fs.rmSync(DIST,{recursive:true,force:true});cp(SRC,DIST);fs.rmSync(path.join(DIST,"shell-body.html"),{force:true});
  const shell=fs.readFileSync(path.join(SRC,"index.html"),"utf8");
  const srv=spawn("node",[path.join(__dirname,"serve.js"),SRC,String(PORT)],{stdio:"ignore"});
@@ -44,7 +47,7 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
  }
  await br.close();srv.kill();
  urls.push(SITE+"/privacy/");urls.push(SITE+"/bracket/");
- const today=new Date().toISOString().slice(0,10);
+ const today=BD;
  fs.writeFileSync(path.join(DIST,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`<url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")+"\n</urlset>\n");
  fs.writeFileSync(path.join(DIST,"robots.txt"),`User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
  console.log("pages:",n,"sitemap urls:",urls.length,"errors:",errs.length?errs.slice(0,5):0);

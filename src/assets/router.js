@@ -71,11 +71,13 @@ function showNF(){["list","detail","home","pets","pdetail","gems","gdetail"].for
 function hideNF(){const n=document.getElementById("nf");if(n)n.hidden=true}
 
 /* ---- meta ---- */
+/* publish date written by tools/build.js on every build */
+function bdate(){const b=window.BUILD_DATE;return b?new Date(b+"T12:00:00"):new Date()}
 const clip=(s,n)=>{s=String(s||"").replace(/\s+/g," ").trim();return s.length>n?s.slice(0,n-1).replace(/\s+\S*$/,"")+"…":s};
 function meta(k){
  const pth=PATH(k);let m;
  if(k==="home")return{t:"Infinite Magicraid Database – Heroes, Tier List, Spirit Beasts & Arcane Gems",d:"Fan-made Infinite Magicraid database: every hero with skills, tier, damage tags and builds, plus Spirit Beasts, Arcane Gems, guides and videos by Dubb."};
- if(k==="heroes")return{t:"All Heroes & Tier List | Infinite Magicraid Database",d:"Browse every Infinite Magicraid hero. Filter by faction, rarity, tier, class, damage tag, buffs and debuffs, and open any hero for skills and builds."};
+ if(k==="heroes"){const mo=bdate().toLocaleString("en-US",{month:"long",year:"numeric"});return{t:`Infinite Magicraid Hero Tier List (IMR) – ${mo}`,d:`Infinite Magicraid (IMR) hero tier list for ${mo}: every hero ranked SS to F. Filter by faction, rarity, class, damage tag and skills, and open any hero for kit and build.`,h:"Infinite Magicraid Hero Tier List (IMR)"}}
  if(k==="pets")return{t:"Spirit Beasts (Pets) – Skills, Stars & Equipment | Infinite Magicraid",d:"All Infinite Magicraid Spirit Beasts with star-by-star skills, damage tags, how to obtain them and recommended Sorcery Orb, Hallow Crystal and Divinity Stone."};
  if(k==="gems")return{t:"Arcane Gems – Effects, Cooldowns & Best Heroes | Infinite Magicraid",d:"Every Infinite Magicraid Arcane Gem with full effects by star, cooldowns and which heroes should use them."};
  if((m=/^pet-(\d+)$/.exec(k))){const p=PETL.find(x=>x.id==m[1]);if(p){const s=(p.skills&&p.skills[0]&&p.skills[0].en)||"";return{t:`${p.en} – Spirit Beast Skills, Stars & Best Equipment | Infinite Magicraid`,d:clip(`${p.en} (${p.q} Spirit Beast) in Infinite Magicraid: ${s} Star upgrades, damage tags and recommended equipment.`,158)}}}
@@ -89,10 +91,23 @@ function meta(k){
   return{t:`${h.n} – Skills, Kit, Tier & Build | Infinite Magicraid`,d:clip(`${h.n} is ${/^[AEIOU]/.test(h.r)?"an":"a"} ${h.r} ${h.f} hero in Infinite Magicraid.${tier}${tags?" Damage: "+tags+".":""} Full skills, exclusive gear, stats, buffs, debuffs and recommended build.`,158)}}
  return{t:BRAND,d:""}}
 function setTag(sel,attr,key,val){let e=document.head.querySelector(sel);if(!e){e=document.createElement(sel.startsWith("link")?"link":"meta");const [a,b]=key;e.setAttribute(a,b);document.head.appendChild(e)}e.setAttribute(attr,val)}
+/* visible "Hero Tier List" header, last-updated date and tier disclaimer (Heroes page only) */
+function tierHead(k){
+ const list=document.getElementById("list");if(!list)return;
+ const sr=list.querySelector("h1.sr");let b=document.getElementById("tlh");const on=k==="heroes";
+ if(!on){if(b)b.hidden=true;if(sr)sr.hidden=false;return}
+ const d=bdate(),mo=d.toLocaleString("en-US",{month:"long",year:"numeric"}),full=d.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+ if(!b){b=document.createElement("div");b.id="tlh";b.className="tlh";const anchor=list.querySelector(".bar");list.insertBefore(b,anchor)}
+ b.replaceChildren();
+ const h=document.createElement("h1");h.textContent=`Infinite Magicraid Hero Tier List – ${mo}`;b.appendChild(h);
+ const u=document.createElement("p");u.className="tlu";u.textContent=`Last updated: ${full}`;b.appendChild(u);
+ const n=document.createElement("p");n.className="tln";n.textContent="Tiers are determined by Resource Priority, Longevity, and Overall Usefulness.";b.appendChild(n);
+ b.hidden=false;if(sr)sr.hidden=true}
 window.PAGEMETA=meta;
 window.SETMETA=function(){
  const k=ROUTEKEY(),m=meta(k),url=SITE+PATH(k);
  document.title=m.t;
+ tierHead(k);
  setTag('meta[name="description"]',"content",["name","description"],m.d);
  setTag('link[rel="canonical"]',"href",["rel","canonical"],url);
  setTag('meta[property="og:title"]',"content",["property","og:title"],m.t);
