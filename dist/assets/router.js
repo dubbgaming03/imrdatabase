@@ -83,7 +83,8 @@ function meta(k){
  if(k.startsWith("fac:")){const f=k.slice(4);return{t:`${f} Faction Heroes | Infinite Magicraid Database`,d:`Every ${f} faction hero in Infinite Magicraid with rarity, tier, damage tags, skills and recommended builds.`}}
  if(k.startsWith("dt:")){const t=k.slice(3);return{t:`${t} Heroes | Infinite Magicraid Database`,d:`All Infinite Magicraid heroes with the ${t} damage tag, with tiers, factions, skills and builds.`}}
  if(k==="notfound")return{t:"Page not found | Infinite Magicraid Database",d:"",nf:1};
- const h=H.find(x=>sl(x.n)===k||x.n===k);
+ const sh=n=>String(n).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");/* hero URLs keep apostrophes as hyphens (heng-e-3) */
+ const h=H.find(x=>sh(x.n)===k||sl(x.n)===k||x.n===k);
  if(h){const x=X[h.n]||[],tags=(x[1]||[]).join(", "),tier=x[0]?` ${x[0]} tier.`:"";
   return{t:`${h.n} – Skills, Kit, Tier & Build | Infinite Magicraid`,d:clip(`${h.n} is ${/^[AEIOU]/.test(h.r)?"an":"a"} ${h.r} ${h.f} hero in Infinite Magicraid.${tier}${tags?" Damage: "+tags+".":""} Full skills, exclusive gear, stats, buffs, debuffs and recommended build.`,158)}}
  return{t:BRAND,d:""}}
