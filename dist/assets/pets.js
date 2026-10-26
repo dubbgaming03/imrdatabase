@@ -1,7 +1,7 @@
 /* Spirit Beasts section + shared tab row — plugs into the main hero database page. */
 (function(){
 const D=window.PETS,P=D.pets,RK={Legend:0,Epic:1,Elite:2};
-const RU={"Legend":"Легенда","Epic":"Эпик","Elite":"Элита","All rarities":"Все редкости","All sources":"Все источники","All effects":"Все эффекты","Sort: rarity":"Сортировка: редкость","Sort: name":"Сортировка: имя","Home":"Главная","Heroes":"Герои","Spirit Beasts":"Звери-духи","Arcane Gems":"Камни мага","Database: Select a Spirit Beast for more info":"База данных: выберите зверя-духа","Search Spirit Beasts or skill text…":"Поиск по имени или тексту навыка…","Spirit Beast Cultivation":"Воспитание зверя-духа","Purgatory of Seven Sins":"Чистилище семи грехов","Random Spirit Beast Shard":"Случайный осколок зверя-духа","Hire Store":"Найм","← All Spirit Beasts":"← Все звери-духи","{a} of {b} Spirit Beasts":"{a} из {b} зверей-духов","Source: game files.":"Источник: файлы игры.","Skill by star":"Навык по звёздам","Base skill":"Базовый навык","NEW":"НОВОЕ","Full skill text at 5★":"Полный текст навыка на 5★","How to obtain":"Как получить","Soul item":"Предмет души"};
+const RU={"Legend":"Легенда","Epic":"Эпик","Elite":"Элита","All rarities":"Все редкости","All sources":"Все источники","All effects":"Все эффекты","Sort: rarity":"Сортировка: редкость","Sort: name":"Сортировка: имя","Home":"Главная","Heroes":"Герои","Spirit Beasts":"Звери-духи","Codes":"Коды","Arcane Gems":"Камни мага","Database: Select a Spirit Beast for more info":"База данных: выберите зверя-духа","Search Spirit Beasts or skill text…":"Поиск по имени или тексту навыка…","Spirit Beast Cultivation":"Воспитание зверя-духа","Purgatory of Seven Sins":"Чистилище семи грехов","Random Spirit Beast Shard":"Случайный осколок зверя-духа","Hire Store":"Найм","← All Spirit Beasts":"← Все звери-духи","{a} of {b} Spirit Beasts":"{a} из {b} зверей-духов","Source: game files.":"Источник: файлы игры.","Skill by star":"Навык по звёздам","Base skill":"Базовый навык","NEW":"НОВОЕ","Full skill text at 5★":"Полный текст навыка на 5★","How to obtain":"Как получить","Soul item":"Предмет души"};
 const ru=()=>typeof LANG!=="undefined"&&LANG==="ru";
 const t=(s,v)=>{let r=ru()&&RU[s]?RU[s]:s;if(v)for(const k in v)r=r.replace("{"+k+"}",v[k]);return r};
 const nm=p=>ru()&&p.ru&&p.ru!==p.en?p.ru:p.en;
@@ -13,6 +13,7 @@ const idx=p=>(parseInt((/(\d+)/.exec(p.img)||[0,1])[1],10)||1)-1;
 const TABS=[];
 window.IM_TABS=function(logo,cur){if(!logo)return;const d=el("div","ptabs");
  [["home","Home","home"],["h","Heroes","heroes"],["p","Spirit Beasts","pets"],["g","Arcane Gems","gems"]].forEach(([k,lab,h])=>{const b=el("a",k===cur?"on":"",lab);b.href=PATH(h);b.dataset.l=lab;b.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV(h)};d.appendChild(b)});
+ {const b=el("a","",t("Codes"));b.href="/codes/";b.dataset.l="Codes";d.appendChild(b)}
  {const b=el("a","",t("Bracket Challenge"));b.href="/bracket/";b.dataset.l="Bracket Challenge";d.appendChild(b)}
  let sb=logo.nextElementSibling;while(sb&&sb.tagName==="H1")sb=sb.nextElementSibling;(sb&&sb.matches(".sub,.psub")?sb:logo).after(d);TABS.push(d)};
 function tabsRu(){TABS.forEach(d=>d.querySelectorAll("button").forEach(b=>b.textContent=t(b.dataset.l)))}

@@ -47,6 +47,17 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
  }
  await br.close();srv.kill();
  urls.push(SITE+"/privacy/");urls.push(SITE+"/bracket/");
+ /* Codes page: static HTML filled from src/codes/codes.json (edit the JSON to update codes) */
+ {const C=JSON.parse(fs.readFileSync(path.join(SRC,"codes","codes.json"),"utf8"));
+  const d=s=>new Date(s+"T12:00:00"),long=s=>d(s).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}),short=s=>d(s).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  const act=C.active.filter(c=>!c.expires||c.expires>=C.checked),late=C.active.filter(c=>c.expires&&c.expires<C.checked);
+  const card=c=>`<div class="ccard" data-code="${esc(c.code)}"${c.expires?` data-exp="${c.expires}" data-expl="${short(c.expires)}"`:""}><div class="crow"><span class="ccode">${esc(c.code)}${c.new?'<span class="cnew">New</span>':""}</span><button class="ccopy" type="button" data-code="${esc(c.code)}" aria-label="Copy code ${esc(c.code)}">Copy</button></div><div class="crew">${esc(c.rewards)}</div><div class="cexp">${c.expires?"Expires "+long(c.expires):"No expiry date announced"}</div></div>`;
+  const row=c=>`<tr><td>${esc(c.code)}</td><td>${esc(c.rewards)}</td><td>${c.ended?short(c.ended):c.expires?short(c.expires):"—"}</td></tr>`;
+  const mo=d(C.checked).toLocaleString("en-US",{month:"long",year:"numeric"});
+  const f=path.join(DIST,"codes","index.html");
+  fs.writeFileSync(f,fs.readFileSync(f,"utf8").split("<!--MONTH-->").join(mo).split("<!--UPDATED-->").join(long(C.checked)).replace("<!--ACTIVE-->",act.map(card).join("")).replace("<!--EXPIRED-->",late.concat(C.expired).map(row).join("")));
+  fs.rmSync(path.join(DIST,"codes","codes.json"),{force:true});
+  urls.push(SITE+"/codes/")}
  const today=BD;
  fs.writeFileSync(path.join(DIST,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`<url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")+"\n</urlset>\n");
  fs.writeFileSync(path.join(DIST,"robots.txt"),`User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);

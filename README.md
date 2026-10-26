@@ -16,6 +16,11 @@ Fan-made Infinite Magicraid database.
   3. If it's an in-app route, add its title/description to `meta()` in `src/assets/router.js`.
   4. Link to it from the tab bar so crawlers can find it.
 
+## Codes page
+
+- Page: `src/codes/index.html` (served at `/codes/`). Codes live in `src/codes/codes.json`; `tools/build.js` writes them into the page (static HTML, so Google can read them) and adds `/codes/` to the sitemap.
+- To update: edit `codes.json` (add/move codes, set `checked` to the date you verified them; that date is the page's "Last updated" and the month in its title), then rebuild. Active codes with an `expires` date move to Expired automatically after that date.
+
 ## Championship Bracket Challenge
 
 - Page: `src/bracket/` (served at `/bracket/`). Shared scoring/validation logic: `src/bracket/logic.js`.
