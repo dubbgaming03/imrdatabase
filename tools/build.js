@@ -22,6 +22,7 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
   D.forEach(d=>k.push("fac:"+d[0]));[...new Set(Object.values(X).flatMap(v=>v[1]))].filter(Boolean).filter(t=>H.some(h=>X[h.n]&&X[h.n][1].includes(t))).forEach(t=>k.push("dt:"+t));
   return k.map(x=>({k:x,p:PATH(x)}))});
  routes.push({k:"notfound",p:"/__404__/"});
+ const OG=await require("./og.js")({br,pg,PORT,ROOT,DIST}); /* hero social preview images */
  const urls=[];let n=0;
  for(const r of routes){
   await pg.goto(`http://localhost:${PORT}${r.p}`,{waitUntil:"load"});
@@ -40,6 +41,7 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
    .replace('<meta property="og:description" content="">',`<meta property="og:description" content="${esc(o.m.d)}">`)
    .replace('<link rel="canonical" href="https://imrdatabase.com/">',r.k==="notfound"?'<meta name="robots" content="noindex">':`<link rel="canonical" href="${url}">`)
    .replace('<meta property="og:url" content="https://imrdatabase.com/">',`<meta property="og:url" content="${url}">`)
+   .replace('<meta property="og:image" content="https://imrdatabase.com/img/logo.png">',OG[r.k]?`<meta property="og:image" content="${SITE}${OG[r.k]}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:image" content="${SITE}${OG[r.k]}">`:'<meta property="og:image" content="https://imrdatabase.com/img/logo.png">')
    .replace("<!--SSR-->",o.html);
   const out=r.k==="notfound"?path.join(DIST,"404.html"):path.join(DIST,r.p,"index.html");
   fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,html);
