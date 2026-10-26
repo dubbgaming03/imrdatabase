@@ -107,3 +107,27 @@ a.nvb{color:var(--ink)}
 #ssr ~ #list{display:none}
 
 .tlh{text-align:center;margin:-6px auto 16px;max-width:720px}.tlh h1{font-size:clamp(18px,3.6vw,24px);font-weight:800;margin:0 0 4px;color:#e9c765;text-shadow:0 1px 3px rgba(0,0,0,.85)}.tlh p{margin:2px 0;font-size:13px;color:var(--mute)}.tlh .tlu{font-weight:600}.tlh .tln{font-style:italic}body.lbg .tlh p{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85)}
+
+/* Hero build & recommended equipment */
+.eqgoal{margin:2px 0 14px}
+.eqgh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.eqgh b{font-size:14px}
+.eqlv{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--acc) 16%,transparent);color:var(--acc)}
+.eqtbl th,.eqtbl td{text-align:center}.eqtbl tr>th:first-child{text-align:left;color:var(--ink);font-size:14px}
+.eqtbl td{font-weight:700;font-size:15px}
+.eqtbl .eq1{color:#16a34a}.eqtbl .eq2{color:#d97706}.eqtbl .eq3{color:#dc2626}
+.eqtbl tr:first-child th{font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.eqr{display:flex;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.eql{width:96px;flex:none;font-size:12px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.eqv{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.eqset{display:flex;align-items:center;gap:8px}
+.eqor,.eqplus{font-size:12px;font-weight:700;color:var(--mute)}.eqplus{font-size:20px}
+.eqtile{display:flex;flex-direction:column;align-items:center;gap:4px;width:92px;text-align:center}
+.eqtile span{font-size:12px;font-weight:600;line-height:1.25}
+.eqtile img{display:block;object-fit:contain}
+.eqtile.eqk-gear img{width:52px;height:52px;border-radius:8px;background:#141018}
+.eqtile.eqk-aura img{width:64px;height:64px;border-radius:50%;background:radial-gradient(#2a2232,#141018)}
+.eqtile.eqk-echo img{width:58px;height:72px;border-radius:6px}
+.eqtbd{font-size:14px;font-style:italic;color:var(--mute)}
+.eqnote{margin:10px 0 0;font-size:12px;color:var(--mute)}
+@media (max-width:520px){.eqr{flex-direction:column;align-items:flex-start;gap:8px}.eql{width:auto}.eqtile{width:78px}}
