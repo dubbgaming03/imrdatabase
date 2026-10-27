@@ -5,7 +5,7 @@ const fs=require("fs"),path=require("path"),crypto=require("crypto");
 const TPL_VER="1";
 const RCOL={Mythic:"#fb923c",Legendary:"#facc15",Epic:"#c4b5fd",LTE:"#a78bfa"};
 const TCOL={SS:"#f43f5e",S:"#f97316",A:"#facc15",B:"#4ade80",C:"#38bdf8",D:"#a78bfa",F:"#9ca3af"};
-const DCOL={"Burn":"#f97316","HP Burning":"#ef4444","Bleed":"#be123c","Poison":"#16a34a","Internal Injury":"#9333ea","Direct DMG":"#3b82f6","HP Deduction":"#ec4899","Resonance":"#14b8a6","Loong’s Wrath":"#d9a93a","Control":"#6366f1","Attribute Steal":"#06b6d4","Pursue & Attack":"#f59e0b"};
+const DCOL={"Burn":"#f97316","Detonation":"#ea580c","HP Burning":"#ef4444","Bleed":"#be123c","Poison":"#16a34a","Internal Injury":"#9333ea","Direct DMG":"#3b82f6","HP Deduction":"#ec4899","Resonance":"#14b8a6","Loong’s Wrath":"#d9a93a","Control":"#6366f1","Attribute Steal":"#06b6d4","Pursue & Attack":"#f59e0b"};
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 
 function card(h,base){
