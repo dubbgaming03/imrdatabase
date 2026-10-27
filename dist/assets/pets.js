@@ -1,7 +1,7 @@
 /* Spirit Beasts section + shared tab row — plugs into the main hero database page. */
 (function(){
 const D=window.PETS,P=D.pets,RK={Legend:0,Epic:1,Elite:2};
-const RU={"Legend":"Легенда","Epic":"Эпик","Elite":"Элита","All rarities":"Все редкости","All sources":"Все источники","All effects":"Все эффекты","Sort: rarity":"Сортировка: редкость","Sort: name":"Сортировка: имя","Home":"Главная","Heroes":"Герои","Spirit Beasts":"Звери-духи","Arcane Gems":"Камни мага","Database: Select a Spirit Beast for more info":"База данных: выберите зверя-духа","Search Spirit Beasts or skill text…":"Поиск по имени или тексту навыка…","Spirit Beast Cultivation":"Воспитание зверя-духа","Purgatory of Seven Sins":"Чистилище семи грехов","Random Spirit Beast Shard":"Случайный осколок зверя-духа","Hire Store":"Найм","← All Spirit Beasts":"← Все звери-духи","{a} of {b} Spirit Beasts":"{a} из {b} зверей-духов","Source: game files.":"Источник: файлы игры.","Skill by star":"Навык по звёздам","Base skill":"Базовый навык","NEW":"НОВОЕ","Full skill text at 5★":"Полный текст навыка на 5★","How to obtain":"Как получить","Soul item":"Предмет души"};
+const RU={"Legend":"Легенда","Epic":"Эпик","Elite":"Элита","All rarities":"Все редкости","All sources":"Все источники","All effects":"Все эффекты","Sort: rarity":"Сортировка: редкость","Sort: name":"Сортировка: имя","Sort: newest":"Сортировка: новые","Sort: oldest":"Сортировка: старые","Released":"Выход","Home":"Главная","Heroes":"Герои","Spirit Beasts":"Звери-духи","Arcane Gems":"Камни мага","Database: Select a Spirit Beast for more info":"База данных: выберите зверя-духа","Search Spirit Beasts or skill text…":"Поиск по имени или тексту навыка…","Spirit Beast Cultivation":"Воспитание зверя-духа","Purgatory of Seven Sins":"Чистилище семи грехов","Random Spirit Beast Shard":"Случайный осколок зверя-духа","Hire Store":"Найм","← All Spirit Beasts":"← Все звери-духи","{a} of {b} Spirit Beasts":"{a} из {b} зверей-духов","Source: game files.":"Источник: файлы игры.","Skill by star":"Навык по звёздам","Base skill":"Базовый навык","NEW":"НОВОЕ","Full skill text at 5★":"Полный текст навыка на 5★","How to obtain":"Как получить","Soul item":"Предмет души"};
 const ru=()=>typeof LANG!=="undefined"&&LANG==="ru";
 const t=(s,v)=>{let r=ru()&&RU[s]?RU[s]:s;if(v)for(const k in v)r=r.replace("{"+k+"}",v[k]);return r};
 const nm=p=>ru()&&p.ru&&p.ru!==p.en?p.ru:p.en;
@@ -43,15 +43,21 @@ function statics(){pl.querySelector(".psub").textContent=t("Database: Select a S
  fillSel("prar",[["",t("All rarities")],["Legend",t("Legend")],["Epic",t("Epic")],["Elite",t("Elite")]]);
  fillSel("pobt",[["",t("All sources")],...Object.keys(OBN).map(k=>[k,t(OBN[k])])]);
  fillSel("peff",[["",t("All effects")],...EFF.map(e=>[e,e])]);
- {const s=$("psort"),v=s.value||"rarity";fillSel("psort",[["rarity",t("Sort: rarity")],["name",t("Sort: name")]]);s.value=v}
+ {const s=$("psort"),v=s.value||"release";fillSel("psort",[["release",t("Sort: newest")],["release-old",t("Sort: oldest")],["rarity",t("Sort: rarity")],["name",t("Sort: name")]]);s.value=v}
  tabsRu()}
 
+/* rough release month per Spirit Beast (Dubb-reviewed; "~" = approximate). Epic/Elite beasts came with the May 2024 launch. */
+const REL={12005001:"2024-05",12005002:"2024-05",12005003:"2024-05",12005004:"2024-05",12005005:"~2024-06",12005006:"~2024-06",12005007:"2024-09",12005008:"2024-12",12005009:"2025-03",12005010:"2025-05",12005011:"~2025-07",12005012:"2025-11",12005013:"2026-03",12005014:"2026-06",12005015:"2026-09"};
+const relK=p=>(REL[p.id]||"2024-05").replace("~","");
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const relTxt=p=>{const r=REL[p.id]||"2024-05",a=r[0]==="~",[y,m]=r.replace("~","").split("-");return (a?"~":"")+MON[+m-1]+" "+y};
+const relCmp=(a,b)=>relK(b).localeCompare(relK(a))||RK[a.q]-RK[b.q]||b.id-a.id;
 /* ---- list ---- */
 function prender(){const q=$("pq").value.trim().toLowerCase(),r=$("prar").value,o=$("pobt").value,ef=$("peff").value,s=$("psort").value;
  let A=P.filter(p=>(!q||[p.en,p.ru,...p.skills.map(x=>x.en),...p.skills.map(x=>x.ru||"")].join(" ").toLowerCase().includes(q))&&(!r||p.q===r)&&(!o||p.obtain.some(x=>x.k===o))&&(!ef||p.skills.some(x=>x.en.includes("["+ef+"]"))));
- A.sort((a,b)=>s==="name"?nm(a).localeCompare(nm(b)):RK[a.q]-RK[b.q]||nm(a).localeCompare(nm(b)));
+ A.sort((a,b)=>s==="name"?nm(a).localeCompare(nm(b)):s==="rarity"?RK[a.q]-RK[b.q]||nm(a).localeCompare(nm(b)):s==="release-old"?-relCmp(a,b):relCmp(a,b));
  window.PNL=A.map(x=>x.id);$("pcount").textContent=t("{a} of {b} Spirit Beasts",{a:A.length,b:P.length});
- const g=$("pgrid");g.replaceChildren();A.forEach(p=>{const c=el("a","pc");c.href=PATH("pet-"+p.id);c.appendChild(pimg(p));const i=el("div","pinfo");i.appendChild(el("div","pn",nm(p)));i.appendChild(el("div","prr "+p.q,t(p.q)));
+ const g=$("pgrid");g.replaceChildren();A.forEach(p=>{const c=el("a","pc");c.href=PATH("pet-"+p.id);c.appendChild(pimg(p));const i=el("div","pinfo");i.appendChild(el("div","pn",nm(p)));i.appendChild(el("div","prr "+p.q,t(p.q)));i.appendChild(el("div","prel",relTxt(p)));
   const eff=[...new Set((p.skills[5].en.match(/\[[^\]]{2,30}\]/g)||[]))];if(eff.length){const ob=el("div","pob");eff.slice(0,3).forEach(x=>ob.appendChild(el("span",null,x.slice(1,-1))));i.appendChild(ob)}
   c.appendChild(i);const go=()=>NAV("pet-"+p.id);c.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();go()};g.appendChild(c)})}
 
@@ -83,9 +89,9 @@ function ptags(p){const L=PTAG[p.id];if(!L)return null;const d=el("div","pdt");d
 /* ---- detail ---- */
 let CUR=null;
 function pshow(id){const p=P.find(x=>x.id===id);if(!p)return false;CUR=id;pd.replaceChildren();
- const b=el("button","back",t("← All Spirit Beasts"));b.onclick=()=>NAV("pets");{const PL=window.PNL&&window.PNL.includes(id)?window.PNL:P.slice().sort((a,c)=>RK[a.q]-RK[c.q]||nm(a).localeCompare(nm(c))).map(x=>x.id);pd.appendChild(NAVBAR(b,PL,id,k=>NAV("pet-"+k),k=>nm(P.find(x=>x.id===k)),k=>"pet-"+k))}
+ const b=el("button","back",t("← All Spirit Beasts"));b.onclick=()=>NAV("pets");{const PL=window.PNL&&window.PNL.includes(id)?window.PNL:P.slice().sort(relCmp).map(x=>x.id);pd.appendChild(NAVBAR(b,PL,id,k=>NAV("pet-"+k),k=>nm(P.find(x=>x.id===k)),k=>"pet-"+k))}
  const h=el("div","pdhead");{const bn=el("div","pbnr"),bi=el("i"),k=idx(p);bi.style.backgroundImage="url(/img/pets-b.webp)";bi.style.backgroundSize="100% 2300%";bi.style.backgroundPosition="0 "+(k/22*100)+"%";bn.appendChild(bi);h.appendChild(bn)}
- h.appendChild(pimg(p));const tt=el("div");tt.appendChild(el("h1","pdh",nm(p)));const dm=el("div","pdm");dm.appendChild(el("b",p.q,t(p.q)));dm.appendChild(document.createTextNode(" · "+t("Soul item")+": "+(ru()&&p.soul_ru?p.soul_ru:p.soul_en)));tt.appendChild(dm);{const g=ptags(p);if(g)tt.appendChild(g)}h.appendChild(tt);pd.appendChild(h);
+ h.appendChild(pimg(p));const tt=el("div");tt.appendChild(el("h1","pdh",nm(p)));const dm=el("div","pdm");dm.appendChild(el("b",p.q,t(p.q)));dm.appendChild(document.createTextNode(" · "+t("Soul item")+": "+(ru()&&p.soul_ru?p.soul_ru:p.soul_en)+" · "+t("Released")+": "+relTxt(p)));tt.appendChild(dm);{const g=ptags(p);if(g)tt.appendChild(g)}h.appendChild(tt);pd.appendChild(h);
  {const s=el("div","sec");s.appendChild(el("h3",null,t("Skill by star")));const sm=(ru()&&p.sum.ru)||p.sum.en;
   sm.forEach((x,i)=>{const r=el("div","pks");const bd=el("div","psb"+(i===0?" s0":""));bd.appendChild(el("b",null,String(i)));bd.appendChild(el("span",null,"★"));r.appendChild(bd);const bb=el("div","pksb");
    if(i===0){bb.appendChild(el("div","pkst",t("Base skill")));const d=el("div","pksd");rich(d,x);bb.appendChild(d)}
