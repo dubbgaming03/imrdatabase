@@ -171,3 +171,4 @@ a.eqtile:hover>span{color:var(--acc);text-decoration:underline}
 .eqwarn{position:relative}
 .eqwb{position:absolute;left:0;top:100%;z-index:40;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .embtabs{display:flex;gap:6px;margin-bottom:8px}.embtabs button{font:inherit;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}.embtabs button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.pobg{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--acc);margin:10px 0 4px}.pobg:first-of-type{margin-top:2px}

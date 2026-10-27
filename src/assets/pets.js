@@ -6,7 +6,17 @@ const ru=()=>typeof LANG!=="undefined"&&LANG==="ru";
 const t=(s,v)=>{let r=ru()&&RU[s]?RU[s]:s;if(v)for(const k in v)r=r.replace("{"+k+"}",v[k]);return r};
 const nm=p=>ru()&&p.ru&&p.ru!==p.en?p.ru:p.en;
 const sk=(p,i)=>{const s=p.skills[i];return ru()&&s.ru?s.ru:s.en};
-const OBN={monthly:"Monthly Card",cult:"Spirit Beast Cultivation",mirage:"Purgatory of Seven Sins",random:"Random Spirit Beast Shard",hire:"Hire Store"};
+const OBN={sbstore:"Spirit Beast Store",guild:"Guild Store",elemental:"Elemental Market",homestead:"Homestead Market",heroq:"Hero Quests",cult:"Spirit Beast Cultivation",rainbow:"Rainbow Diamond Store",mirage:"Purgatory of Seven Sins",random:"Random Spirit Beast Shard",hire:"Hire Store",monthly:"Monthly Card",border:"Battle Order",group:"Group Benefit",acp:"Advanced Combat Pass",huge:"Huge Discount"};
+const OBP=new Set(["monthly","border","group","acp","huge"]);
+const OBD={sbstore:"10 Souls for 4,800 Spirit Beast Coins. Limit 1; store refreshes every 30 days.",
+ guild:"Selection chest: 10 Souls for 20,000 Guild Coins. Limit 1; store refreshes every 30 days.",
+ elemental:"Selection chest: 10 Souls. Limit 1; store refreshes every 30 days.",
+ homestead:"Selection chest: 10 Souls for 100,000 Homestead Coins. Limit 1; store refreshes every 30 days.",
+ rainbow:"50 Souls for 20,000 Rainbow Diamonds. Limit 1.",
+ border:"Level 50 paid track: selection chest of 10 Souls.",
+ group:"Selection chest of 5 Souls at 200 progress (plus Random Spirit Beast Shards at 40 and 80 progress).",
+ acp:"Selection chest of 10 Souls each season.",
+ huge:"Ultimate Pack: selection chest of 50 Souls."};
 const idx=p=>(parseInt((/(\d+)/.exec(p.img)||[0,1])[1],10)||1)-1;
 
 /* ---- shared tab row ---- */
@@ -84,13 +94,17 @@ function pshow(id){const p=P.find(x=>x.id===id);if(!p)return false;CUR=id;pd.rep
   const det=el("details","pfull");det.appendChild(el("summary",null,t("Full skill text at 5★")));const ft=el("div","pksd");rich(ft,sk(p,5));det.appendChild(ft);s.appendChild(det);
   s.appendChild(el("div","kn",t("Source: game files.")));pd.appendChild(s)}
  pd.appendChild(eqSec(p));
- {const s=el("div","sec");s.appendChild(el("h3",null,t("How to obtain")));const ul=el("ul","pobl");
-  p.obtain.forEach(o=>{let line=t(OBN[o.k]);const R=ru();
-   if(o.k==="monthly")line+=R?" — каждые 7 дней получения наград: сундук выбора души зверя-духа (1 душа этого зверя на выбор).":" — every 7 days of claimed rewards: Soul of Spirit Beast Selection Chest (pick 1 Soul of this Spirit Beast).";if(o.k==="cult")line+=R?" — событие (ограниченное время): полный прогресс даёт 10 душ этого зверя.":" — limited-time event; full cultivation progress grants 10 Souls of this Spirit Beast.";
+ {const s=el("div","sec");s.appendChild(el("h3",null,t("How to obtain")));
+  const OB=[...p.obtain].sort((a,b)=>Object.keys(OBN).indexOf(a.k)-Object.keys(OBN).indexOf(b.k));
+  const grp=(lab,L)=>{if(!L.length)return;s.appendChild(el("div","pobg",lab));const u=el("ul","pobl");L.forEach(o=>u.appendChild(obLine(o)));s.appendChild(u)};
+  grp("Free-to-play",OB.filter(o=>!OBP.has(o.k)));grp("Paid",OB.filter(o=>OBP.has(o.k)));
+  function obLine(o){let line=t(OBN[o.k]);const R=ru();if(o.d||OBD[o.k])line+=" — "+(o.d||OBD[o.k]);
+   if(o.k==="monthly")line+=R?" — каждые 7 дней получения наград: сундук выбора души зверя-духа (1 душа этого зверя на выбор).":" — every 7 days of claimed rewards: Soul of Spirit Beast Selection Chest (pick 1 Soul of this Spirit Beast).";if(o.k==="cult")line+=" — Limited-time event. Free track: 10 Souls (random chance); a paid track is also available.";
    if(o.k==="mirage"){const ds=o.diffs,rng=ds.length>2&&ds[ds.length-1]-ds[0]===(ds.length-1)*(ds[1]-ds[0])?ds[0]+"–"+ds[ds.length-1]:ds.join(", ");line+=(R?" — награда за первое прохождение, сложность ":" — first-clear reward, Difficulty ")+rng+" ("+o.nums.join("–")+(R?" душ)":" Souls)")}
    if(o.k==="random")line+=(R?" — шанс выпадения души: ":" — Soul drop chance: ")+o.pct+"%";
    if(o.k==="hire")line+=R?" — можно нанять на время (не насовсем).":" — can be hired temporarily (not kept).";
-   ul.appendChild(el("li",null,line))});s.appendChild(ul);pd.appendChild(s)}
+   const li=el("li");li.appendChild(el("b",null,line.split(" — ")[0]));if(line.includes(" — "))li.appendChild(document.createTextNode(" — "+line.split(" — ").slice(1).join(" — ")));return li}
+  pd.appendChild(s)}
  return true}
 
 /* ---- routing ---- */
