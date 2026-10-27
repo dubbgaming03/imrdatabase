@@ -6,7 +6,7 @@ const ru=()=>typeof LANG!=="undefined"&&LANG==="ru";
 const t=(s,v)=>{let r=ru()&&RU[s]?RU[s]:s;if(v)for(const k in v)r=r.replace("{"+k+"}",v[k]);return r};
 const nm=p=>ru()&&p.ru&&p.ru!==p.en?p.ru:p.en;
 const sk=(p,i)=>{const s=p.skills[i];return ru()&&s.ru?s.ru:s.en};
-const OBN={sbstore:"Spirit Beast Store",guild:"Guild Store",elemental:"Elemental Market",homestead:"Homestead Market",heroq:"Hero Quests",cult:"Spirit Beast Cultivation",rainbow:"Rainbow Diamond Store",mirage:"Purgatory of Seven Sins",random:"Random Spirit Beast Shard",hire:"Hire Store",monthly:"Monthly Card",border:"Battle Order",group:"Group Benefit",acp:"Advanced Combat Pass",huge:"Huge Discount"};
+const OBN={sbstore:"Spirit Beast Store",guild:"Guild Store",elemental:"Elemental Market",homestead:"Homestead Market",heroq:"Hero Quests",cult:"Spirit Beast Cultivation",rainbow:"Rainbow Diamond Store",mirage:"Purgatory of Seven Sins",random:"Random Spirit Beast Shard",monthly:"Monthly Card",border:"Battle Order",group:"Group Benefit",acp:"Advanced Combat Pass",huge:"Huge Discount"};
 const OBP=new Set(["monthly","border","group","acp","huge"]);
 const OBD={sbstore:"10 Souls for 4,800 Spirit Beast Coins. Limit 1; store refreshes every 30 days.",
  guild:"Selection chest: 10 Souls for 20,000 Guild Coins. Limit 1; store refreshes every 30 days.",
