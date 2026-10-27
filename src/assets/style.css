@@ -138,3 +138,10 @@ a.eqtile:hover>span{color:var(--acc);text-decoration:underline}
 .eqtile:hover>.eqtip,.eqtile:focus>.eqtip,.eqtile:focus-within>.eqtip{display:block}
 .eqtbd{font-size:14px;font-style:italic;color:var(--mute)}
 @media (max-width:520px){.eqr{flex-direction:column;align-items:flex-start;gap:8px}.eql{width:auto}.eqtile{width:78px}.eqtip{position:fixed;left:16px;right:16px;bottom:16px;top:auto;transform:none;width:auto}}
+
+.eqgrp{display:flex;flex-direction:column;gap:4px;padding-right:10px;margin-right:4px}
+.eqgrp+.eqgrp{border-left:1px solid var(--line);padding-left:14px}
+.eqgl{font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;letter-spacing:.06em}
+.eqtxt{font-size:14px;font-weight:600;align-self:center}
+.eqnote2{margin:6px 0 0;font-size:13px;color:var(--mute)}
+@media (max-width:520px){.eqgrp+.eqgrp{border-left:0;padding-left:0}}
