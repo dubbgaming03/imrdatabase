@@ -31,7 +31,8 @@ window.HERO_EQ={
   "gear": [
    "Fast Killing",
    "Devouring",
-   "Swift Blade"
+   "Swift Blade",
+   "Conquest"
   ],
   "aura": [
    "Deep Targeting",
@@ -44,7 +45,7 @@ window.HERO_EQ={
    "Crown of the Deep"
   ],
   "gem": [
-   "Crimson Blade Crystal"
+   "Stellar Soul Core"
   ]
  },
  "Boreas": {
