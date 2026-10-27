@@ -18,6 +18,21 @@ function gemTile(name){const g=(window.GEMS&&GEMS.gems||[]).find(x=>x.en===name)
  const a=el("a","eqtile eqk-gem");a.href=PATH("gem-"+g.id);a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV("gem-"+g.id)};
  const k=Math.max(0,GIDX().indexOf(g.img)),i=el("div","eqgem");i.style.backgroundPosition=((k%8)/7*100)+"% "+(Math.floor(k/8)/3*100)+"%";i.setAttribute("role","img");i.setAttribute("aria-label",g.en);
  a.appendChild(i);a.appendChild(el("span",null,g.en));a.title="Open "+g.en;return a}
+
+/* ---- Arcane Gem warning ---- */
+function gemWarn(){const d=el("details","eqwarn");const sm=el("summary");sm.appendChild(el("span","eqwi","!"));sm.appendChild(document.createTextNode("Read before equipping"));d.appendChild(sm);
+ const b=el("div","eqwb");const u=el("ul");
+ [["Active gems"," need several stars before they’re useful. Equipping one too early can hurt your hero."],
+  ["Passive gems"," are safe at low stars, but still choose carefully who gets them."],
+  ["Removing a gem"," is free once per month. After that it costs 1,500 Diamonds (5 Primordial Potions)."]].forEach(([b1,t])=>{const li=el("li");li.appendChild(el("b",null,b1));li.appendChild(document.createTextNode(t));u.appendChild(li)});
+ b.appendChild(u);const a=el("a",null,"How Arcane Gems work →");a.href=PATH("gems");a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV("gems")};b.appendChild(a);d.appendChild(b);return d}
+/* ---- Emblem tree ---- */
+function emblemTree(sel){const E=(window.EMBLEMS||[]).filter(x=>!x.h),on=new Set(sel.map(Number));const w=el("div","embt");
+ [["Attack",1],["Defense",2],["Support",3]].forEach(([lab,c])=>{const col=el("div","embc embc"+c);col.appendChild(el("div","embh",lab+" · "+E.filter(x=>x.c===c&&on.has(x.id)).length));
+  for(let r=1;r<=6;r++){const rw=el("div","embr");E.filter(x=>x.c===c&&x.r===r).sort((a,b)=>a.id-b.id).forEach(x=>{const o=on.has(x.id),t=el("div","emb"+(o?" on":""));t.tabIndex=0;
+    const i=el("img");i.src="/img/emb/"+(o?x.i:x.ia)+".webp";i.alt=x.n;i.loading="lazy";t.appendChild(i);if(o)t.appendChild(el("span","embl",x.mx+"/"+x.mx));
+    const tip=el("div","eqtip");tip.appendChild(el("b",null,x.n));x.d.split("\n").forEach(l=>tip.appendChild(rich(el("p"),l)));tip.appendChild(el("small",null,(o?"Recommended · ":"")+"At max level ("+x.mx+"/"+x.mx+")"));t.appendChild(tip);t.setAttribute("aria-label",x.n+": "+x.d);rw.appendChild(t)});col.appendChild(rw)}
+  w.appendChild(col)});return w}
 function row(label,kids){const r=el("div","eqr");r.appendChild(el("div","eql",label));const b=el("div","eqv");kids.forEach(k=>b.appendChild(k));r.appendChild(b);return r}
 function build(n){const q=EQ[n];if(!q)return null;
  const s=el("div","sec eqsec");s.appendChild(el("h3",null,"Build & recommended equipment"));
@@ -30,13 +45,14 @@ function build(n){const q=EQ[n];if(!q)return null;
  if(q.aura)s.appendChild(row("Aura",q.aura.map(x=>tile("aura",x))));
  if(q.echo){const k=q.echo.map(x=>tile("echo",x));if(q.echonote)k.push(el("span","eqtxt",q.echonote));s.appendChild(row("Echo",k))}
  const gems=q.gem?(Array.isArray(q.gem)?q.gem:[q.gem]):[];
- s.appendChild(row("Arcane Gem",gems.length?gems.map(gemTile):[el("span","eqtbd",q.gemnote||"To be determined")]));
+ {const r=row("Arcane Gem",gems.length?gems.map(gemTile):[el("span","eqtbd",q.gemnote||"To be determined")]);r.querySelector(".eql").appendChild(gemWarn());s.appendChild(r)}
+ if(q.emblems&&q.emblems.length)s.appendChild(row("Emblems",[emblemTree(q.emblems)]));
  if(q.pet){const p=(window.PETS&&PETS.pets||[]).find(x=>x.en===q.pet);if(p){const a=el("a","eqtile eqk-pet");a.href=PATH("pet-"+p.id);a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV("pet-"+p.id)};
   const k=(parseInt((/(\d+)/.exec(p.img)||[0,1])[1],10)||1)-1,i=el("div","eqgem");i.style.backgroundImage="url(/img/pets-p.webp)";i.style.backgroundSize="600% 400%";i.style.backgroundPosition=((k%6)/5*100)+"% "+(Math.floor(k/6)/3*100)+"%";
   a.appendChild(i);a.appendChild(el("span",null,p.en));a.title="Open "+p.en;s.appendChild(row("Spirit Beast",[a]))}}
  return s}
 /* tap outside closes an open tooltip on touch screens */
-document.addEventListener("click",e=>{if(!e.target.closest(".eqtile"))document.activeElement&&document.activeElement.classList&&document.activeElement.classList.contains("eqtile")&&document.activeElement.blur()});
+document.addEventListener("click",e=>{if(!e.target.closest(".eqtile,.emb"))document.activeElement&&document.activeElement.classList&&(document.activeElement.classList.contains("eqtile")||document.activeElement.classList.contains("emb"))&&document.activeElement.blur()});
 if(typeof show==="function"){const _s=show;show=function(n){const r=_s.apply(this,arguments);try{const d=document.getElementById("detail"),s=build(n);if(d&&s){const secs=[...d.querySelectorAll(".sec")];const kit=secs.find(x=>{const h=x.querySelector("h3");return h&&/^(Kit|Stat card|Videos)$/i.test(h.textContent.trim())});kit?kit.before(s):d.appendChild(s)}}catch(e){}return r}}
 if(typeof route==="function")route();
 })();
