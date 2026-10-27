@@ -45,8 +45,10 @@ function build(n){const q=EQ[n];if(!q)return null;
  if(q.aura)s.appendChild(row("Aura",q.aura.map(x=>tile("aura",x))));
  if(q.echo){const k=q.echo.map(x=>tile("echo",x));if(q.echonote)k.push(el("span","eqtxt",q.echonote));s.appendChild(row("Echo",k))}
  const gems=q.gem?(Array.isArray(q.gem)?q.gem:[q.gem]):[];
- {const r=row("Arcane Gem",gems.length?gems.map(gemTile):[el("span","eqtbd",q.gemnote||"To be determined")]);r.querySelector(".eql").appendChild(gemWarn());s.appendChild(r)}
- if(q.emblems&&q.emblems.length)s.appendChild(row("Emblems",[emblemTree(q.emblems)]));
+ if("gem" in q||q.gemnote){const r=row("Arcane Gem",gems.length?gems.map(gemTile):[el("span","eqtbd",q.gemnote||"To be determined")]);r.querySelector(".eql").appendChild(gemWarn());s.appendChild(r)}
+ if(q.emblems){if(Array.isArray(q.emblems))s.appendChild(row("Emblems",[emblemTree(q.emblems)]));else{const w=el("div","embw"),tb=el("div","embtabs"),box=el("div");const ks=Object.keys(q.emblems);
+  const sh=k=>{box.replaceChildren(emblemTree(q.emblems[k]));[...tb.children].forEach(b=>b.classList.toggle("on",b.dataset.k===k))};
+  ks.forEach(k=>{const b=el("button",null,k);b.type="button";b.dataset.k=k;b.onclick=()=>sh(k);tb.appendChild(b)});w.appendChild(tb);w.appendChild(box);sh(ks[0]);s.appendChild(row("Emblems",[w]))}}
  if(q.pet){const p=(window.PETS&&PETS.pets||[]).find(x=>x.en===q.pet);if(p){const a=el("a","eqtile eqk-pet");a.href=PATH("pet-"+p.id);a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV("pet-"+p.id)};
   const k=(parseInt((/(\d+)/.exec(p.img)||[0,1])[1],10)||1)-1,i=el("div","eqgem");i.style.backgroundImage="url(/img/pets-p.webp)";i.style.backgroundSize="600% 400%";i.style.backgroundPosition=((k%6)/5*100)+"% "+(Math.floor(k/6)/3*100)+"%";
   a.appendChild(i);a.appendChild(el("span",null,p.en));a.title="Open "+p.en;s.appendChild(row("Spirit Beast",[a]))}}
