@@ -145,3 +145,4 @@ a.eqtile:hover>span{color:var(--acc);text-decoration:underline}
 .eqtxt{font-size:14px;font-weight:600;align-self:center}
 .eqnote2{margin:6px 0 0;font-size:13px;color:var(--mute)}
 @media (max-width:520px){.eqgrp+.eqgrp{border-left:0;padding-left:0}}
+.eqms{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 8px;padding:5px 8px;border-radius:6px;background:rgba(242,210,122,.12);border:1px solid rgba(242,210,122,.3);font-size:12px}.eqms span{color:#a79fc0}.eqms strong{color:#f2d27a}

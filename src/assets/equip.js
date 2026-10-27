@@ -9,7 +9,7 @@ function rich(e,s){String(s).split(/(\[[^\[\]]{2,40}\])/).forEach(p=>{if(/^\[.*\
 function tile(kind,name){const d=DATA()[kind][name]||{};const t=el("div","eqtile eqk-"+kind+(d.q?" q"+d.q:""));t.tabIndex=0;
  const i=el("img");i.src="/img/eq/"+(d.i||"")+".webp";i.alt=name;i.loading="lazy";i.onerror=()=>i.style.visibility="hidden";t.appendChild(i);
  t.appendChild(el("span",null,short[name]||name));
- if(d.d){const tip=el("div","eqtip");tip.appendChild(el("b",null,name+(kind==="aura"?" Aura":kind==="gear"?" Set":"")));
+ if(d.d){const tip=el("div","eqtip");tip.appendChild(el("b",null,name+(kind==="aura"?" Aura":kind==="gear"?" Set":"")));if(d.ms){const m=el("div","eqms");m.appendChild(el("span",null,"Main stat"));m.appendChild(el("strong",null,d.ms));tip.appendChild(m)}
   const txt=kind==="gear"?d.d.replace(/^[^:]+:\s*/,""):d.d;txt.split("\n").forEach(l=>tip.appendChild(rich(el("p"),l)));
   if(kind!=="gear"&&!d.nd)tip.appendChild(el("small",null,"At max "+(kind==="aura"?"star":"level")));t.appendChild(tip);t.setAttribute("aria-label",name+": "+txt)}
  return t}
