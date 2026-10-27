@@ -7,7 +7,7 @@ const EQ={
   gear:["Penetration","Bone Erosion","Wind Erosion"],
   aura:["Mastery Expert","Advanced Hit","Versatility","Bone-gnawing Toxin"],
   echo:["The Traveler's Diary","Uplifting Drums","Golden Sand Reverie"],
-  gem:null}
+  gem:"Golden Sand Amber"}
 };
 window.HERO_EQ=EQ;
 const DATA=()=>window.EQDATA||{gear:{},aura:{},echo:{}};
