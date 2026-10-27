@@ -107,3 +107,34 @@ a.nvb{color:var(--ink)}
 #ssr ~ #list{display:none}
 
 .tlh{text-align:center;margin:-6px auto 16px;max-width:720px}.tlh h1{font-size:clamp(18px,3.6vw,24px);font-weight:800;margin:0 0 4px;color:#e9c765;text-shadow:0 1px 3px rgba(0,0,0,.85)}.tlh p{margin:2px 0;font-size:13px;color:var(--mute)}.tlh .tlu{font-weight:600}.tlh .tln{font-style:italic}body.lbg .tlh p{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85)}
+
+/* Hero build & recommended equipment */
+.eqgoal{margin:2px 0 14px}
+.eqgh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px}
+.eqgh b{font-size:14px}
+.eqlv{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;background:color-mix(in srgb,var(--acc) 16%,transparent);color:var(--acc)}
+.eqtbl th,.eqtbl td{text-align:center}.eqtbl tr>th:first-child{text-align:left;color:var(--ink);font-size:14px}
+.eqtbl td{font-weight:700;font-size:15px}
+.eqtbl .eq1{color:#16a34a}.eqtbl .eq2{color:#d97706}.eqtbl .eq3{color:#dc2626}
+.eqtbl tr:first-child th{font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.eqr{display:flex;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.eql{width:96px;flex:none;font-size:12px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.eqv{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px}
+.eqtile{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;width:92px;text-align:center;color:inherit;text-decoration:none;cursor:help;outline:none;border-radius:10px;padding:4px 0}
+a.eqtile{cursor:pointer}
+.eqtile:focus-visible{box-shadow:0 0 0 2px var(--acc)}
+.eqtile>span{font-size:12px;font-weight:600;line-height:1.25}
+.eqtile img{display:block;object-fit:contain}
+.eqk-gear img{width:52px;height:52px;padding:5px;border-radius:10px;background:#1a1520;box-sizing:border-box}
+.eqk-aura img{width:64px;height:64px;border-radius:50%;background:radial-gradient(#2a2232,#141018)}
+.eqk-echo img{width:60px;height:60px;border-radius:10px;border:2px solid #8b5cf6;box-sizing:border-box}
+.eqk-echo.q5 img{border-color:#e0a82e}.eqk-echo.q3 img{border-color:#3b82f6}
+.eqgem{width:60px;height:60px;border-radius:10px;background:url(/img/gems.webp) no-repeat;background-size:800% 400%;background-color:#1a1520}
+a.eqtile:hover>span{color:var(--acc);text-decoration:underline}
+.eqtip{display:none;position:absolute;z-index:30;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);width:270px;text-align:left;background:#1c1726;color:#f3f0fa;border:1px solid #3a3150;border-radius:10px;padding:10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:12.5px;line-height:1.45;cursor:default}
+.eqtip b{display:block;font-size:13px;margin-bottom:4px;color:#f2d27a}
+.eqtip p{margin:0 0 4px}.eqtip p b{display:inline;color:#c4b5fd;font-size:inherit;margin:0}
+.eqtip small{display:block;color:#a79fc0;margin-top:4px}
+.eqtile:hover>.eqtip,.eqtile:focus>.eqtip,.eqtile:focus-within>.eqtip{display:block}
+.eqtbd{font-size:14px;font-style:italic;color:var(--mute)}
+@media (max-width:520px){.eqr{flex-direction:column;align-items:flex-start;gap:8px}.eql{width:auto}.eqtile{width:78px}.eqtip{position:fixed;left:16px;right:16px;bottom:16px;top:auto;transform:none;width:auto}}
