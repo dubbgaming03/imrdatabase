@@ -1828,6 +1828,52 @@ window.HERO_EQ={
   ]
  },
  "Boomagi": {
+  "lv": 200,
+  "goals": [
+   [
+    "ATK",
+    "40K",
+    "60K",
+    "80K"
+   ],
+   [
+    "Mastery",
+    "140%",
+    "170%",
+    "200%"
+   ],
+   [
+    "DoT/SD",
+    "20%",
+    "35%",
+    "50%"
+   ],
+   [
+    "SPD",
+    "2,200",
+    "2,600",
+    "2,800"
+   ]
+  ],
+  "gear": [
+   "Penetration",
+   "Bone Erosion",
+   "Wind Erosion"
+  ],
+  "aura": [
+   "Mastery Expert",
+   "Advanced Hit",
+   "Versatility",
+   "Heart-piercing"
+  ],
+  "echo": [
+   "The Traveler's Diary",
+   "Uplifting Drums",
+   "Curtain Call Salute"
+  ],
+  "gem": [
+   "Crimson Blade Crystal"
+  ],
   "emblems": [
    1121,
    2121,
