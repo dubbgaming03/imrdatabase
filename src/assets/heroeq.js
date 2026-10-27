@@ -705,7 +705,7 @@ window.HERO_EQ={
   "echo": [
    "Victory Sprint",
    "Sogdian Whirl",
-   "Verdant Crown"
+   "Wild Verdant Crown"
   ],
   "gem": null
  },
@@ -1011,7 +1011,7 @@ window.HERO_EQ={
   ],
   "echo": [
    "The Traveler's Diary",
-   "Primal Spitfire"
+   "Primal Spiritfire"
   ],
   "echonote": "Any Echo with ATK Rate % as its main stat also works.",
   "gem": [
