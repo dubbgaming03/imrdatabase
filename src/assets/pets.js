@@ -6,7 +6,7 @@ const ru=()=>typeof LANG!=="undefined"&&LANG==="ru";
 const t=(s,v)=>{let r=ru()&&RU[s]?RU[s]:s;if(v)for(const k in v)r=r.replace("{"+k+"}",v[k]);return r};
 const nm=p=>ru()&&p.ru&&p.ru!==p.en?p.ru:p.en;
 const sk=(p,i)=>{const s=p.skills[i];return ru()&&s.ru?s.ru:s.en};
-const OBN={cult:"Spirit Beast Cultivation",mirage:"Purgatory of Seven Sins",random:"Random Spirit Beast Shard",hire:"Hire Store"};
+const OBN={monthly:"Monthly Card",cult:"Spirit Beast Cultivation",mirage:"Purgatory of Seven Sins",random:"Random Spirit Beast Shard",hire:"Hire Store"};
 const idx=p=>(parseInt((/(\d+)/.exec(p.img)||[0,1])[1],10)||1)-1;
 
 /* ---- shared tab row ---- */
@@ -86,7 +86,7 @@ function pshow(id){const p=P.find(x=>x.id===id);if(!p)return false;CUR=id;pd.rep
  pd.appendChild(eqSec(p));
  {const s=el("div","sec");s.appendChild(el("h3",null,t("How to obtain")));const ul=el("ul","pobl");
   p.obtain.forEach(o=>{let line=t(OBN[o.k]);const R=ru();
-   if(o.k==="cult")line+=R?" — событие (ограниченное время): полный прогресс даёт 10 душ этого зверя.":" — limited-time event; full cultivation progress grants 10 Souls of this Spirit Beast.";
+   if(o.k==="monthly")line+=R?" — каждые 7 дней получения наград: сундук выбора души зверя-духа (1 душа этого зверя на выбор).":" — every 7 days of claimed rewards: Soul of Spirit Beast Selection Chest (pick 1 Soul of this Spirit Beast).";if(o.k==="cult")line+=R?" — событие (ограниченное время): полный прогресс даёт 10 душ этого зверя.":" — limited-time event; full cultivation progress grants 10 Souls of this Spirit Beast.";
    if(o.k==="mirage"){const ds=o.diffs,rng=ds.length>2&&ds[ds.length-1]-ds[0]===(ds.length-1)*(ds[1]-ds[0])?ds[0]+"–"+ds[ds.length-1]:ds.join(", ");line+=(R?" — награда за первое прохождение, сложность ":" — first-clear reward, Difficulty ")+rng+" ("+o.nums.join("–")+(R?" душ)":" Souls)")}
    if(o.k==="random")line+=(R?" — шанс выпадения души: ":" — Soul drop chance: ")+o.pct+"%";
    if(o.k==="hire")line+=R?" — можно нанять на время (не насовсем).":" — can be hired temporarily (not kept).";
