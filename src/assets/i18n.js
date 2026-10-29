@@ -2,8 +2,8 @@
    loaded only when picked. Game text (heroes, skills, buffs, Spirit Beasts, Arcane Gems, gear,
    emblems) comes from the game's own language files; site text is translated. */
 (function(){
-const LANGS=[["en","English"],["es","Español"],["pt","Português"],["fr","Français"],["de","Deutsch"],["it","Italiano"],["ru","Русский"],["tr","Türkçe"],["id","Bahasa Indonesia"],["ja","日本語"],["ko","한국어"],["cn","简体中文"],["zh","繁體中文"]];
-const HL={cn:"zh-Hans",zh:"zh-Hant"},LOC={en:"en-US",es:"es-ES",pt:"pt-BR",fr:"fr-FR",de:"de-DE",it:"it-IT",ru:"ru-RU",tr:"tr-TR",id:"id-ID",ja:"ja-JP",ko:"ko-KR",cn:"zh-CN",zh:"zh-TW"};
+const LANGS=[["en","English"],["es","Español"],["pt","Português"],["fr","Français"],["de","Deutsch"],["it","Italiano"],["ru","Русский"],["tr","Türkçe"],["id","Bahasa Indonesia"],["ja","日本語"],["ko","한국어"],["th","ภาษาไทย"],["cn","简体中文"],["zh","繁體中文"]];
+const HL={cn:"zh-Hans",zh:"zh-Hant"},LOC={en:"en-US",es:"es-ES",pt:"pt-BR",fr:"fr-FR",de:"de-DE",it:"it-IT",ru:"ru-RU",tr:"tr-TR",id:"id-ID",ja:"ja-JP",ko:"ko-KR",cn:"zh-CN",zh:"zh-TW",th:"th-TH"};
 const CACHE={},WAIT={};
 const I={lang:"en",d:null,LANGS};window.I18N=I;
 const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}};
