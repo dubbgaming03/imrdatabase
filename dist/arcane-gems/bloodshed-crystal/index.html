@@ -29,7 +29,7 @@ At the beginning of each wave or when the owner reduces enemies' Turn Meters, th
 For every 10 layers of <span class="pbk">[Poison]</span> inflicted by the owner, gains 1 layer of <span class="pbk">[Blood Spirit]</span> (increases ATK by 10%), up to 50% ATK can be increased in this way.
 The DMG dealt by <span class="pbk">[Toxic Impact]</span> ignores <span class="pbk">[Shield]</span> and <span class="pbk">[DMG Immunity]</span>.
  After the owner inflicts <span class="pbk">[ATK Down Ⅱ]</span> or <span class="pbk">[Cold II]</span> on any enemy, other enemies also gain <span class="pbk">[ATK Down Ⅱ]</span> or <span class="pbk">[Cold II]</span>. The <span class="pbk">[ATK Down Ⅱ]</span> or <span class="pbk">[Cold II]</span> inflicted in this way can be triggered once respectively in any turn.</div></details><div class="kn">Source: game files.</div></div><div class="sec"><h3>Effects</h3><ul class="pobl gkw"><li><span class="pbk gdb">[Poison]</span> — Each layer of Poison reduces the DMG dealt by the owner by 1.5%, stackable up to 10 layers. This effect is doubled when Poison stacks more than 5 layers. Meanwhile, the owner takes DMG by 100% of the inflictor's ATK each turn before action. Poison DMG ignores DEF and cannot trigger Crit, Leech and DMG Reflect effects.</li><li><span class="pbk">[Toxic Impact]</span> — When others try inflicting [Poison] on the owner, the owner takes a certain amount of [Poison] DMG.</li><li><span class="pbk">[Blood Spirit]</span> — Increases ATK by a certain amount.</li><li><span class="pbk gdb">[Shield]</span> — Blocks some DMG.</li><li><span class="pbk gdb">[DMG Immunity]</span> — Will not take any DMG at all.</li><li><span class="pbk gdb">[ATK Down Ⅱ]</span> — Reduces ATK by 40%.</li><li><span class="pbk gdb">[Cold Ⅱ]</span> — Skill DMG -40%</li></ul></div></div></div>
-<div class="lw"><div class="lang" id="langbox" hidden><select id="lang" aria-label="Language"><option value="en">English</option><option value="ru">Русский</option></select><span id="langx" hidden><input id="langin" placeholder="Language, e.g. Spanish" aria-label="Language name"><button id="langgo" type="button">Translate</button></span><span class="lst" id="lst"></span></div><img class="avt" src="/img/avatar.png" alt="Dubb"></div>
+<div class="lw"><div class="lang" id="langbox" hidden><select id="lang" aria-label="Language"><option value="en">English</option></select></div><img class="avt" src="/img/avatar.png" alt="Dubb"></div>
 <div id="list">
 <img class="logo" src="/img/logo.png" alt="Infinite Magicraid"><h1 class="sr" data-en="Infinite Magicraid Database">Infinite Magicraid Database</h1>
 <p class="sub" data-en="Database: Select a hero for more info">Database: Select a hero for more info</p>
@@ -59,10 +59,11 @@ The DMG dealt by <span class="pbk">[Toxic Impact]</span> ignores <span class="pb
 </main>
 
 
-<footer class="sitefoot">Infinite Magicraid Database is a fan-made site by <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.<br><a href="/bracket/">Bracket Challenge</a> · <a href="/privacy/">Privacy Policy</a></footer>
+<footer class="sitefoot"><span data-en="Infinite Magicraid Database is a fan-made site by">Infinite Magicraid Database is a fan-made site by</span> <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. <span data-en="It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.">It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.</span><br><a href="/bracket/" data-en="Bracket Challenge">Bracket Challenge</a> · <a href="/privacy/" data-en="Privacy Policy">Privacy Policy</a></footer>
 <script src="/assets/pets-data.js"></script>
 <script src="/assets/gems-data.js"></script>
 <script src="/assets/buildinfo.js"></script>
+<script src="/assets/i18n.js"></script>
 <script src="/assets/router.js"></script>
 <script src="/assets/app.js"></script>
 <script src="/assets/pets.js"></script>
@@ -73,6 +74,6 @@ The DMG dealt by <span class="pbk">[Toxic Impact]</span> ignores <span class="pb
 <script src="/assets/emblems.js"></script>
 <script src="/assets/heroeq.js"></script>
 <script src="/assets/equip.js"></script>
-<script>SETMETA()</script>
+<script>SETMETA();I18N.init()</script>
 </body>
 </html>

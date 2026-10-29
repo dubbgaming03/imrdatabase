@@ -62,12 +62,12 @@ window.LISTR=function(k){
  let h=hd;if(!h){h=document.createElement("div");h.id="lhd";h.className="lhd";const g=document.getElementById("count");g.parentNode.insertBefore(h,g)}
  const n=H.filter(x=>fac?x.f===v:(X[x.n]&&X[x.n][1].includes(v))).length;
  h.replaceChildren();
- const t=document.createElement("h2");t.textContent=fac?v+" Faction Heroes":v+" Heroes";h.appendChild(t);
- const p=document.createElement("p");p.textContent=fac?`All ${n} heroes of the ${v} faction in Infinite Magicraid, with tiers, skills and builds.`:`All ${n} Infinite Magicraid heroes that deal ${v} damage, with tiers, skills and builds.`;h.appendChild(p);
- const a=document.createElement("a");a.href="/heroes/";a.textContent="← All heroes";a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV("heroes")};h.appendChild(a);
+ const vn=fac?I18N.fac(v):T(v);const t=document.createElement("h2");t.textContent=fac?T("{x} Faction Heroes",{x:vn}):T("{x} Heroes",{x:vn});h.appendChild(t);
+ const p=document.createElement("p");p.textContent=fac?T("All {n} heroes of the {x} faction in Infinite Magicraid, with tiers, skills and builds.",{n:n,x:vn}):T("All {n} Infinite Magicraid heroes that deal {x} damage, with tiers, skills and builds.",{n:n,x:vn});h.appendChild(p);
+ const a=document.createElement("a");a.href="/heroes/";a.textContent=T("← All heroes");a.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV("heroes")};h.appendChild(a);
  window.scrollTo(0,0);return true};
 
-function showNF(){["list","detail","home","pets","pdetail","gems","gdetail"].forEach(i=>{const e=document.getElementById(i);if(e)e.hidden=true});let n=document.getElementById("nf");if(!n){n=document.createElement("div");n.id="nf";n.className="nf";n.innerHTML='<h1>Page not found</h1><p>That page doesn’t exist. Try the <a href="/heroes/">hero list</a>, <a href="/spirit-beasts/">Spirit Beasts</a> or <a href="/arcane-gems/">Arcane Gems</a>.</p>';document.querySelector("main").appendChild(n)}n.hidden=false}
+function showNF(){["list","detail","home","pets","pdetail","gems","gdetail"].forEach(i=>{const e=document.getElementById(i);if(e)e.hidden=true});let n=document.getElementById("nf");if(!n){n=document.createElement("div");n.id="nf";n.className="nf";document.querySelector("main").appendChild(n)}n.innerHTML='<h1></h1><p></p><p><a href="/heroes/"></a> · <a href="/spirit-beasts/"></a> · <a href="/arcane-gems/"></a></p>';n.querySelector("h1").textContent=T("Page not found");n.querySelector("p").textContent=T("That page doesn’t exist. Try one of these:");const as=n.querySelectorAll("a");as[0].textContent=T("Heroes");as[1].textContent=T("Spirit Beasts");as[2].textContent=T("Arcane Gems");n.hidden=false}
 function hideNF(){const n=document.getElementById("nf");if(n)n.hidden=true}
 
 /* ---- meta ---- */
@@ -96,12 +96,12 @@ function tierHead(k){
  const list=document.getElementById("list");if(!list)return;
  const sr=list.querySelector("h1.sr");let b=document.getElementById("tlh");const on=k==="heroes";
  if(!on){if(b)b.hidden=true;if(sr)sr.hidden=false;return}
- const d=bdate(),mo=d.toLocaleString("en-US",{month:"long",year:"numeric"}),full=d.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+ const lc=window.I18N?I18N.loc():"en-US",d=bdate(),mo=d.toLocaleString(lc,{month:"long",year:"numeric"}),full=d.toLocaleDateString(lc,{month:"long",day:"numeric",year:"numeric"});
  if(!b){b=document.createElement("div");b.id="tlh";b.className="tlh";const anchor=list.querySelector(".bar");list.insertBefore(b,anchor)}
  b.replaceChildren();
- const h=document.createElement("h1");h.textContent=`Infinite Magicraid Hero Tier List – ${mo}`;b.appendChild(h);
- const u=document.createElement("p");u.className="tlu";u.textContent=`Last updated: ${full}`;b.appendChild(u);
- const n=document.createElement("p");n.className="tln";n.textContent="Tiers are determined by Resource Priority, Longevity, and Overall Usefulness.";b.appendChild(n);
+ const h=document.createElement("h1");h.textContent=T("Infinite Magicraid Hero Tier List – {m}",{m:mo});b.appendChild(h);
+ const u=document.createElement("p");u.className="tlu";u.textContent=T("Last updated: {d}",{d:full});b.appendChild(u);
+ const n=document.createElement("p");n.className="tln";n.textContent=T("Tiers are determined by Resource Priority, Longevity, and Overall Usefulness.");b.appendChild(n);
  b.hidden=false;if(sr)sr.hidden=true}
 window.PAGEMETA=meta;
 window.SETMETA=function(){
@@ -114,4 +114,5 @@ window.SETMETA=function(){
  setTag('meta[property="og:description"]',"content",["property","og:description"],m.d);
  setTag('meta[property="og:url"]',"content",["property","og:url"],url);
  setTag('meta[name="robots"]',"content",["name","robots"],m.nf?"noindex":"index,follow")};
+if(window.I18N)I18N.onChange(()=>{const k=ROUTEKEY();tierHead(k);if(LISTK)LISTR(LISTK);if(k==="notfound")showNF()});
 })();

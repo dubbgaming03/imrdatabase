@@ -29,7 +29,7 @@ After casting this skill, the owner gains an extra turn, and the CD of this skil
 After casting this skill, increases all allies' DMG dealt to Bosses by 0.5%; for each ally with the <span class="pbk">[Poison]</span> tag deployed, additionally increases the DMG bonus by 0.1%, up to 10 layers.
 After casting this skill, additionally increases all allies' Skill DMG by 5% and Mastery by 5% until the end of battle, up to 40 times.
 At the beginning of battle, automatically casts this skill once. This cast does not grant an extra turn. When causing an enemy to skip their turns, <span class="pbk">[Golden Edict]</span> can trigger 1 additional time, for a total of up to 2 triggers before self acts. After <span class="pbk">[Golden Edict]</span> has triggered 2 times in total, each time self casts a skill during the next 2 turns, additionally causes the enemy with the highest SPD to immediately take 1 turn and skip 1 turn. This can trigger up to 2 times before self's turn. Skipping turn this time does not trigger <span class="pbk">[Golden Edict]</span>. This additional immediate-turn and turn-skipping effect does not apply if the selected target is a Boss.</div></details><div class="kn">Source: game files.</div></div><div class="sec"><h3>Effects</h3><ul class="pobl gkw"><li><span class="pbk">[Frenzied Blade]</span> — Increases ATK by a certain amount.</li><li><span class="pbk">[Golden Edict]</span> — When successfully inflicting a Control effect on a non-Boss unit or causing them to skip a turn, increases self's Turn Meter by a certain amount.</li><li><span class="pbk gdb">[Poison]</span> — Each layer of Poison reduces the DMG dealt by the owner by 1.5%, stackable up to 10 layers. This effect is doubled when Poison stacks more than 5 layers. Meanwhile, the owner takes DMG by 100% of the inflictor's ATK each turn before action. Poison DMG ignores DEF and cannot trigger Crit, Leech and DMG Reflect effects.</li></ul></div></div></div>
-<div class="lw"><div class="lang" id="langbox" hidden><select id="lang" aria-label="Language"><option value="en">English</option><option value="ru">Русский</option></select><span id="langx" hidden><input id="langin" placeholder="Language, e.g. Spanish" aria-label="Language name"><button id="langgo" type="button">Translate</button></span><span class="lst" id="lst"></span></div><img class="avt" src="/img/avatar.png" alt="Dubb"></div>
+<div class="lw"><div class="lang" id="langbox" hidden><select id="lang" aria-label="Language"><option value="en">English</option></select></div><img class="avt" src="/img/avatar.png" alt="Dubb"></div>
 <div id="list">
 <img class="logo" src="/img/logo.png" alt="Infinite Magicraid"><h1 class="sr" data-en="Infinite Magicraid Database">Infinite Magicraid Database</h1>
 <p class="sub" data-en="Database: Select a hero for more info">Database: Select a hero for more info</p>
@@ -59,10 +59,11 @@ At the beginning of battle, automatically casts this skill once. This cast does 
 </main>
 
 
-<footer class="sitefoot">Infinite Magicraid Database is a fan-made site by <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.<br><a href="/bracket/">Bracket Challenge</a> · <a href="/privacy/">Privacy Policy</a></footer>
+<footer class="sitefoot"><span data-en="Infinite Magicraid Database is a fan-made site by">Infinite Magicraid Database is a fan-made site by</span> <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. <span data-en="It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.">It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.</span><br><a href="/bracket/" data-en="Bracket Challenge">Bracket Challenge</a> · <a href="/privacy/" data-en="Privacy Policy">Privacy Policy</a></footer>
 <script src="/assets/pets-data.js"></script>
 <script src="/assets/gems-data.js"></script>
 <script src="/assets/buildinfo.js"></script>
+<script src="/assets/i18n.js"></script>
 <script src="/assets/router.js"></script>
 <script src="/assets/app.js"></script>
 <script src="/assets/pets.js"></script>
@@ -73,6 +74,6 @@ At the beginning of battle, automatically casts this skill once. This cast does 
 <script src="/assets/emblems.js"></script>
 <script src="/assets/heroeq.js"></script>
 <script src="/assets/equip.js"></script>
-<script>SETMETA()</script>
+<script>SETMETA();I18N.init()</script>
 </body>
 </html>

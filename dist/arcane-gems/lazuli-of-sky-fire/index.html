@@ -26,7 +26,7 @@
 Each layer of <span class="pbk">[Celestial Inferno]</span> also increases Skill DMG by 1.5%.</div></details><details class="pfull"><summary>Full skill text at 7★</summary><div class="pksd" style="white-space: pre-line;">At the beginning of the owner's turn, grants all allies 1 layer of <span class="pbk">[Spirit Flame]</span>: Will be converted to <span class="pbk">[Celestial Inferno]</span> (increases <span class="pbk">[Burn]</span> DMG dealt by 2.6%, up to 20 layers.) after dealing Burn DMG or inflicting <span class="pbk">[Burn]</span>. When there are multiple <span class="pbk">[Spirit Flame]</span> and <span class="pbk">[Celestial Inferno]</span>, only the strongest one will take effect(<span class="pbk">[Celestial Inferno]</span> will not be removed when the owner dies or at the wave transition.).
 Each layer of <span class="pbk">[Celestial Inferno]</span> also increases Skill DMG by 1.5%.
 At the beginning of the owner's turn, reclaims the newly converted <span class="pbk">[Celestial Inferno]</span> and copies them to other allies. This effect will not be triggered when the layers of <span class="pbk">[Celestial Inferno]</span> reach the upper limit.</div></details><div class="kn">Source: game files.</div></div><div class="sec"><h3>Effects</h3><ul class="pobl gkw"><li><span class="pbk">[Spirit Flame]</span> — Will be converted to [Celestial Inferno] after dealing [Burn] DMG or inflicting [Burn].</li><li><span class="pbk gdb">[Burn]</span> — Takes DMG by 50% of the inflictor's ATK each turn before action. Will be detonated and then removed when stacking 2 layers, which deals DMG by 300% of the inflictor’s ATK. Burn DMG ignores DEF and cannot trigger Crit, Leech and DMG Reflect effects.</li><li><span class="pbk">[Celestial Inferno]</span> — Increases [Burn] DMG dealt by a certain amount.</li></ul></div></div></div>
-<div class="lw"><div class="lang" id="langbox" hidden><select id="lang" aria-label="Language"><option value="en">English</option><option value="ru">Русский</option></select><span id="langx" hidden><input id="langin" placeholder="Language, e.g. Spanish" aria-label="Language name"><button id="langgo" type="button">Translate</button></span><span class="lst" id="lst"></span></div><img class="avt" src="/img/avatar.png" alt="Dubb"></div>
+<div class="lw"><div class="lang" id="langbox" hidden><select id="lang" aria-label="Language"><option value="en">English</option></select></div><img class="avt" src="/img/avatar.png" alt="Dubb"></div>
 <div id="list">
 <img class="logo" src="/img/logo.png" alt="Infinite Magicraid"><h1 class="sr" data-en="Infinite Magicraid Database">Infinite Magicraid Database</h1>
 <p class="sub" data-en="Database: Select a hero for more info">Database: Select a hero for more info</p>
@@ -56,10 +56,11 @@ At the beginning of the owner's turn, reclaims the newly converted <span class="
 </main>
 
 
-<footer class="sitefoot">Infinite Magicraid Database is a fan-made site by <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.<br><a href="/bracket/">Bracket Challenge</a> · <a href="/privacy/">Privacy Policy</a></footer>
+<footer class="sitefoot"><span data-en="Infinite Magicraid Database is a fan-made site by">Infinite Magicraid Database is a fan-made site by</span> <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. <span data-en="It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.">It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.</span><br><a href="/bracket/" data-en="Bracket Challenge">Bracket Challenge</a> · <a href="/privacy/" data-en="Privacy Policy">Privacy Policy</a></footer>
 <script src="/assets/pets-data.js"></script>
 <script src="/assets/gems-data.js"></script>
 <script src="/assets/buildinfo.js"></script>
+<script src="/assets/i18n.js"></script>
 <script src="/assets/router.js"></script>
 <script src="/assets/app.js"></script>
 <script src="/assets/pets.js"></script>
@@ -70,6 +71,6 @@ At the beginning of the owner's turn, reclaims the newly converted <span class="
 <script src="/assets/emblems.js"></script>
 <script src="/assets/heroeq.js"></script>
 <script src="/assets/equip.js"></script>
-<script>SETMETA()</script>
+<script>SETMETA();I18N.init()</script>
 </body>
 </html>
