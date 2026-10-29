@@ -20,6 +20,26 @@ const TH=["xo9M_Q6pBwc", "5Zqoh1TG18o", "pBs6w5phLUI", "OultrV09aPY", "bGEEj04oQ
 function thumb(v){const w=el("div","hthumb");{const i=el("img","himg");i.loading="lazy";i.decoding="async";i.alt=v.t;const q=["maxresdefault","sddefault","hqdefault"];let n=0;i.src="https://i.ytimg.com/vi/"+v.id+"/"+q[0]+".jpg";i.onload=()=>{if(i.naturalWidth<=120&&n<q.length-1){n++;i.src="https://i.ytimg.com/vi/"+v.id+"/"+q[n]+".jpg"}};i.onerror=()=>{if(n<q.length-1){n++;i.src="https://i.ytimg.com/vi/"+v.id+"/"+q[n]+".jpg"}};w.appendChild(i)}w.appendChild(el("span","hplay","▶"));w.appendChild(el("span","hdur",fl(v.s)));return w}
 function vcard(v,pin){const b=el("div","hbody");b.appendChild(el("div","hvt",v.t));b.appendChild(el("div","hvm",fv(v.v)+" "+t("views")+" · "+fd(v.d)));const c=link("hcard"+(pin?" pin":""),yurl(v.id),[thumb(v),b]);if(pin)c.appendChild(el("span","hpin",t("Pinned")));return c}
 
+
+/* ---- Download Today: official store links + Dubb's Aptoide link ---- */
+const DL=[
+ ["apple","https://apps.apple.com/app/6469089586","Download on the","App Store"],
+ ["gplay","https://play.google.com/store/apps/details?id=com.ihgames.im.android.google","Get it on","Google Play"],
+ ["apk","https://res-download.dhgames.com/ih/apk/infinite-magicraid.apk","Download the","Android APK"],
+ ["pc","https://res-download.dhgames.com/ih/apk/infinite-magicraid-windows-launcher.exe","Download for","PC (Windows)"]];
+const APTOIDE="http://aptoi.de/Dubb_IMR_download";
+const DLI={
+ apple:'<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#fff" d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.2 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8 0 0-2.5-1-2.5-3.9zM14 5.5c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4z"/></svg>',
+ gplay:'<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="#00d7fe" d="M3.6 2.2 13.4 12l-9.8 9.8c-.4-.2-.6-.6-.6-1.1V3.3c0-.5.2-.9.6-1.1z"/><path fill="#ffce00" d="m16.7 15.3-3.3-3.3 3.3-3.3 3.8 2.2c.9.5.9 1.8 0 2.3z"/><path fill="#ff3a44" d="M16.7 15.3 13.4 12l-9.8 9.8c.4.2.9.2 1.4-.1z"/><path fill="#00f076" d="M16.7 8.7 5 2.3c-.5-.3-1-.3-1.4-.1L13.4 12z"/></svg>',
+ apk:'<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="#3ddc84" d="M5 10h14v8a1.5 1.5 0 0 1-1.5 1.5H16v2.5a1.25 1.25 0 0 1-2.5 0v-2.5h-3v2.5a1.25 1.25 0 0 1-2.5 0v-2.5H6.5A1.5 1.5 0 0 1 5 18zM2.25 10.5a1.25 1.25 0 0 1 2.5 0v5a1.25 1.25 0 0 1-2.5 0zm17 0a1.25 1.25 0 0 1 2.5 0v5a1.25 1.25 0 0 1-2.5 0zM5 9a7 7 0 0 1 14 0zm3.6-6.7.9 1.5M15.4 2.3l-.9 1.5"/><path stroke="#3ddc84" stroke-width="1.2" stroke-linecap="round" d="m8.2 2 1.2 2m6.4-2-1.2 2"/><circle cx="9.5" cy="6.3" r=".9" fill="#1b1b1b"/><circle cx="14.5" cy="6.3" r=".9" fill="#1b1b1b"/></svg>',
+ pc:'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4cc2ff" d="M2 4.3 10 3.2v7.6H2zm9-1.2L22 1.5v9.3H11zM2 12h8v7.7l-8-1.1zm9 0h11v10.5l-11-1.6z"/></svg>'};
+{const st=document.createElement("style");st.textContent=".hdl{margin:26px auto 6px;max-width:880px}.hdl h2{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85);margin:0 0 12px;font-size:22px}.hdlg{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.hdlb{display:inline-flex;align-items:center;gap:10px;min-width:180px;padding:8px 16px 8px 12px;border-radius:12px;background:#0b0b0f;border:1px solid rgba(255,255,255,.45);color:#fff;text-decoration:none;text-align:left;box-shadow:0 2px 10px rgba(0,0,0,.45)}.hdlb:hover{border-color:#fff;background:#1a1a22}.hdlb span{display:flex;flex-direction:column;line-height:1.1}.hdlb small{font-size:11px;opacity:.85}.hdlb b{font-size:17px;font-weight:700;letter-spacing:.01em}.hdla{display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin-top:14px;padding:12px 22px 10px;border-radius:14px;background:#fff;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.45);border:2px solid #fe6446}.hdla:hover{filter:brightness(1.04)}.hdla img{height:34px;width:auto;display:block}.hdla small{color:#5a3328;font-size:12px;font-weight:700}@media (max-width:520px){.hdlb{min-width:0;flex:1 1 calc(50% - 10px)}.hdlb b{font-size:15px}}";document.head.appendChild(st)}
+function dlSection(){const s=el("section","hdl");s.appendChild(el("h2",null,t("Download Today")));const g=el("div","hdlg");
+ DL.forEach(([k,u,a,b])=>{const x=link("hdlb",u,[]);const ic=el("span","hdli");ic.innerHTML=DLI[k];x.appendChild(ic.firstChild);const tx=el("span");tx.appendChild(el("small",null,t(a)));tx.appendChild(el("b",null,t(b)));x.appendChild(tx);x.setAttribute("aria-label",t(a)+" "+t(b));g.appendChild(x)});
+ s.appendChild(g);
+ const ap=link("hdla",APTOIDE,[]);const im=el("img");im.src="/img/aptoide.svg";im.alt="Aptoide";ap.appendChild(im);ap.appendChild(el("small",null,t("Get it on Aptoide")));ap.setAttribute("aria-label",t("Get it on Aptoide"));s.appendChild(ap);
+ return s}
+
 /* ---- markup ---- */
 const home=el("div");home.id="home";home.hidden=true;
 home.innerHTML='<img class="logo" src="/img/logo.png" alt="Infinite Magicraid"><p class="psub"></p><div id="htop"></div><div id="hnews"></div><div id="hpop"></div><div id="hpl"></div><div class="hfoot"></div>';
@@ -33,7 +53,7 @@ function section(title,sub){const s=el("section","hsec");s.appendChild(el("h2",n
 
 function build(){
  home.querySelector(".psub").textContent=t("Database: News, videos and guides");
- $("htop").replaceChildren(followRow(true));
+ $("htop").replaceChildren();
  /* News */
  const N=$("hnews");N.replaceChildren();const ns=section(t("Latest news"));
  const FEATURED="DAAhfW1pi0E";const patch=V.find(v=>/^patch note hype/i.test(v.t));const feat=BYID[FEATURED]||patch;const isPatch=feat===patch;
@@ -52,7 +72,7 @@ function build(){
  const L=$("hpl");L.replaceChildren();const ls=section(t("Playlists"));const lg=el("div","hgrid pls");
  PL.forEach(([n,id,c])=>{const b=el("div","hbody");b.appendChild(el("div","hvt",t(n)));b.appendChild(el("div","hvm",(c?c+" "+t("videos")+" · ":"")+t("Watch playlist")+" →"));lg.appendChild(link("hcard plc","https://www.youtube.com/playlist?list="+id,[b]))});ls.appendChild(lg);L.appendChild(ls);
  /* Footer */
- const F=home.querySelector(".hfoot");F.replaceChildren();F.appendChild(followRow(false));
+ const F=home.querySelector(".hfoot");F.replaceChildren();F.appendChild(followRow(false));F.appendChild(dlSection());
  F.appendChild(el("p","hnote",t("Video list and view counts are a snapshot from")+" "+fd(window.YT_SNAPSHOT)+"."))}
 
 /* ---- routing ---- */
