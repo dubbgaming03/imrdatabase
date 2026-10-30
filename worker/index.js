@@ -2,11 +2,13 @@
 // Storage: D1 database bound as DB. Admin actions need the BRACKET_ADMIN_KEY secret in the x-admin-key header.
 import "../src/bracket/logic.js";
 import SEED_CONFIG from "./seed-config.json";
+import { ACCOUNT_SCHEMA, snapshot, listArchive, handleAccounts } from "./accounts.js";
 const BC = globalThis.BC;
 
 const SCHEMA = [
   "CREATE TABLE IF NOT EXISTS bracket_entries (pid TEXT PRIMARY KEY, name TEXT NOT NULL, discord TEXT NOT NULL, div TEXT NOT NULL, picks TEXT NOT NULL, token_hash TEXT NOT NULL, test INTEGER NOT NULL DEFAULT 0, created_at TEXT NOT NULL, updated_at TEXT NOT NULL)",
   "CREATE TABLE IF NOT EXISTS bracket_kv (k TEXT PRIMARY KEY, v TEXT NOT NULL)",
+  ...ACCOUNT_SCHEMA,
 ];
 let schemaReady = false;
 async function ensureSchema(db) {
@@ -125,6 +127,8 @@ async function handleApi(req, env, url) {
       if (!b) return fail("Missing settings.");
       const cur = await getKV(db, "config", { event: "", deadline: null, players: {} });
       const next = { ...cur };
+      // Archive the outgoing event before its name or deadline changes.
+      if ("event" in b && clean(b.event, 120) !== cur.event) await snapshot(db);
       if ("event" in b) next.event = clean(b.event, 120);
       if ("deadline" in b) next.deadline = b.deadline && !isNaN(Date.parse(b.deadline)) ? new Date(b.deadline).toISOString() : null;
       if (b.players && typeof b.players === "object") {
@@ -143,14 +147,18 @@ async function handleApi(req, env, url) {
       const out = {};
       for (const d of BC.DIVS) if (b[d]) out[d] = b[d];
       await putKV(db, "results", out);
+      await snapshot(db);
       return json({ ok: true });
     }
     if (req.method === "POST" && what === "delete") {
       const pids = Array.isArray(b && b.pids) ? b.pids.map(String) : [];
       if (!pids.length) return fail("Nothing to delete.");
+      await snapshot(db);
       await db.batch(pids.map((p) => db.prepare("DELETE FROM bracket_entries WHERE pid = ?").bind(p)));
       return json({ ok: true, deleted: pids.length });
     }
+    if (req.method === "POST" && what === "archive") return json({ ok: true, archived: await snapshot(db) });
+    if (req.method === "GET" && what === "archive") return json({ events: await listArchive(db) });
     if (req.method === "POST" && what === "delete-tests") {
       const r = await db.prepare("DELETE FROM bracket_entries WHERE test = 1").run();
       return json({ ok: true, deleted: r.meta.changes });
@@ -162,6 +170,16 @@ async function handleApi(req, env, url) {
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
+    if (url.pathname.startsWith("/api/auth") || url.pathname === "/api/me" || url.pathname.startsWith("/api/me/")) {
+      try {
+        if (!env.DB) return fail("The database isn't connected yet.", 503);
+        await ensureSchema(env.DB);
+        return await handleAccounts(req, env, url);
+      } catch (err) {
+        console.error(err);
+        return fail("Something went wrong on the server. Try again in a moment.", 500);
+      }
+    }
     if (url.pathname.startsWith("/api/bracket")) {
       try {
         return await handleApi(req, env, url);
