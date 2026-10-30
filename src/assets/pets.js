@@ -25,6 +25,7 @@ window.IM_TABS=function(logo,cur){if(!logo)return;const d=el("div","ptabs");
  [["home","Home","home"],["h","Heroes","heroes"],["p","Spirit Beasts","pets"],["g","Arcane Gems","gems"]].forEach(([k,lab,h])=>{const b=el("a",k===cur?"on":"",t(lab));b.href=PATH(h);b.dataset.l=lab;b.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV(h)};d.appendChild(b)});
  {const b=el("a","",t("Codes"));b.href="/codes/";b.dataset.l="Codes";d.appendChild(b)}
  {const b=el("a","",t("Bracket Challenge"));b.href="/bracket/";b.dataset.l="Bracket Challenge";d.appendChild(b)}
+ {const b=el("a","",t("My Account"));b.href="/account/";b.dataset.l="My Account";d.appendChild(b)}
  let sb=logo.nextElementSibling;while(sb&&sb.tagName==="H1")sb=sb.nextElementSibling;(sb&&sb.matches(".sub,.psub")?sb:logo).after(d);TABS.push(d)};
 function tabsRu(){TABS.forEach(d=>d.querySelectorAll("a,button").forEach(b=>{if(b.dataset.l)b.textContent=t(b.dataset.l)}))}
 
