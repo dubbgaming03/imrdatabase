@@ -49,6 +49,19 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
  }
  await br.close();srv.kill();
  urls.push(SITE+"/privacy/");urls.push(SITE+"/bracket/");
+ /* Codes page: static HTML filled from src/codes/codes.json (edit the JSON to update codes) */
+ {const C=JSON.parse(fs.readFileSync(path.join(SRC,"codes","codes.json"),"utf8"));
+  const d=s=>new Date(s+"T12:00:00"),long=s=>d(s).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}),short=s=>d(s).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  const act=C.active.filter(c=>!c.expires||c.expires>=C.checked),late=C.active.filter(c=>c.expires&&c.expires<C.checked);
+  const card=c=>`<div class="ccard" data-code="${esc(c.code)}"${c.expires?` data-exp="${c.expires}" data-expl="${short(c.expires)}"`:""}><div class="crow"><span class="ccode">${esc(c.code)}${c.new?'<span class="cnew">New</span>':""}</span><button class="ccopy" type="button" data-code="${esc(c.code)}" aria-label="Copy code ${esc(c.code)}">Copy</button></div><div class="crew">${esc(c.rewards)}</div><div class="cexp">${c.expires?"Expires "+long(c.expires):"No expiry date announced"}</div></div>`;
+  const row=c=>`<tr><td>${esc(c.code)}</td><td>${esc(c.rewards)}</td><td>${c.ended?short(c.ended):c.expires?short(c.expires):"—"}</td></tr>`;
+  const F=C.featured,et=s=>new Date(s).toLocaleString("en-US",{timeZone:"America/New_York",month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+  const feat=F&&new Date(F.end)>new Date()?`<section class="cfeat" id="feat" data-start="${F.start}" data-end="${F.end}" aria-labelledby="h-feat"><div class="cfhead"><img src="/img/aptoide.svg" alt="Aptoide" class="cflogo"><span class="cfonly">Aptoide only</span></div><h2 id="h-feat" class="cftitle">Aptoide Wallet promo code</h2><div class="cfrow"><span class="cfcode">${esc(F.code)}</span><button class="ccopy" type="button" data-code="${esc(F.code)}" aria-label="Copy code ${esc(F.code)}">Copy</button></div><p class="cfrew">${esc(F.reward)}</p><p class="cfdate"><span class="cfstat"></span>${et(F.start)} – ${et(F.end)} ET</p><p class="cfnote">Enter this code in your <b>Aptoide Wallet</b>, not in the game. It only works for purchases in the Aptoide version of Infinite Magicraid. The in-game codes below go in the game's Redeem Code screen.</p><a class="cfbtn" href="${esc(F.link)}" rel="noopener">Get Infinite Magicraid on Aptoide</a></section>`:"";
+  const mo=d(C.checked).toLocaleString("en-US",{month:"long",year:"numeric"});
+  const f=path.join(DIST,"codes","index.html");
+  fs.writeFileSync(f,fs.readFileSync(f,"utf8").split("<!--MONTH-->").join(mo).split("<!--UPDATED-->").join(long(C.checked)).replace("<!--FEATURED-->",feat).replace("<!--ACTIVE-->",act.map(card).join("")).replace("<!--EXPIRED-->",late.concat(C.expired).map(row).join("")));
+  fs.rmSync(path.join(DIST,"codes","codes.json"),{force:true});
+  urls.push(SITE+"/codes/")}
  const today=BD;
  fs.writeFileSync(path.join(DIST,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`<url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")+"\n</urlset>\n");
  fs.writeFileSync(path.join(DIST,"robots.txt"),`User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
