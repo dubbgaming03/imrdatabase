@@ -11,7 +11,7 @@
     {"code": "IMADVENTURE", "rewards": "100 Diamonds and a bonus item"},
     {"code": "PLAYIM", "rewards": "5 Premium Hero EXP Potions"},
     {"code": "IMGIFT", "rewards": "Coins"},
-    {"code": "TEST111111", "rewards": "100 Coins, 100 Diamonds"}
+    {"code": "TEST111111", "rewards": "100K Coins, 100 Diamonds"}
   ],
   "expired": [
     {"code": "MOONCAKE2026", "rewards": "10 Excellent Runes", "ended": "2026-10-12"},
