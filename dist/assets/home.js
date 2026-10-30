@@ -20,6 +20,19 @@ const TH=["xo9M_Q6pBwc", "5Zqoh1TG18o", "pBs6w5phLUI", "OultrV09aPY", "bGEEj04oQ
 function thumb(v){const w=el("div","hthumb");{const i=el("img","himg");i.loading="lazy";i.decoding="async";i.alt=v.t;const q=["maxresdefault","sddefault","hqdefault"];let n=0;i.src="https://i.ytimg.com/vi/"+v.id+"/"+q[0]+".jpg";i.onload=()=>{if(i.naturalWidth<=120&&n<q.length-1){n++;i.src="https://i.ytimg.com/vi/"+v.id+"/"+q[n]+".jpg"}};i.onerror=()=>{if(n<q.length-1){n++;i.src="https://i.ytimg.com/vi/"+v.id+"/"+q[n]+".jpg"}};w.appendChild(i)}w.appendChild(el("span","hplay","▶"));w.appendChild(el("span","hdur",fl(v.s)));return w}
 function vcard(v,pin){const b=el("div","hbody");b.appendChild(el("div","hvt",v.t));b.appendChild(el("div","hvm",fv(v.v)+" "+t("views")+" · "+fd(v.d)));const c=link("hcard"+(pin?" pin":""),yurl(v.id),[thumb(v),b]);if(pin)c.appendChild(el("span","hpin",t("Pinned")));return c}
 
+
+/* ---- Download Today: official store links + Dubb's Aptoide link ---- */
+const DL=[["web","http://www.infinitemagicraid.com/en/index.html","Download from the","Official Website"]];
+const APTOIDE="http://aptoi.de/Dubb_IMR_download";
+const DLI={
+ web:'<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="#e9c765" stroke-width="1.6"/><path fill="none" stroke="#e9c765" stroke-width="1.4" d="M2.5 12h19M12 2.5c2.8 2.6 4 6 4 9.5s-1.2 6.9-4 9.5c-2.8-2.6-4-6-4-9.5s1.2-6.9 4-9.5z"/></svg>'};
+{const st=document.createElement("style");st.textContent=".hdl{margin:26px auto 6px;max-width:880px}.hdl h2{color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85);margin:0 0 12px;font-size:22px}.hdlg{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}.hdlb{display:inline-flex;align-items:center;gap:10px;min-width:180px;padding:8px 16px 8px 12px;border-radius:12px;background:#0b0b0f;border:1px solid rgba(255,255,255,.45);color:#fff;text-decoration:none;text-align:left;box-shadow:0 2px 10px rgba(0,0,0,.45)}.hdlb:hover{border-color:#fff;background:#1a1a22}.hdlb span{display:flex;flex-direction:column;line-height:1.1}.hdlb small{font-size:11px;opacity:.85}.hdlb b{font-size:17px;font-weight:700;letter-spacing:.01em}.hdlg{align-items:center}.hdlb{min-height:62px;box-sizing:border-box}.hdla{display:inline-flex;flex-direction:column;align-items:center;gap:4px;padding:8px 20px 7px;border-radius:12px;min-height:62px;box-sizing:border-box;justify-content:center;background:#fff;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.45);border:2px solid #fe6446}.hdla:hover{filter:brightness(1.04)}.hdla img{height:28px;width:auto;display:block}.hdla small{color:#5a3328;font-size:12px;font-weight:700}@media (max-width:520px){.hdlb{min-width:0;flex:1 1 calc(50% - 10px)}.hdlb b{font-size:15px}}";document.head.appendChild(st)}
+function dlSection(){const s=el("section","hdl");s.appendChild(el("h2",null,t("Download Today")));const g=el("div","hdlg");
+ DL.forEach(([k,u,a,b])=>{const x=link("hdlb",u,[]);const ic=el("span","hdli");ic.innerHTML=DLI[k];x.appendChild(ic.firstChild);const tx=el("span");tx.appendChild(el("small",null,t(a)));tx.appendChild(el("b",null,t(b)));x.appendChild(tx);x.setAttribute("aria-label",t(a)+" "+t(b));g.appendChild(x)});
+ s.appendChild(g);
+ const ap=link("hdla",APTOIDE,[]);g.appendChild(ap);const im=el("img");im.src="/img/aptoide.svg";im.alt="Aptoide";ap.appendChild(im);ap.appendChild(el("small",null,t("Get it on Aptoide")));ap.setAttribute("aria-label",t("Get it on Aptoide"));
+ return s}
+
 /* ---- markup ---- */
 const home=el("div");home.id="home";home.hidden=true;
 home.innerHTML='<img class="logo" src="/img/logo.png" alt="Infinite Magicraid"><p class="psub"></p><div id="htop"></div><div id="hnews"></div><div id="hpop"></div><div id="hpl"></div><div class="hfoot"></div>';
@@ -33,7 +46,7 @@ function section(title,sub){const s=el("section","hsec");s.appendChild(el("h2",n
 
 function build(){
  home.querySelector(".psub").textContent=t("Database: News, videos and guides");
- $("htop").replaceChildren(followRow(true));
+ $("htop").replaceChildren();
  /* News */
  const N=$("hnews");N.replaceChildren();const ns=section(t("Latest news"));
  const FEATURED="DAAhfW1pi0E";const patch=V.find(v=>/^patch note hype/i.test(v.t));const feat=BYID[FEATURED]||patch;const isPatch=feat===patch;
@@ -52,7 +65,7 @@ function build(){
  const L=$("hpl");L.replaceChildren();const ls=section(t("Playlists"));const lg=el("div","hgrid pls");
  PL.forEach(([n,id,c])=>{const b=el("div","hbody");b.appendChild(el("div","hvt",t(n)));b.appendChild(el("div","hvm",(c?c+" "+t("videos")+" · ":"")+t("Watch playlist")+" →"));lg.appendChild(link("hcard plc","https://www.youtube.com/playlist?list="+id,[b]))});ls.appendChild(lg);L.appendChild(ls);
  /* Footer */
- const F=home.querySelector(".hfoot");F.replaceChildren();F.appendChild(followRow(false));
+ const F=home.querySelector(".hfoot");F.replaceChildren();F.appendChild(followRow(false));F.appendChild(dlSection());
  F.appendChild(el("p","hnote",t("Video list and view counts are a snapshot from")+" "+fd(window.YT_SNAPSHOT)+"."))}
 
 /* ---- routing ---- */
