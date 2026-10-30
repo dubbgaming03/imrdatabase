@@ -49,7 +49,7 @@ function build(){
  $("htop").replaceChildren();
  /* News */
  const N=$("hnews");N.replaceChildren();const ns=section(t("Latest news"));
- const FEATURED="DAAhfW1pi0E";const patch=V.find(v=>/^patch note hype/i.test(v.t));const feat=BYID[FEATURED]||patch;const isPatch=feat===patch;
+ const FEATURED="9NelGamsMPE";const patch=V.find(v=>/^patch note hype/i.test(v.t));const feat=BYID[FEATURED]||patch;const isPatch=feat===patch;
  if(feat){const f=el("div","hfeat");f.appendChild(link("hfthumb",yurl(feat.id),[thumb(feat)]));
   const b=el("div","hfbody");b.appendChild(el("span","hbadge",t(isPatch?"Latest patch notes":"Featured")));b.appendChild(el("h3",null,feat.t));b.appendChild(el("div","hvm",fv(feat.v)+" "+t("views")+" · "+fd(feat.d)));
   const row=el("div","hrow");row.appendChild(link("hbtn",yurl(feat.id),[el("span",null,"▶ "+t("Watch"))]));if(isPatch)row.appendChild(link("hbtn alt","https://www.youtube.com/playlist?list="+PATCH_PL,[el("span",null,t("All Patch Note HYPE videos"))]));b.appendChild(row);f.appendChild(b);ns.appendChild(f)}
