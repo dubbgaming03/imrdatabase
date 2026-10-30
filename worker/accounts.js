@@ -60,7 +60,7 @@ const enabled = (env) => !!(env.DISCORD_CLIENT_ID && env.DISCORD_CLIENT_SECRET);
 const cookies = (req) => Object.fromEntries((req.headers.get("cookie") || "").split(/;\s*/).filter(Boolean).map((c) => { const i = c.indexOf("="); return [c.slice(0, i), decodeURIComponent(c.slice(i + 1))]; }));
 const setCookie = (name, val, maxAge) => `${name}=${encodeURIComponent(val)}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
 const redirect = (to, headers = []) => { const h = new Headers({ location: to, "cache-control": "no-store" }); headers.forEach((c) => h.append("set-cookie", c)); return new Response(null, { status: 302, headers: h }); };
-const safeNext = (n) => (typeof n === "string" && /^\/[^/\\]/.test(n) ? n : "/account/");
+const safeNext = (n) => (typeof n === "string" && /^\/[^/\\]/.test(n) ? n : "/bracket/#mine");
 
 async function currentUser(req, db) {
   const sid = cookies(req)[COOKIE];
@@ -120,16 +120,16 @@ export async function handleAccounts(req, env, url) {
     if (!enabled(env)) return fail("Sign-in isn't switched on yet.", 503);
     const [state, next] = (cookies(req).imr_oauth || "").split("|");
     const clear = setCookie("imr_oauth", "", 0);
-    if (url.searchParams.get("error")) return redirect("/account/?signin=cancelled", [clear]);
-    if (!state || state !== url.searchParams.get("state")) return redirect("/account/?signin=failed", [clear]);
+    if (url.searchParams.get("error")) return redirect("/bracket/?signin=cancelled#mine", [clear]);
+    if (!state || state !== url.searchParams.get("state")) return redirect("/bracket/?signin=failed#mine", [clear]);
     const tok = await fetch("https://discord.com/api/oauth2/token", {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({ client_id: env.DISCORD_CLIENT_ID, client_secret: env.DISCORD_CLIENT_SECRET, grant_type: "authorization_code", code: url.searchParams.get("code") || "", redirect_uri: origin + "/api/auth/discord/callback" }),
     }).then((r) => r.json()).catch(() => null);
-    if (!tok || !tok.access_token) return redirect("/account/?signin=failed", [clear]);
+    if (!tok || !tok.access_token) return redirect("/bracket/?signin=failed#mine", [clear]);
     const me = await fetch("https://discord.com/api/users/@me", { headers: { authorization: "Bearer " + tok.access_token } }).then((r) => r.json()).catch(() => null);
-    if (!me || !me.id) return redirect("/account/?signin=failed", [clear]);
+    if (!me || !me.id) return redirect("/bracket/?signin=failed#mine", [clear]);
     const now = new Date().toISOString();
     let user = await db.prepare("SELECT * FROM users WHERE discord_id = ?").bind(me.id).first();
     if (user) {
@@ -145,7 +145,7 @@ export async function handleAccounts(req, env, url) {
       db.prepare("DELETE FROM sessions WHERE expires_at < ?").bind(now),
       db.prepare("INSERT INTO sessions (id_hash, user_id, expires_at) VALUES (?, ?, ?)").bind(await sha256(sid), user.id, exp),
     ]);
-    return redirect(next || "/account/", [clear, setCookie(COOKIE, sid, DAYS * 86400)]);
+    return redirect(next || "/bracket/#mine", [clear, setCookie(COOKIE, sid, DAYS * 86400)]);
   }
 
   if (path === "auth/logout" && req.method === "POST") {

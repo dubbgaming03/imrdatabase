@@ -18,7 +18,7 @@ const RNAME = { 1: "Round 1", 2: "Round 2", 3: "Group final" };
 const S = {
   isAdmin: false, ready: false, offline: false, adminKey: LS.get("bcc-admin") || "", tokens: LS.get("bcc-tokens") || {},
   config: null, results: {}, entries: [],
-  tab: ["picks", "bracket", "standings", "admin"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "picks",
+  tab: ["picks", "bracket", "standings", "mine", "admin"].includes(location.hash.slice(1)) ? location.hash.slice(1) : "picks",
   div: { bracket: "Apex", standings: "Apex", admin: "Apex" },
   form: Object.assign({ pid: "", name: "", discord: "", div: "Apex" }, LS.get("bcc-form") || {}),
   draft: LS.get("bcc-draft") || null,
@@ -280,7 +280,7 @@ function renderStandings(main) {
     h("div", { class: "row", style: "justify-content:space-between;margin-bottom:8px" }, h("h2", { style: "margin:0" }, `${div} standings`),
       h("span", { class: "muted" }, perfectAlive ? `${perfectAlive} perfect bracket${perfectAlive === 1 ? "" : "s"} still alive` : "No perfect brackets left")),
     !reveal && h("div", { class: "note", style: "margin-bottom:10px" }, "Everyone's picks are hidden until picks lock."),
-    h("div", { class: "tablewrap" }, t)));
+    h("div", { style: "overflow-x:auto" }, t)));
   const sel = reveal && rows.find((r) => ekey(r.e) === S.selEntry);
   if (sel) {
     const e = sel.e, d = BC.toDraft(e);
@@ -422,6 +422,52 @@ function copyCSV() {
   });
 }
 
+/* ---------- My results (Sign in with Discord) ---------- */
+const ME = { loaded: false, loading: false, enabled: false, user: null, brackets: null, err: null,
+  msg: { cancelled: "Sign-in was cancelled.", failed: "Sign-in didn't work. Please try again." }[new URLSearchParams(location.search).get("signin")] || null };
+const DISC_SVG = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M20.3 4.4A19.6 19.6 0 0 0 15.4 3l-.6 1.3a18 18 0 0 0-5.6 0L8.6 3a19.5 19.5 0 0 0-4.9 1.5C.6 9.1-.3 13.6.1 18.1A19.7 19.7 0 0 0 6.1 21l1.3-2.1a12.7 12.7 0 0 1-2-1l.5-.4a14 14 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.6 19.6 0 0 0 6-2.9c.5-5.2-.8-9.7-3.6-13.7zM8 15.4c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4z"/></svg>';
+const jget = (p, o) => fetch(p, Object.assign({ credentials: "same-origin", cache: "no-store" }, o)).then((r) => r.json());
+async function loadMe() {
+  if (ME.loading) return; ME.loading = true;
+  try {
+    const d = await jget("/api/me"); ME.enabled = !!d.enabled; ME.user = d.user || null;
+    if (ME.user) { const b = await jget("/api/me/brackets"); ME.brackets = b.brackets || []; }
+  } catch { ME.err = "Couldn't load your account. Refresh to try again."; }
+  ME.loaded = true; ME.loading = false; if (S.tab === "mine") render();
+}
+const ord = (n) => n + (["th", "st", "nd", "rd"][(n % 100 - 20) % 10] || ["th", "st", "nd", "rd"][n % 100] || "th");
+function renderMine(main) {
+  if (!ME.loaded) { loadMe(); main.append(h("div", { class: "panel empty" }, "Loading your account…")); return; }
+  if (ME.err) { main.append(h("div", { class: "note warn" }, ME.err)); return; }
+  if (!ME.user) {
+    const btn = h("a", { class: "discbtn", href: "/api/auth/discord?next=" + encodeURIComponent("/bracket/#mine") }); btn.innerHTML = DISC_SVG; btn.append("Sign in with Discord");
+    main.append(h("section", { class: "panel", style: "text-align:center" },
+      ME.msg ? h("div", { class: "note warn" }, ME.msg) : null,
+      h("h2", { style: "margin:0 0 6px" }, "My results"),
+      h("p", { class: "muted" }, "Sign in with Discord to see every Bracket Challenge you've entered, with your place and points."),
+      ME.enabled ? btn : h("p", { class: "muted" }, "Sign-in is coming soon."),
+      ME.enabled ? h("p", { class: "muted", style: "font-size:12px;margin-top:10px" }, "We only see your Discord username and avatar. No email, no password.") : null));
+    return;
+  }
+  const u = ME.user;
+  main.append(h("section", { class: "panel mehead" },
+    u.avatar ? h("img", { src: u.avatar, alt: "", class: "meav" }) : null,
+    h("div", { style: "flex:1;min-width:0" }, h("div", { style: "font-weight:700;font-size:18px" }, u.display), h("div", { class: "muted", style: "font-size:13px" }, "@" + u.username)),
+    h("button", { class: "btn sm", type: "button", onclick: async () => { await jget("/api/auth/logout", { method: "POST" }); ME.user = null; ME.brackets = null; render(); } }, "Sign out")));
+  const L = ME.brackets || [];
+  if (!L.length) main.append(h("div", { class: "panel empty" }, `No brackets found for @${u.username} yet. Results are saved from now on, so your next entry will show up here. Make sure the Discord name on your bracket matches your Discord username.`));
+  else {
+    const t = h("table", { class: "metbl" }, h("thead", {}, h("tr", {}, ["Event", "Division", "Place", "R1", "R2", "Group final", "Final 8", "Pts"].map((x, i) => h("th", { class: (i >= 2 ? "r" : "") + (i === 1 || (i >= 3 && i <= 6) ? " rc" : "") }, x)))),
+      h("tbody", {}, L.map((b) => { const s = b.score || { r1: 0, r2: 0, r3: 0, finals: 0, total: 0 }; const done = b.results && b.results.champ != null;
+        return h("tr", {}, h("td", {}, h("div", { style: "font-weight:600" }, b.event), h("div", { class: "muted", style: "font-size:12px" }, h("span", { class: "mediv" }, b.div + " · "), "as " + b.name + (done ? "" : " · in progress"))),
+          h("td", { class: "rc" }, b.div), h("td", { class: "r num", style: "white-space:nowrap" }, b.place ? ord(b.place) + " of " + b.of : "—"),
+          [s.r1, s.r2, s.r3, s.finals].map((v) => h("td", { class: "r num rc" }, v)), h("td", { class: "r num total" }, s.total)); })));
+    main.append(h("section", { class: "panel" }, h("h2", { style: "margin:0 0 8px" }, "My results"), h("div", { style: "overflow-x:auto" }, t)));
+  }
+  main.append(h("p", { class: "muted", style: "font-size:12px;text-align:center" }, "Results are matched to the Discord name on your bracket. ",
+    h("a", { href: "#", onclick: async (e) => { e.preventDefault(); if (!confirm("Delete your imrdatabase.com account? Your bracket entries stay on the leaderboards.")) return; await jget("/api/me/delete", { method: "POST" }); ME.user = null; ME.brackets = null; render(); } }, "Delete my account")));
+}
+
 /* ---------- render ---------- */
 function render() {
   document.querySelectorAll("#tabs button").forEach((b) => b.setAttribute("aria-selected", b.dataset.tab === S.tab ? "true" : "false"));
@@ -434,7 +480,7 @@ function render() {
   main.replaceChildren();
   if (S.offline) main.append(h("div", { class: "note warn" }, "Couldn't reach the bracket server. Check your connection and refresh the page."));
   if (!S.ready && !S.offline) main.append(h("div", { class: "panel empty" }, "Loading the championship…"));
-  ({ picks: renderPicks, bracket: renderBracket, standings: renderStandings, admin: renderAdmin })[S.tab](main);
+  ({ picks: renderPicks, bracket: renderBracket, standings: renderStandings, mine: renderMine, admin: renderAdmin })[S.tab](main);
   if (S.tab !== "picks") $("#submitBar").hidden = true; else updateBar();
   for (const [id, v] of Object.entries(keep)) { const el = document.getElementById(id); if (el) { el.value = v; el.dataset.dirty = "1"; el.dispatchEvent(new Event("input")); } }
   if (aeId) { const el = document.getElementById(aeId); if (el && el !== document.activeElement) { el.focus({ preventScroll: true }); try { if (sel) el.setSelectionRange(sel[0], sel[1]); } catch {} } }
