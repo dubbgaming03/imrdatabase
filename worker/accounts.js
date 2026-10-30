@@ -101,7 +101,10 @@ async function myBrackets(db, u) {
 export async function handleAccounts(req, env, url) {
   const db = env.DB;
   const path = url.pathname.replace(/^\/api\//, "").replace(/\/$/, "");
-  const origin = url.origin;
+  // Always sign in on the main address so Discord's registered redirect matches
+  // (e.g. visitors on www.imrdatabase.com or an old link are sent to imrdatabase.com first).
+  const origin = "https://imrdatabase.com";
+  if (url.hostname.endsWith("imrdatabase.com") && url.origin !== origin && path.startsWith("auth/discord")) return redirect(origin + url.pathname + url.search);
 
   if (path === "auth/status") return json({ enabled: enabled(env) });
 
