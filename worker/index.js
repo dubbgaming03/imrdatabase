@@ -157,6 +157,15 @@ async function handleApi(req, env, url) {
       await db.batch(pids.map((p) => db.prepare("DELETE FROM bracket_entries WHERE pid = ?").bind(p)));
       return json({ ok: true, deleted: pids.length });
     }
+    // End of week: archive everything, then clear brackets, results and players so picks stay closed
+    // until the next 64 players are posted.
+    if (req.method === "POST" && what === "new-event") {
+      const archived = await snapshot(db);
+      const cleared = (await db.prepare("DELETE FROM bracket_entries").run()).meta.changes;
+      await putKV(db, "results", {});
+      await putKV(db, "config", { event: "", deadline: null, players: {} });
+      return json({ ok: true, archived, cleared });
+    }
     if (req.method === "POST" && what === "archive") return json({ ok: true, archived: await snapshot(db) });
     if (req.method === "GET" && what === "archive") return json({ events: await listArchive(db) });
     if (req.method === "POST" && what === "delete-tests") {

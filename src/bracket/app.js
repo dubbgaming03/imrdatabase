@@ -66,7 +66,7 @@ function roundsDone(res) {
 /* ---------- header ---------- */
 function renderHeader() {
   const ev = S.config && S.config.event;
-  $("#eventLine").textContent = S.offline ? "Couldn't load the event. Check your connection and refresh." : ev ? ev : S.ready ? "No event set up yet." : "Loading event…";
+  $("#eventLine").textContent = S.offline ? "Couldn't load the event. Check your connection and refresh." : ev ? ev : S.ready ? "Next week's bracket opens once the new players are posted." : "Loading event…";
   const d = deadline(), box = $("#lockBox");
   box.className = "lock " + (d ? (locked() ? "closed" : "open") : "");
   if (!d) { $("#lockBig").textContent = "Not scheduled"; $("#lockSmall").textContent = ""; return; }
@@ -310,6 +310,14 @@ function renderAdmin(main) {
   const dl = deadline() || BC.nextReset();
   const iso = dl.toISOString().slice(0, 16);
   main.append(h("div", { class: "row", style: "justify-content:flex-end" }, h("button", { class: "btn sm", onclick: () => { S.adminKey = ""; LS.set("bcc-admin", ""); refresh(); } }, "Sign out of admin")));
+  main.append(h("section", { class: "panel" }, h("h2", {}, "Finish this week"),
+    h("p", { class: "muted" }, "When the championship is over: saves this week's brackets and results to everyone's My results history, then clears all brackets, results and players. Picks stay closed until you post the next 64 players for each division."),
+    h("button", { class: "btn danger", disabled: S.busy, onclick: async () => {
+      if (!confirm("Save this week's results to history and reset the bracket for next week? This clears all brackets, results and players.")) return;
+      S.busy = true; render();
+      try { const r = await api("admin/new-event", {}); toast(`Saved ${r.archived} brackets to history. Bracket reset for next week.`); } catch (e) { toast(e.message); }
+      S.busy = false; await refresh();
+    } }, "Save results & reset for next week")));
   main.append(h("section", { class: "panel" }, h("h2", {}, "Event"),
     h("div", { class: "fields" },
       h("label", { class: "f", for: "a-event" }, "Event name", h("input", { id: "a-event", value: cfg.event || "", placeholder: "e.g. Championship · Round 1 – 26 Oct 2026" })),
