@@ -442,13 +442,17 @@ function renderPast(main) {
   const D = PAST.data;
   if (!D) sec.append(h("p", { class: "muted" }, "Loading…"));
   else {
-    const ids = [...new Set(D.entries.map((e) => e.pid))];
-    const ta = h("textarea", { rows: 8, readonly: true, style: "width:100%;font-family:var(--mono);font-size:13px;margin-top:10px" }); ta.value = ids.join("\n");
+    const seen = new Set(), people = D.entries.filter((e) => !seen.has(e.pid) && seen.add(e.pid));
+    const ids = people.map((e) => e.pid);
+    // Tab-separated so it pastes into separate spreadsheet columns.
+    const table = ["Player ID\tPlayer name\tDiscord"].concat(people.map((e) => [e.pid, e.name, e.discord].join("\t"))).join("\n");
+    const ta = h("textarea", { rows: 8, readonly: true, style: "width:100%;font-family:var(--mono);font-size:13px;margin-top:10px" }); ta.value = table;
     const copy = (text, msg) => navigator.clipboard.writeText(text).then(() => toast(msg), () => { ta.value = text; ta.select(); toast("Select the text and copy it."); });
     const csv = () => [["Division", "Place", "Player", "Player ID", "Discord", "Points", "Submitted"].join(",")].concat(D.entries.map((e) => [e.div, e.place, e.name, e.pid, e.discord, e.points, e.at].map((x) => `"${String(x).replace(/"/g, '""')}"`).join(","))).join("\n");
-    sec.append(h("p", { class: "muted", style: "margin-top:10px" }, `${ids.length} Player IDs`), ta,
+    sec.append(h("p", { class: "muted", style: "margin-top:10px" }, `${ids.length} players (Player ID, name, Discord)`), ta,
       h("div", { class: "row", style: "margin-top:10px" },
-        h("button", { class: "btn primary", onclick: () => copy(ids.join("\n"), `${ids.length} Player IDs copied`) }, "Copy Player IDs"),
+        h("button", { class: "btn primary", onclick: () => copy(table, `${ids.length} players copied. Paste into a spreadsheet.`) }, "Copy players"),
+        h("button", { class: "btn", onclick: () => copy(ids.join("\n"), `${ids.length} Player IDs copied`) }, "Copy Player IDs only"),
         h("button", { class: "btn", onclick: () => copy(csv(), "Standings copied. Paste into a spreadsheet.") }, "Copy full standings as CSV")));
   }
   main.append(sec);
