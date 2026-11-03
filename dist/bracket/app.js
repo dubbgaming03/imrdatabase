@@ -375,7 +375,7 @@ function renderAdmin(main) {
   const all = [...S.entries].sort((a, b) => String(b.at).localeCompare(String(a.at)));
   main.append(h("section", { class: "panel" },
     h("div", { class: "row", style: "justify-content:space-between;margin-bottom:8px" }, h("h2", { style: "margin:0" }, `All brackets (${all.length})`),
-      h("button", { class: "btn sm", onclick: () => copyCSV() }, "Copy standings as CSV")),
+      h("button", { class: "btn sm", onclick: () => copyCSV() }, "Copy standings")),
     all.length ? h("div", { class: "tablewrap" }, h("table", {}, h("thead", {}, h("tr", {}, ["Player", "ID", "Discord", "Division", "Submitted", ""].map((x) => h("th", {}, x)))),
       h("tbody", {}, all.map((e) => h("tr", {}, h("td", {}, e.name, e.test ? h("span", { class: "muted" }, " · test") : null), h("td", { class: "num" }, e.pid), h("td", {}, e.discord), h("td", {}, e.div), h("td", { class: "muted" }, new Date(e.at).toLocaleString()),
         h("td", { class: "r" }, S.confirmDel === e.pid
@@ -448,19 +448,19 @@ function renderPast(main) {
     const table = ["Division\tPlace\tPlayer ID\tPlayer name\tDiscord\tFinal score"].concat(people.map((e) => [e.div, e.place, e.pid, e.name, e.discord, e.points].join("\t"))).join("\n");
     const ta = h("textarea", { rows: 8, readonly: true, style: "width:100%;font-family:var(--mono);font-size:13px;margin-top:10px" }); ta.value = table;
     const copy = (text, msg) => navigator.clipboard.writeText(text).then(() => toast(msg), () => { ta.value = text; ta.select(); toast("Select the text and copy it."); });
-    const csv = () => [["Division", "Place", "Player", "Player ID", "Discord", "Points", "Submitted"].join(",")].concat(D.entries.map((e) => [e.div, e.place, e.name, e.pid, e.discord, e.points, e.at].map((x) => `"${String(x).replace(/"/g, '""')}"`).join(","))).join("\n");
+    const csv = () => [["Division", "Place", "Player", "Player ID", "Discord", "Points", "Submitted"].join("\t")].concat(D.entries.map((e) => [e.div, e.place, e.name, e.pid, e.discord, e.points, e.at].map((x) => String(x == null ? "" : x).replace(/[\t\r\n]+/g, " ")).join("\t"))).join("\n");
     sec.append(h("p", { class: "muted", style: "margin-top:10px" }, `${ids.length} players (division, place, Player ID, name, Discord, final score)`), ta,
       h("div", { class: "row", style: "margin-top:10px" },
         h("button", { class: "btn primary", onclick: () => copy(table, `${ids.length} players copied. Paste into a spreadsheet.`) }, "Copy players"),
         h("button", { class: "btn", onclick: () => copy(ids.join("\n"), `${ids.length} Player IDs copied`) }, "Copy Player IDs only"),
-        h("button", { class: "btn", onclick: () => copy(csv(), "Standings copied. Paste into a spreadsheet.") }, "Copy full standings as CSV")));
+        h("button", { class: "btn", onclick: () => copy(csv(), "Standings copied. Paste into a spreadsheet.") }, "Copy full standings")));
   }
   main.append(sec);
 }
 
 function copyCSV() {
-  const lines = [["Division", "Place", "Player", "Player ID", "Discord", "R1", "R2", "Group final", "Final 8", "Points", "Max", "Submitted"].join(",")];
-  BC.DIVS.forEach((d) => BC.standings(entriesIn(d), resultsFor(d)).forEach((r) => lines.push([d, r.place, r.e.name, r.e.pid, r.e.discord, r.s.r1, r.s.r2, r.s.r3, r.s.finals, r.s.total, r.s.max, r.e.at].map((x) => `"${String(x).replace(/"/g, '""')}"`).join(","))));
+  const lines = [["Division", "Place", "Player", "Player ID", "Discord", "R1", "R2", "Group final", "Final 8", "Points", "Max", "Submitted"].join("\t")];
+  BC.DIVS.forEach((d) => BC.standings(entriesIn(d), resultsFor(d)).forEach((r) => lines.push([d, r.place, r.e.name, r.e.pid, r.e.discord, r.s.r1, r.s.r2, r.s.r3, r.s.finals, r.s.total, r.s.max, r.e.at].map((x) => String(x == null ? "" : x).replace(/[\t\r\n]+/g, " ")).join("\t"))));
   const text = lines.join("\n");
   navigator.clipboard.writeText(text).then(() => toast("Standings copied. Paste into a spreadsheet."), () => {
     const ta = h("textarea", { rows: 6, style: "width:100%;font-family:var(--mono);font-size:12px" }); ta.value = text;
