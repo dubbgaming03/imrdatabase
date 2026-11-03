@@ -2,7 +2,7 @@
 // Storage: D1 database bound as DB. Admin actions need the BRACKET_ADMIN_KEY secret in the x-admin-key header.
 import "../src/bracket/logic.js";
 import SEED_CONFIG from "./seed-config.json";
-import { ACCOUNT_SCHEMA, snapshot, listArchive, handleAccounts } from "./accounts.js";
+import { ACCOUNT_SCHEMA, snapshot, listArchive, archiveEvent, handleAccounts } from "./accounts.js";
 const BC = globalThis.BC;
 
 const SCHEMA = [
@@ -168,6 +168,10 @@ async function handleApi(req, env, url) {
     }
     if (req.method === "POST" && what === "archive") return json({ ok: true, archived: await snapshot(db) });
     if (req.method === "GET" && what === "archive") return json({ events: await listArchive(db) });
+    if (req.method === "GET" && what === "archive-event") {
+      const ev = await archiveEvent(db, url.searchParams.get("key") || "");
+      return ev ? json(ev) : fail("That event isn't in the archive.", 404);
+    }
     if (req.method === "POST" && what === "delete-tests") {
       const r = await db.prepare("DELETE FROM bracket_entries WHERE test = 1").run();
       return json({ ok: true, deleted: r.meta.changes });

@@ -53,6 +53,20 @@ export async function listArchive(db) {
   return ev;
 }
 
+// Admin: every archived entry of one event, with its place and points.
+export async function archiveEvent(db, key) {
+  const ev = await db.prepare("SELECT * FROM bracket_events WHERE key = ?").bind(key).first();
+  if (!ev) return null;
+  const results = JSON.parse(ev.results);
+  const rows = (await db.prepare("SELECT * FROM bracket_history WHERE event_key = ?").bind(key).all()).results;
+  const out = [];
+  for (const d of BC().DIVS) {
+    const field = rows.filter((r) => r.div === d).map((r) => ({ ...JSON.parse(r.picks), pid: r.pid, name: r.name, discord: r.discord, at: r.created_at }));
+    BC().standings(field, results[d] || BC().blankResults()).forEach((x) => out.push({ div: d, place: x.place, name: x.e.name, pid: x.e.pid, discord: x.e.discord, points: x.s.total, at: x.e.at }));
+  }
+  return { event: ev.event, deadline: ev.deadline, entries: out };
+}
+
 /* ---------------- accounts ---------------- */
 const COOKIE = "imr_session";
 const DAYS = 60;

@@ -315,7 +315,7 @@ function renderAdmin(main) {
     h("button", { class: "btn danger", disabled: S.busy, onclick: async () => {
       if (!confirm("Save this week's results to history and reset the bracket for next week? This clears all brackets, results and players.")) return;
       S.busy = true; render();
-      try { const r = await api("admin/new-event", {}); toast(`Saved ${r.archived} brackets to history. Bracket reset for next week.`); } catch (e) { toast(e.message); }
+      try { const r = await api("admin/new-event", {}); toast(`Saved ${r.archived} brackets to history. Bracket reset for next week.`); PAST.list = null; PAST.sel = ""; } catch (e) { toast(e.message); }
       S.busy = false; await refresh();
     } }, "Save results & reset for next week")));
   main.append(h("section", { class: "panel" }, h("h2", {}, "Event"),
@@ -394,6 +394,7 @@ function renderAdmin(main) {
       h("button", { class: "btn", disabled: !list.length, onclick: () => { S.adminRes = { div: adiv, res: BC.randomResults(+$("#a-upto").value) }; S.adminDirty = true; render(); toast("Random results filled. Save to apply."); } }, "Fill"),
       h("button", { class: "btn", onclick: () => { S.adminRes = { div: adiv, res: BC.blankResults() }; S.adminDirty = true; render(); } }, "Clear results"),
       h("button", { class: "btn danger", disabled: S.busy, onclick: () => deleteTestEntries() }, "Delete all test brackets"))));
+  renderPast(main);
 }
 async function writeConfig(patch) {
   const next = { event: "", deadline: null, players: {}, ...(S.config || {}), ...patch };
@@ -420,6 +421,39 @@ async function deleteTestEntries() {
   try { const r = await api("admin/delete-tests", {}); toast(`Deleted ${r.deleted} test brackets`); } catch (e) { toast(e.message); }
   S.busy = false; await refresh();
 }
+/* Past events (archive): pick an event, copy its Player IDs or full standings. */
+const PAST = { list: null, sel: "", data: null, err: null };
+async function loadPast() {
+  try { PAST.list = (await api("admin/archive")).events || []; if (!PAST.sel && PAST.list[0]) { PAST.sel = PAST.list[0].key; await loadPastEvent(); } }
+  catch (e) { PAST.err = e.message; PAST.list = []; }
+  render();
+}
+async function loadPastEvent() {
+  PAST.data = null;
+  try { PAST.data = await api("admin/archive-event?key=" + encodeURIComponent(PAST.sel)); } catch (e) { PAST.err = e.message; }
+  render();
+}
+function renderPast(main) {
+  if (!PAST.list) { loadPast(); main.append(h("section", { class: "panel" }, h("h2", {}, "Past events"), h("p", { class: "muted" }, "Loading…"))); return; }
+  const sec = h("section", { class: "panel" }, h("h2", {}, "Past events"));
+  if (!PAST.list.length) { sec.append(h("p", { class: "muted" }, PAST.err || "No archived events yet.")); main.append(sec); return; }
+  const sel = h("select", { onchange: async (e) => { PAST.sel = e.target.value; await loadPastEvent(); } }, PAST.list.map((ev) => h("option", { value: ev.key, selected: ev.key === PAST.sel ? true : null }, `${ev.event} (${ev.entries} brackets)`)));
+  sec.append(h("div", { class: "row" }, sel));
+  const D = PAST.data;
+  if (!D) sec.append(h("p", { class: "muted" }, "Loading…"));
+  else {
+    const ids = [...new Set(D.entries.map((e) => e.pid))];
+    const ta = h("textarea", { rows: 8, readonly: true, style: "width:100%;font-family:var(--mono);font-size:13px;margin-top:10px" }); ta.value = ids.join("\n");
+    const copy = (text, msg) => navigator.clipboard.writeText(text).then(() => toast(msg), () => { ta.value = text; ta.select(); toast("Select the text and copy it."); });
+    const csv = () => [["Division", "Place", "Player", "Player ID", "Discord", "Points", "Submitted"].join(",")].concat(D.entries.map((e) => [e.div, e.place, e.name, e.pid, e.discord, e.points, e.at].map((x) => `"${String(x).replace(/"/g, '""')}"`).join(","))).join("\n");
+    sec.append(h("p", { class: "muted", style: "margin-top:10px" }, `${ids.length} Player IDs`), ta,
+      h("div", { class: "row", style: "margin-top:10px" },
+        h("button", { class: "btn primary", onclick: () => copy(ids.join("\n"), `${ids.length} Player IDs copied`) }, "Copy Player IDs"),
+        h("button", { class: "btn", onclick: () => copy(csv(), "Standings copied. Paste into a spreadsheet.") }, "Copy full standings as CSV")));
+  }
+  main.append(sec);
+}
+
 function copyCSV() {
   const lines = [["Division", "Place", "Player", "Player ID", "Discord", "R1", "R2", "Group final", "Final 8", "Points", "Max", "Submitted"].join(",")];
   BC.DIVS.forEach((d) => BC.standings(entriesIn(d), resultsFor(d)).forEach((r) => lines.push([d, r.place, r.e.name, r.e.pid, r.e.discord, r.s.r1, r.s.r2, r.s.r3, r.s.finals, r.s.total, r.s.max, r.e.at].map((x) => `"${String(x).replace(/"/g, '""')}"`).join(","))));
