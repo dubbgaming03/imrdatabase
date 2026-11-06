@@ -1,10 +1,10 @@
 {
   "_note": "Edit this file to update the Codes page. 'checked' = date the codes were last verified (shown as Last updated). Active codes with an 'expires' date move to Expired automatically once that date passes.",
-  "checked": "2026-10-29",
+  "checked": "2026-11-06",
   "_featuredNote": "Featured Aptoide code. Update start/end each promo period (Eastern time, ISO with offset: -04:00 EDT, -05:00 EST). The card hides itself after 'end'.",
   "featured": {"code": "DUBBIMR", "reward": "+5% cashback on every purchase", "start": "2026-10-29T20:02:00-04:00", "end": "2026-11-14T18:59:00-05:00", "link": "http://aptoi.de/Dubb_IMR_download"},
   "active": [
-    {"code": "OCTGIFT2026", "rewards": "3 Advanced Skill Scrolls, 3 5★ Dragon Eggs, 20M Coins, 1,000 Diamonds", "expires": "2026-10-31", "new": true},
+    {"code": "IMRHALLOWEEN26", "rewards": "3 5★ Dragon Eggs, 10 Premium Hero EXP Potions, 10 Excellent Runes", "expires": "2026-11-09", "new": true},
     {"code": "IM999", "rewards": "30 Excellent Runes"},
     {"code": "IM777", "rewards": "10 Excellent Runes, Diamonds and Coins"},
     {"code": "WXQB888", "rewards": "10 Excellent Runes"},
@@ -16,6 +16,7 @@
     {"code": "TEST111111", "rewards": "100K Coins, 100 Diamonds"}
   ],
   "expired": [
+    {"code": "OCTGIFT2026", "rewards": "3 Advanced Skill Scrolls, 3 5★ Dragon Eggs, 20M Coins, 1,000 Diamonds", "ended": "2026-10-31"},
     {"code": "MOONCAKE2026", "rewards": "10 Excellent Runes", "ended": "2026-10-12"},
     {"code": "SEPGIFT2026", "rewards": "3 Advanced Skill Scrolls, 3 5★ Dragon Eggs, 20M Coins, 1,000 Diamonds", "ended": "2026-09-30"},
     {"code": "DUBBIMRHYPE", "rewards": "20M Coins", "ended": "2026-09-07"},

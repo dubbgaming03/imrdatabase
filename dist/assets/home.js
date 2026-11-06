@@ -53,7 +53,7 @@ function build(){
  if(feat){const f=el("div","hfeat");f.appendChild(link("hfthumb",yurl(feat.id),[thumb(feat)]));
   const b=el("div","hfbody");b.appendChild(el("span","hbadge",t(isPatch?"Latest patch notes":"Featured")));b.appendChild(el("h3",null,feat.t));b.appendChild(el("div","hvm",fv(feat.v)+" "+t("views")+" · "+fd(feat.d)));
   const row=el("div","hrow");row.appendChild(link("hbtn",yurl(feat.id),[el("span",null,"▶ "+t("Watch"))]));if(isPatch)row.appendChild(link("hbtn alt","https://www.youtube.com/playlist?list="+PATCH_PL,[el("span",null,t("All Patch Note HYPE videos"))]));b.appendChild(row);f.appendChild(b);ns.appendChild(f)}
- const NEWS=/patch note|leak|event|update|roadmap|message|discount|top up|vip|reward|login|packs|hotfix|anniversary|lte|festival|gift|mall|pass|servers|rework|bracket challenge/i;
+ const NEWS=/patch note|new legendary hero|leak|event|update|roadmap|message|discount|top up|vip|reward|login|packs|hotfix|anniversary|lte|festival|gift|mall|pass|servers|rework|bracket challenge/i;
  const feed=V.filter(v=>v!==feat&&(v===patch||!/^patch note hype/i.test(v.t))&&NEWS.test(v.t)).slice(0,8);
  const g=el("div","hgrid");feed.forEach(v=>g.appendChild(vcard(v)));ns.appendChild(g);N.appendChild(ns);
  /* Popular */
