@@ -158,6 +158,16 @@ function renderPicks(main) {
   if (locked()) main.append(h("div", { class: "note " + (S.isAdmin ? "warn" : "err") }, S.isAdmin ? "Picks are locked for players. As admin you can still submit test brackets." : "Picks are locked. Check the Leaderboard to follow the results."));
 
   const f = S.form;
+  // Discord sign-in, up front so players see it before they fill in their bracket.
+  if (!ME.loaded) loadMe();
+  else if (ME.user) {
+    if (!f.discord) { f.discord = ME.user.username; savePicksLocal(); }
+    main.prepend(h("div", { class: "note signbar" }, ME.user.avatar ? h("img", { src: ME.user.avatar, alt: "", class: "meav sm" }) : null,
+      h("span", {}, "Signed in as ", h("b", {}, ME.user.display), ` (@${ME.user.username}). Your results will be saved to `, h("a", { href: "#mine", onclick: (e) => { e.preventDefault(); S.tab = "mine"; try { history.replaceState(null, "", "#mine"); } catch {} window.scrollTo(0, 0); render(); } }, "My results"), ".")));
+  } else if (ME.enabled) {
+    const btn = h("a", { class: "discbtn", href: "/api/auth/discord?next=" + encodeURIComponent("/bracket/") }); btn.innerHTML = DISC_SVG; btn.append("Sign in with Discord");
+    main.prepend(h("section", { class: "panel signbar" }, h("div", { style: "flex:1;min-width:220px" }, h("b", {}, "Sign in with Discord"), h("div", { class: "muted", style: "font-size:13px" }, "Optional. Keeps a history of every bracket you enter, with your place and points, in My results.")), btn));
+  }
   const existing = myEntry();
   const inp = (id, key, label, attrs = {}) => h("label", { class: "f", for: id }, label, h("input", Object.assign({ id, value: f[key], disabled: lockedNow, oninput: (e) => { f[key] = e.target.value; savePicksLocal(); updateBar(); if (key === "pid") renderExisting(); } }, attrs)));
   const exBox = h("div", { id: "existingBox" });
@@ -479,7 +489,7 @@ async function loadMe() {
     const d = await jget("/api/me"); ME.enabled = !!d.enabled; ME.user = d.user || null;
     if (ME.user) { const b = await jget("/api/me/brackets"); ME.brackets = b.brackets || []; }
   } catch { ME.err = "Couldn't load your account. Refresh to try again."; }
-  ME.loaded = true; ME.loading = false; if (S.tab === "mine") render();
+  ME.loaded = true; ME.loading = false; if (S.tab === "mine" || S.tab === "picks") render();
 }
 const ord = (n) => n + (["th", "st", "nd", "rd"][(n % 100 - 20) % 10] || ["th", "st", "nd", "rd"][n % 100] || "th");
 function renderMine(main) {
