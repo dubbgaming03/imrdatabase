@@ -342,21 +342,40 @@ function renderAdmin(main) {
   // Players
   const adiv = S.div.admin;
   const list = players(adiv);
+  // Slot-by-slot editor: 8 groups x 4 matches x 2 players, kept in sync with the paste box below.
+  // One draft per division, so switching divisions keeps unsaved typing.
+  S.pEdits = S.pEdits || {};
+  if (!S.pEdits[adiv]) S.pEdits[adiv] = { arr: Array.from({ length: 64 }, (_, i) => list[i] || "") };
+  const PE = S.pEdits[adiv];
+  const slotInputs = [];
+  const grid = h("div", { class: "pgrid" }, Array.from({ length: 8 }, (_, g) => h("div", { class: "pgroup" }, h("h3", {}, `Group ${g + 1}`),
+    Array.from({ length: 4 }, (_, m) => h("div", { class: "pmatch" }, [0, 1].map((k) => {
+      const i = g * 8 + m * 2 + k;
+      const el = h("input", { value: PE.arr[i], placeholder: `${BC.slotLabel(i)} ${k ? "bottom" : "top"}`, "aria-label": `Slot ${BC.slotLabel(i)} ${k ? "bottom" : "top"}`, autocomplete: "off",
+        oninput: (e) => { PE.arr[i] = e.target.value; ta.value = PE.arr.join("\n"); updCnt(); },
+        onkeydown: (e) => { if (e.key === "Enter") { e.preventDefault(); const nx = slotInputs[i + 1]; if (nx) nx.focus(); } } });
+      slotInputs[i] = el; return el;
+    }))))));
   const ta = h("textarea", { id: "a-players", rows: 12, style: "font-family:var(--mono);font-size:13px;margin-top:10px", placeholder: "One player per line, in bracket order:\n1a top\n1a bottom\n1b top\n…\n8d bottom" });
   ta.value = list.join("\n");
   const cnt = h("span", { class: "num muted" });
-  const updCnt = () => { const n = BC.parsePlayers(ta.value).length; cnt.textContent = `${n}/64 players`; cnt.style.color = n === 64 ? "var(--hit)" : "var(--miss)"; };
-  ta.addEventListener("input", updCnt); updCnt();
+  const updCnt = () => { const n = PE.arr.filter((x) => x.trim()).length; cnt.textContent = `${n}/64 players`; cnt.style.color = n === 64 ? "var(--hit)" : "var(--miss)"; };
+  ta.value = PE.arr.join("\n").replace(/\n+$/, "");
+  ta.addEventListener("input", () => { const arr = BC.parsePlayers(ta.value); PE.arr = Array.from({ length: 64 }, (_, i) => arr[i] || ""); slotInputs.forEach((el, i) => { el.value = PE.arr[i]; }); updCnt(); });
+  updCnt();
   main.append(h("section", { class: "panel" }, h("h2", {}, "Players"),
-    h("p", { class: "muted", style: "margin:0 0 10px" }, "Paste the 64 names for a division in bracket order, top to bottom: 1a, 1a, 1b, 1b … 8d, 8d. Leading labels like \"1a\" are stripped. Picks are stored by slot, so fixing a name later keeps everyone's picks."),
-    h("div", { class: "row", style: "justify-content:space-between" }, divChips("admin"), cnt), ta,
+    h("p", { class: "muted", style: "margin:0 0 10px" }, "Type each player into their slot in bracket order (Enter jumps to the next box), or paste a list of 64 names below. Picks are stored by slot, so fixing a name later keeps everyone's picks."),
+    h("div", { class: "row", style: "justify-content:space-between" }, divChips("admin"), cnt), grid,
+    h("details", { style: "margin-top:10px" }, h("summary", {}, "Or paste a list of 64 names"), ta),
     h("div", { class: "row", style: "margin-top:10px" },
       h("button", { class: "btn primary", onclick: async () => {
-        const arr = BC.parsePlayers(ta.value);
-        if (arr.length !== 64) { toast(`Need exactly 64 names; you have ${arr.length}.`); return; }
+        const arr = PE.arr.map((x) => x.trim());
+        const miss = arr.findIndex((x) => !x);
+        if (miss >= 0) { toast(`Slot ${BC.slotLabel(miss)} ${miss % 2 ? "bottom" : "top"} is empty. All 64 are needed.`); slotInputs[miss].focus(); return; }
         await writeConfig({ players: { ...(cfg.players || {}), [adiv]: arr } }); toast(`${adiv} players saved`);
       } }, `Save ${adiv} players`),
-      h("button", { class: "btn", onclick: () => { ta.value = Array.from({ length: 64 }, (_, i) => `${adiv} ${BC.slotLabel(i)}${i % 2 ? "-B" : "-A"}`).join("\n"); updCnt(); } }, "Fill sample names"))));
+      h("button", { class: "btn", onclick: () => { PE.arr = Array.from({ length: 64 }, (_, i) => `${adiv} ${BC.slotLabel(i)}${i % 2 ? "-B" : "-A"}`); slotInputs.forEach((el, i) => { el.value = PE.arr[i]; }); ta.value = PE.arr.join("\n"); updCnt(); } }, "Fill sample names"),
+      h("button", { class: "btn", onclick: () => { if (!confirm("Clear all 64 name boxes?")) return; PE.arr = Array(64).fill(""); slotInputs.forEach((el) => { el.value = ""; }); ta.value = ""; updCnt(); } }, "Clear boxes"))));
 
   // Results
   if (!S.adminRes || S.adminRes.div !== adiv) { S.adminRes = { div: adiv, res: resultsFor(adiv) }; S.adminDirty = false; }
