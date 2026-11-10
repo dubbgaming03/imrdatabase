@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wuthering Coast Guide – Infinite Magicraid | IMR</title>
+<meta name="description" content="A boss event where your damage counts toward personal and guild totals, with rankings across your Warzone.">
+<link rel="canonical" href="https://imrdatabase.com/game-modes/abyssal-prison/wuthering-coast/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Infinite Magicraid Database">
+<meta property="og:title" content="Infinite Magicraid Wuthering Coast">
+<meta property="og:description" content="A boss event where your damage counts toward personal and guild totals, with rankings across your Warzone.">
+<meta property="og:url" content="https://imrdatabase.com/game-modes/abyssal-prison/wuthering-coast/">
+<meta property="og:image" content="https://imrdatabase.com/img/modes/wuthering-coast.webp">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+/* Game Modes overview: PvE / PvP / GvG sections. PvE modes are cards with map art; each will link to its own guide later. */
+#pgbg{display:block;background-image:linear-gradient(rgba(10,10,20,.6),rgba(10,10,20,.85)),url(/img/fbg-hidden-wave.jpg)}
+main{max-width:1080px;margin:0 auto;position:relative}
+.ctop{position:relative}
+.ctop .avt{position:absolute;top:6px;right:0;width:72px;height:72px}
+@media (max-width:699px){.ctop .avt{width:52px;height:52px}}
+.ghead{text-align:center;margin:0 auto 18px;max-width:760px}
+.ghead h1{font-size:clamp(22px,4.4vw,32px);font-weight:800;margin:4px 0 6px;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.ghead p{margin:4px 0;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85);font-size:14px}
+.gjump{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:10px 0 22px}
+.gjump a{text-decoration:none;color:#fff;font-weight:800;letter-spacing:.06em;padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.35)}
+.gjump a b{color:#e9c765;font-weight:600;margin-left:6px;font-size:13px}
+.gsec{margin:0 0 30px;scroll-margin-top:12px}
+.gsec>h2{display:flex;align-items:baseline;gap:10px;color:#fff;font-size:24px;margin:0 0 4px;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.gsec>h2 small{font-size:13px;color:#e9c765;font-weight:600}
+.gsec>p{color:#ddd;margin:0 0 14px;font-size:14px;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.gmgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:12px}
+.gmcard{display:flex;flex-direction:row;align-items:flex-start;gap:14px;padding:14px;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--line);border-radius:14px;overflow:hidden;scroll-margin-top:12px}
+.gmimg{flex:0 0 112px;width:112px;height:112px;border-radius:12px;overflow:hidden;box-shadow:0 0 0 2px rgba(233,199,101,.55),0 4px 12px rgba(0,0,0,.25);background:#1d3346}
+.gmimg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+.gmcard:hover .gmimg img{transform:scale(1.06)}
+.gmbody{display:flex;flex-direction:column;gap:7px;flex:1;min-width:0;align-self:stretch}
+.gmbody h3{margin:0;font-size:18px}
+.gmbody p{margin:0;font-size:14px;line-height:1.45;color:var(--mute)}
+.gmrew{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.gmlbl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}
+.gmchip{font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;background:#f7ebc4;color:#7a5200;border:1px solid #e3c873}
+.gmsoon{margin-top:auto;align-self:flex-start;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);border:1px dashed var(--line);border-radius:6px;padding:3px 8px}
+a.gmcard{color:inherit;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+a.gmcard:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.gmgo{margin-top:auto;align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.04em;color:#7a5200;background:#f7ebc4;border:1px solid #e3c873;border-radius:8px;padding:4px 10px}
+.gmlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.gmmini{display:flex;justify-content:space-between;align-items:center;gap:10px;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700}
+.gmmini .gmsoon{margin:0}
+@media (max-width:520px){.gmgrid{grid-template-columns:1fr}.gmcard{padding:12px;gap:12px}.gmimg{flex-basis:84px;width:84px;height:84px}}
+
+.crumbs{text-align:center;font-size:13px;margin:0 0 6px;color:#ddd;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.crumbs a{color:#e9c765;text-decoration:none;font-weight:700}
+.crumbs span{opacity:.6;margin:0 6px}
+a.gmcard{color:inherit;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+a.gmcard:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35)}
+.gmgo{margin-top:auto;align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.04em;color:#7a5200;background:#f7ebc4;border:1px solid #e3c873;border-radius:8px;padding:4px 10px}
+.mhero{display:flex;gap:18px;align-items:center;margin:0 auto 18px;max-width:860px;padding:16px;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--line);border-radius:16px}
+.mhero .gmimg{flex-basis:140px;width:140px;height:140px}
+.mhero h1{margin:0 0 6px;font-size:clamp(22px,4vw,30px)}
+.mhero p{margin:0;color:var(--mute);font-size:15px;line-height:1.5}
+.mbox{max-width:860px;margin:0 auto 16px;padding:16px 18px;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--line);border-radius:16px}
+.mbox h2{margin:0 0 10px;font-size:18px}
+.mbox ul{margin:0;padding-left:20px;line-height:1.55;font-size:14.5px}
+.mbox li{margin:0 0 6px}
+.mvids{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.mvid{display:block;color:inherit;text-decoration:none}
+.mvid img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#222}
+.mvid b{display:block;font-size:13.5px;line-height:1.35;margin-top:6px}
+.mvid span{font-size:12px;color:var(--mute)}
+.msoon{max-width:860px;margin:0 auto 24px;text-align:center;color:#ddd;font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+@media (max-width:520px){.mhero{flex-direction:column;text-align:center}.mhero .gmimg{width:120px;height:120px;flex-basis:auto}}
+</style>
+</head>
+<body class="lbg">
+<div id="pgbg"></div>
+<main>
+<div class="ctop">
+<img class="avt" src="/img/avatar.png" alt="Dubb">
+<img class="logo" src="/img/logo.png" alt="Infinite Magicraid">
+</div>
+<p class="sub" style="text-align:center;text-transform:uppercase;letter-spacing:.16em;font-weight:700;color:#e9c765">Game Modes</p>
+<nav class="ptabs" aria-label="Site sections"><a href="/">Home</a><a href="/heroes/">Heroes</a><a href="/spirit-beasts/">Spirit Beasts</a><a href="/arcane-gems/">Arcane Gems</a><a class="on" href="/game-modes/" aria-current="page">Game Modes</a><a href="/codes/">Codes</a><a href="/bracket/">Bracket Challenge</a></nav>
+<p class="crumbs"><a href="/game-modes/">Game Modes</a><span>›</span><a href="/game-modes/abyssal-prison/">Abyssal Prison</a><span>›</span>Wuthering Coast</p>
+<section class="mhero"><div class="gmimg"><img src="/img/modes/wuthering-coast.webp" alt="Wuthering Coast"></div><div><h1>Wuthering Coast</h1><p>A boss event where your damage counts toward personal and guild totals, with rankings across your Warzone.</p><div class="gmrew"><span class="gmlbl">Rewards</span><span class="gmchip">Dragon Scale Shards</span><span class="gmchip">Damage rewards</span><span class="gmchip">Ranking rewards</span></div></div></section>
+<section class="mbox"><h2>How it works</h2><ul><li>Every challenge adds to your <b>Individual DMG</b> and to your guild's <b>Guild Total DMG</b>; both have reward goals.</li><li>Rankings: <b>Guild Ranking</b>, <b>Individual Ranking</b> (across your Warzone) and <b>Individual Contribution</b>.</li><li>There are also <b>Single Lineup's Min DMG</b> ranking and goal rewards.</li><li>It is the source of <b>Superior</b> and <b>Supreme Dragon Scale Shards</b>: 100 shards craft 1 Dragon Scale.</li></ul></section>
+<section class="mbox" hidden><h2>Videos from Dubb</h2><div class="mvids" id="mvids"></div></section>
+<p class="msoon">Full guide with teams, builds and tips coming soon.</p>
+<footer class="sitefoot">Infinite Magicraid Database is a fan-made site by <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.<br><a href="/heroes/">Hero Tier List</a> · <a href="/bracket/">Bracket Challenge</a> · <a href="/privacy/">Privacy Policy</a></footer>
+</main>
+<script src="/assets/videos.js"></script>
+<script>
+(function(){var K=["wuthering coast"],box=document.getElementById("mvids");if(!box||!window.YT_ROWS)return;
+var rows=YT_ROWS.split("\n").map(function(l){var a=l.split("|");return{id:a[0],d:a[1],v:+a[2],t:a.slice(4).join("|")}})
+.filter(function(r){var t=r.t.toLowerCase();return K.some(function(k){return t.indexOf(k)>=0})}).sort(function(a,b){return a.d<b.d?1:-1}).slice(0,8);
+if(!rows.length)return;box.closest(".mbox").hidden=false;
+rows.forEach(function(r){var a=document.createElement("a");a.className="mvid";a.href="https://www.youtube.com/watch?v="+r.id;a.target="_blank";a.rel="noopener";
+var i=document.createElement("img");i.loading="lazy";i.alt=r.t;i.src="https://i.ytimg.com/vi/"+r.id+"/mqdefault.jpg";var b=document.createElement("b");b.textContent=r.t;
+var s=document.createElement("span");s.textContent=r.d+" · "+r.v.toLocaleString()+" views";a.append(i,b,s);box.appendChild(a)})})();
+</script>
+</body>
+</html>
