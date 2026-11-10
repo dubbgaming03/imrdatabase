@@ -35,6 +35,8 @@ a.gmcard:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.35)}
 .mvid img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;display:block;background:#222}
 .mvid b{display:block;font-size:13.5px;line-height:1.35;margin-top:6px}
 .mvid span{font-size:12px;color:var(--mute)}
+.uc{max-width:860px;margin:0 auto 16px;padding:10px 14px;border-radius:12px;background:#fff4d6;color:#6b4a00;border:1px solid #e3c873;font-size:14px;text-align:center}
+.uc b{margin-right:6px}
 .msoon{max-width:860px;margin:0 auto 24px;text-align:center;color:#ddd;font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.8)}
 @media (max-width:520px){.mhero{flex-direction:column;text-align:center}.mhero .gmimg{width:120px;height:120px;flex-basis:auto}}
 """
@@ -168,6 +170,7 @@ def build():
             m = MODES[ck]
             cards.append(f'<a class="gmcard" href="/game-modes/{hk}/{ck}/"><div class="gmimg"><img src="/img/modes/{ck}.webp" alt="{e(m["name"])}" loading="lazy"></div><div class="gmbody"><h3>{e(m["name"])}</h3><p>{e(m["short"])}</p>{chips(m["rewards"])}<span class="gmsoon">Guide coming soon</span></div></a>')
         body = f"""<p class="crumbs"><a href="/game-modes/">Game Modes</a><span>›</span>PvE<span>›</span>{e(h["name"])}</p>
+<div class="uc" role="note"><b>🚧 Under construction.</b>This page is a work in progress and will be filled in over time.</div>
 <header class="ghead"><h1>{e(h["name"])}</h1><p>{e(h["intro"])}</p></header>
 <section class="gsec"><div class="gmgrid">
 {chr(10).join(cards)}
@@ -177,6 +180,7 @@ def build():
         hub = HUBS[m["hub"]]
         facts = "".join(f"<li>{f}</li>" for f in m["facts"])
         body = f"""<p class="crumbs"><a href="/game-modes/">Game Modes</a><span>›</span><a href="/game-modes/{m["hub"]}/">{e(hub["name"])}</a><span>›</span>{e(m["name"])}</p>
+<div class="uc" role="note"><b>🚧 Under construction.</b>This page is a work in progress and will be filled in over time.</div>
 <section class="mhero"><div class="gmimg"><img src="/img/modes/{mk}.webp" alt="{e(m["name"])}"></div><div><h1>{e(m["name"])}</h1><p>{e(m["short"])}</p>{chips(m["rewards"])}</div></section>
 <section class="mbox"><h2>How it works</h2><ul>{facts}</ul></section>
 <section class="mbox" hidden><h2>Videos from Dubb</h2><div class="mvids" id="mvids"></div></section>
