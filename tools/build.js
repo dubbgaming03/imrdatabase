@@ -62,6 +62,7 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
   fs.writeFileSync(f,fs.readFileSync(f,"utf8").split("<!--MONTH-->").join(mo).split("<!--UPDATED-->").join(long(C.checked)).replace("<!--FEATURED-->",feat).replace("<!--ACTIVE-->",act.map(card).join("")).replace("<!--EXPIRED-->",late.concat(C.expired).map(row).join("")));
   fs.rmSync(path.join(DIST,"codes","codes.json"),{force:true});
   urls.push(SITE+"/codes/")}
+ urls.push(SITE+"/game-modes/");
  const today=BD;
  fs.writeFileSync(path.join(DIST,"sitemap.xml"),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+urls.map(u=>`<url><loc>${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")+"\n</urlset>\n");
  fs.writeFileSync(path.join(DIST,"robots.txt"),`User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
