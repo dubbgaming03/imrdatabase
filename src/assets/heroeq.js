@@ -1451,7 +1451,7 @@ window.HERO_EQ={
    "Hit Grandmaster"
   ],
   "echo": [
-   "Soul Burning",
+   "Power of Protection",
    "Bloody Fight",
    "King of Tundra"
   ],
