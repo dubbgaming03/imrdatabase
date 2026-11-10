@@ -166,7 +166,7 @@ def build():
         cards = []
         for ck in h["children"]:
             m = MODES[ck]
-            cards.append(f'<a class="gmcard" href="/game-modes/{hk}/{ck}/"><div class="gmimg"><img src="/img/modes/{ck}.webp" alt="{e(m["name"])}" loading="lazy"></div><div class="gmbody"><h3>{e(m["name"])}</h3><p>{e(m["short"])}</p>{chips(m["rewards"])}<span class="gmgo">Open →</span></div></a>')
+            cards.append(f'<a class="gmcard" href="/game-modes/{hk}/{ck}/"><div class="gmimg"><img src="/img/modes/{ck}.webp" alt="{e(m["name"])}" loading="lazy"></div><div class="gmbody"><h3>{e(m["name"])}</h3><p>{e(m["short"])}</p>{chips(m["rewards"])}<span class="gmsoon">Guide coming soon</span></div></a>')
         body = f"""<p class="crumbs"><a href="/game-modes/">Game Modes</a><span>›</span>PvE<span>›</span>{e(h["name"])}</p>
 <header class="ghead"><h1>{e(h["name"])}</h1><p>{e(h["intro"])}</p></header>
 <section class="gsec"><div class="gmgrid">
