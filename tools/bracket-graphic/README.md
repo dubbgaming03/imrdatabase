@@ -13,7 +13,7 @@ Makes the daily standings infographic for the Championship Bracket Challenge. No
    - It prints the grouping, each panel's top 5, and anyone tied with 5th but left out.
 
 ## What the graphic shows
-- Banner: `ROUND <N> - <D> <MONTH> <YYYY>`. N counts completed stages: R1, R2, Group final, Final 4, Final 2, Champion.
+- Banner: `ROUND <N> - <D> <MONTH> <YYYY>`. N counts completed stages: R1, R2, Group final, Final 4, Final 2, Champion. Once the champion is decided (stage 6) the banner reads `FINAL - <D> <MONTH> <YYYY>` instead of ROUND 6.
 - Right column: 3 panels by default. Each panel shows the top 5 across its divisions, ranked by points, then finals points, then earliest submission.
 
 ## Grouping rules

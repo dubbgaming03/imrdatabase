@@ -33,6 +33,7 @@ PANELS = [(488, 726), (792, 1028), (1200, 1440)]
 NAME_X, SCORE_X = 588, 928
 BANNER = dict(box=(245, 352, 795, 392), cx=519, base=385, size=37)
 ROWS = 5
+FINAL_ROUND = 6                  # champion decided: banner reads FINAL instead of ROUND 6
 COLORS = {  # header fill colour per division; unknown divisions take PALETTE in turn
     "Apex": (250, 236, 10), "Ultimate": (214, 18, 30), "Legendary": (232, 30, 132),
     "Master": (240, 168, 12), "Elite": (118, 12, 205), "Trial": (0, 132, 250),
@@ -292,7 +293,8 @@ def build(data, out, date, rnd, k, groups=None):
     im = Image.alpha_composite(im, layer)
 
     # banner
-    txt = f"ROUND {rnd} - {date.day} {date.strftime('%B').upper()} {date.year}"
+    stage = "FINAL" if rnd >= FINAL_ROUND else f"ROUND {rnd}"
+    txt = f"{stage} - {date.day} {date.strftime('%B').upper()} {date.year}"
     size = BANNER["size"]
     F = ImageFont.truetype(LAT, size)
     while F.getlength(txt) > (BANNER["box"][2] - BANNER["box"][0]) and size > 20:
