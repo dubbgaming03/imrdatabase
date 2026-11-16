@@ -1988,6 +1988,52 @@ window.HERO_EQ={
   ]
  },
  "Valkyrie": {
+  "lv": 200,
+  "goals": [
+   [
+    "HP",
+    "500K",
+    "700K",
+    "1,000K+"
+   ],
+   [
+    "Mastery",
+    "80%",
+    "140%",
+    "200%"
+   ],
+   [
+    "SPD",
+    "2,200",
+    "2,600",
+    "2,800"
+   ]
+  ],
+  "gear": {
+   "Early": [
+    "Endurance",
+    "Feather"
+   ],
+   "End": [
+    "Bone Erosion",
+    "Wind Erosion",
+    "Rapid Rejuvenation"
+   ]
+  },
+  "aura": [
+   "Mastery Expert",
+   "Dwarven Blessing",
+   "Hit Grandmaster",
+   "Scorching Soul"
+  ],
+  "echo": [
+   "Soul Burning",
+   "Bloody Fight",
+   "Sacred Wing Judgment"
+  ],
+  "gem": [
+   "Gale of Nemesis"
+  ],
   "emblems": [
    1121,
    2121,
