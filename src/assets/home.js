@@ -35,7 +35,7 @@ function dlSection(){const s=el("section","hdl");s.appendChild(el("h2",null,t("D
 
 /* ---- markup ---- */
 const home=el("div");home.id="home";home.hidden=true;
-home.innerHTML='<img class="logo" src="/img/logo.png" alt="Infinite Magicraid"><p class="psub"></p><div id="htop"></div><div id="hnews"></div><div id="hpop"></div><div id="hpl"></div><div class="hfoot"></div>';
+home.innerHTML='<img class="logo" src="/img/logo.png" alt="Infinite Magicraid"><p class="psub"></p><div id="htop"></div><div id="hnews"></div><div id="hlatest"></div><div id="hpop"></div><div id="hpl"></div><div class="hfoot"></div>';
 document.getElementById("list").before(home);
 IM_TABS(home.querySelector(".logo"),"home");
 
@@ -56,6 +56,8 @@ function build(){
  const NEWS=/patch note|new legendary hero|leak|event|update|roadmap|message|discount|top up|vip|reward|login|packs|hotfix|anniversary|lte|festival|gift|mall|pass|servers|rework|bracket challenge/i;
  const feed=V.filter(v=>v!==feat&&(v===patch||!/^patch note hype/i.test(v.t))&&NEWS.test(v.t)).slice(0,8);
  const g=el("div","hgrid");feed.forEach(v=>g.appendChild(vcard(v)));ns.appendChild(g);N.appendChild(ns);
+ /* Latest videos */
+ const LV=$("hlatest");LV.replaceChildren();const lv=section(t("Latest videos"));const lg0=el("div","hgrid");V.filter(v=>v!==feat&&v.s>60).slice(0,8).forEach(v=>lg0.appendChild(vcard(v)));lv.appendChild(lg0);LV.appendChild(lv);
  /* Popular */
  const P=$("hpop");P.replaceChildren();const ps=section(t("Popular"),t("Most-viewed videos from the last 90 days, plus the guides to start with."));
  const cut=new Date(window.YT_SNAPSHOT+"T00:00:00Z");cut.setUTCDate(cut.getUTCDate()-90);const cs=cut.toISOString().slice(0,10);

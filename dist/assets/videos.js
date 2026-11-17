@@ -8,11 +8,8 @@ wWnw1QU0uEs|2026-11-16|87|345|Mysterious Box
 IydHmmhOnoI|2026-11-15|195|508|Homestead Game Modes
 sW3_ToPMRe0|2026-11-15|175|347|Homestead War Buildings!
 wdkgzX4CuLk|2026-11-15|130|514|Homestead Economy Buildings
-80i_nzTLb9A|2026-11-14|110|60|Championship Bracket Challenge FINAL: 14 November 2026
-FpN0a--csF8|2026-11-13|149|60|Championship Bracket Challenge Round 5: 13 November 2026
 M472p8U3lh0|2026-11-12|283|218|New Game Mode Passes! Are they worth it??
 5OqQ0EO4fd4|2026-11-12|299|366|Patch Note HYPE!!!! 12 November 2026
-b8fhYLM9YS0|2026-11-12|108|60|Championship Bracket Challenge Round 4: 12 November 2026
 Xz_Mk_skjyM|2026-11-10|417|1444|New LEGENDARY Hero Kijuro!! Kit Review, Initial Build, & Final Verdict
 nRvVmxFW4Hs|2026-11-08|100|279|How to Install Aptoide on Android!
 18M__3fFiDc|2026-11-08|251|95|Absolute BEST Mobile Game of 2026!!
