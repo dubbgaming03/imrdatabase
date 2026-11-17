@@ -1,20 +1,35 @@
 /* Dubb_Gaming YouTube snapshot — id|published|views|seconds|title. Refreshed on request. */
-window.YT_SNAPSHOT="2026-11-06";
-window.YT_ROWS=`S3BTRbB8N_M|2026-11-05|221|137|New LEGENDARY Hero KIJURO!!! Summoning
-2HsktyNA5DA|2026-11-04|274|323|Patch Note HYPE!!! 5 November 2026
-cUFlpNxWPP0|2026-11-02|164|437|Broken Lands Guide!
-a_Tlev2emNU|2026-11-02|132|195|Flower Breeding
-Dhms6vBVsYg|2026-11-02|183|256|Amazing Login Calendar!!
-9NelGamsMPE|2026-10-29|188|54|APTOIDE Promo Code!!
-1ykijLYgQYQ|2026-10-29|234|485|Patch Note HYPE!!! 29 October 2026
-NyLyXVHJYDk|2026-10-28|441|1392|New LTE BOOMAGI! Kit Review, Initial Build, & Final Verdict!
-cDFXcWE5M8g|2026-10-27|283|445|Halloween Dungeon! Legendary Dragon Eye!
-4GThFgbvHGo|2026-10-26|152|445|Ghosts' Night Out! Halloween Event
-0b_iK-jjJ6U|2026-10-25|186|274|Championship Bracket Challenge!
-DAAhfW1pi0E|2026-10-25|447|272|imrdatabase.com LAUNCH!!
-kZ7KWAR5-ds|2026-10-23|590|518|NEW Limited Time Event Hero BOOMAGI!!! Summoning
-xo9M_Q6pBwc|2026-10-21|377|376|Patch Note HYPE!!! 22 October 2026
-bHxmdxdQRtY|2026-10-18|514|499|Wuthering Coast META Min/Max HP Burning
+window.YT_SNAPSHOT="2026-11-17";
+window.YT_ROWS=`IqniJRKuLhw|2026-11-16|54|177|Spirit Beast Cultivation
+mv5jNuJ5sbk|2026-11-16|41|248|Colorful Gasaphon
+wWnw1QU0uEs|2026-11-16|87|345|Mysterious Box
+3FrJWO19wvw|2026-11-16|151|474|Seven Sages of Liuli META POISON Min/Max!!
+1X8akvCcjGs|2026-11-15|309|414|Black Friday Celebration!
+IydHmmhOnoI|2026-11-15|195|508|Homestead Game Modes
+sW3_ToPMRe0|2026-11-15|175|347|Homestead War Buildings!
+wdkgzX4CuLk|2026-11-15|130|514|Homestead Economy Buildings
+M472p8U3lh0|2026-11-12|283|218|New Game Mode Passes! Are they worth it??
+5OqQ0EO4fd4|2026-11-12|299|366|Patch Note HYPE!!!! 12 November 2026
+Xz_Mk_skjyM|2026-11-10|417|1444|New LEGENDARY Hero Kijuro!! Kit Review, Initial Build, & Final Verdict
+nRvVmxFW4Hs|2026-11-08|100|279|How to Install Aptoide on Android!
+18M__3fFiDc|2026-11-08|251|95|Absolute BEST Mobile Game of 2026!!
+S7wMAEKJ5iY|2026-11-08|215|176|Oceanic Treasure
+0jEllghgOOQ|2026-11-08|101|272|Championship Bracket Challenge!!!
+S3BTRbB8N_M|2026-11-05|341|137|New LEGENDARY Hero KIJURO!!! Summoning
+2HsktyNA5DA|2026-11-04|327|323|Patch Note HYPE!!! 5 November 2026
+cUFlpNxWPP0|2026-11-02|316|437|Broken Lands Guide!
+a_Tlev2emNU|2026-11-02|163|195|Flower Breeding
+Dhms6vBVsYg|2026-11-02|209|256|Amazing Login Calendar!!
+9NelGamsMPE|2026-10-29|234|54|APTOIDE Promo Code!!
+1ykijLYgQYQ|2026-10-29|238|485|Patch Note HYPE!!! 29 October 2026
+NyLyXVHJYDk|2026-10-28|458|1392|New LTE BOOMAGI! Kit Review, Initial Build, & Final Verdict!
+cDFXcWE5M8g|2026-10-27|287|445|Halloween Dungeon! Legendary Dragon Eye!
+4GThFgbvHGo|2026-10-26|156|445|Ghosts' Night Out! Halloween Event
+0b_iK-jjJ6U|2026-10-25|193|274|Championship Bracket Challenge!
+DAAhfW1pi0E|2026-10-25|454|272|imrdatabase.com LAUNCH!!
+kZ7KWAR5-ds|2026-10-23|598|518|NEW Limited Time Event Hero BOOMAGI!!! Summoning
+xo9M_Q6pBwc|2026-10-21|381|376|Patch Note HYPE!!! 22 October 2026
+bHxmdxdQRtY|2026-10-18|532|499|Wuthering Coast META Min/Max HP Burning
 XqIM_W4y3d8|2026-10-18|846|498|Wuthering Coast META Min/Max Burn
 ZQTzY4u9zQ8|2026-10-18|615|639|Wuthering Coast META Min/Max Poison
 BTwHPmpIEKs|2026-10-18|611|416|Wuthering Coast META Min/Max Bleed
