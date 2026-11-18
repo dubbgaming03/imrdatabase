@@ -43,6 +43,8 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
    .replace('<meta property="og:url" content="https://imrdatabase.com/">',`<meta property="og:url" content="${url}">`)
    .replace('<meta property="og:image" content="https://imrdatabase.com/img/logo.png">',OG[r.k]?`<meta property="og:image" content="${SITE}${OG[r.k]}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n<meta name="twitter:image" content="${SITE}${OG[r.k]}">`:'<meta property="og:image" content="https://imrdatabase.com/img/logo.png">')
    .replace("<!--SSR-->",o.html);
+  /* one main heading per page: the hidden logo heading stays an h1 only on the home page */
+  if(r.k!=="home"){const one=html.replace(/<h1 class="sr"([^>]*)>Infinite Magicraid Database<\/h1>/g,'<p class="sr"$1>Infinite Magicraid Database</p>');if(/<h1[\s>]/.test(one))html=one;else{let k=0;html=html.replace(/<h1 class="sr"([^>]*)>Infinite Magicraid Database<\/h1>/g,(m,a)=>k++?`<p class="sr"${a}>Infinite Magicraid Database</p>`:m)}}
   const out=r.k==="notfound"?path.join(DIST,"404.html"):path.join(DIST,r.p,"index.html");
   fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,html);
   if(r.k!=="notfound")urls.push(SITE+r.p);n++;

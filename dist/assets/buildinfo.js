@@ -1,1 +1,1 @@
-window.BUILD_DATE="2026-11-17";
+window.BUILD_DATE="2026-11-18";
