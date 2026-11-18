@@ -23,6 +23,7 @@ const idx=p=>(parseInt((/(\d+)/.exec(p.img)||[0,1])[1],10)||1)-1;
 const TABS=[];
 window.IM_TABS=function(logo,cur){if(!logo)return;const d=el("div","ptabs");
  [["home","Home","home"],["h","Heroes","heroes"],["p","Spirit Beasts","pets"],["g","Arcane Gems","gems"]].forEach(([k,lab,h])=>{const b=el("a",k===cur?"on":"",t(lab));b.href=PATH(h);b.dataset.l=lab;b.onclick=e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.button)return;e.preventDefault();NAV(h)};d.appendChild(b)});
+ {const b=el("a","",t("Echoes"));b.href="/echoes/";b.dataset.l="Echoes";const sb=d.querySelector('[data-l="Spirit Beasts"]');d.insertBefore(b,sb)}
  {const b=el("a","",t("Game Modes"));b.href="/game-modes/";b.dataset.l="Game Modes";d.appendChild(b)}
  {const b=el("a","",t("Codes"));b.href="/codes/";b.dataset.l="Codes";d.appendChild(b)}
  {const b=el("a","",t("Bracket Challenge"));b.href="/bracket/";b.dataset.l="Bracket Challenge";d.appendChild(b)}

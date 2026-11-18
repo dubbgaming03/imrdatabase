@@ -64,6 +64,7 @@ function cp(a,b){fs.mkdirSync(b,{recursive:true});for(const f of fs.readdirSync(
   fs.writeFileSync(f,fs.readFileSync(f,"utf8").split("<!--MONTH-->").join(mo).split("<!--UPDATED-->").join(long(C.checked)).replace("<!--FEATURED-->",feat).replace("<!--ACTIVE-->",act.map(card).join("")).replace("<!--EXPIRED-->",late.concat(C.expired).map(row).join("")));
   fs.rmSync(path.join(DIST,"codes","codes.json"),{force:true});
   urls.push(SITE+"/codes/")}
+ urls.push(SITE+"/echoes/");
  urls.push(SITE+"/game-modes/");
  for(const p of ["abyssal-prison/","abyssal-prison/wuthering-coast/","abyssal-prison/guild-boss/","abyssal-prison/seven-sages-of-liuli/","abyssal-prison/demon-conquest/"]) urls.push(SITE+"/game-modes/"+p);
  const today=BD;
