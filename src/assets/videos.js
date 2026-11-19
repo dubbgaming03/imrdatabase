@@ -1,16 +1,19 @@
 /* Dubb_Gaming YouTube snapshot — id|published|views|seconds|title. Refreshed on request. */
-window.YT_SNAPSHOT="2026-11-17";
-window.YT_ROWS=`IqniJRKuLhw|2026-11-16|54|177|Spirit Beast Cultivation
-mv5jNuJ5sbk|2026-11-16|41|248|Colorful Gasaphon
-wWnw1QU0uEs|2026-11-16|87|345|Mysterious Box
-3FrJWO19wvw|2026-11-16|151|474|Seven Sages of Liuli META POISON Min/Max!!
-1X8akvCcjGs|2026-11-15|309|414|Black Friday Celebration!
-IydHmmhOnoI|2026-11-15|195|508|Homestead Game Modes
-sW3_ToPMRe0|2026-11-15|175|347|Homestead War Buildings!
-wdkgzX4CuLk|2026-11-15|130|514|Homestead Economy Buildings
+window.YT_SNAPSHOT="2026-11-18";
+window.YT_ROWS=`Nkoqw9Jatv8|2026-11-18|10|676|Patch Note HYPE!!! 19 November 2026
+yknmPnvHzoQ|2026-11-18|24|399|Seven Sages of Liuli META INTERNAL INJURY Min/Max!!
+wlxtMe8UPnw|2026-11-17|166|467|Seven Sages of Liuli META BURN Min/Max
+IqniJRKuLhw|2026-11-16|125|177|Spirit Beast Cultivation
+mv5jNuJ5sbk|2026-11-16|62|248|Colorful Gasaphon
+wWnw1QU0uEs|2026-11-16|141|345|Mysterious Box
+3FrJWO19wvw|2026-11-16|196|474|Seven Sages of Liuli META POISON Min/Max!!
+1X8akvCcjGs|2026-11-15|324|414|Black Friday Celebration!
+IydHmmhOnoI|2026-11-15|224|508|Homestead Game Modes
+sW3_ToPMRe0|2026-11-15|190|347|Homestead War Buildings!
+wdkgzX4CuLk|2026-11-15|146|514|Homestead Economy Buildings
 M472p8U3lh0|2026-11-12|283|218|New Game Mode Passes! Are they worth it??
-5OqQ0EO4fd4|2026-11-12|299|366|Patch Note HYPE!!!! 12 November 2026
-Xz_Mk_skjyM|2026-11-10|417|1444|New LEGENDARY Hero Kijuro!! Kit Review, Initial Build, & Final Verdict
+5OqQ0EO4fd4|2026-11-12|302|366|Patch Note HYPE!!!! 12 November 2026
+Xz_Mk_skjyM|2026-11-10|431|1444|New LEGENDARY Hero Kijuro!! Kit Review, Initial Build, & Final Verdict
 nRvVmxFW4Hs|2026-11-08|100|279|How to Install Aptoide on Android!
 18M__3fFiDc|2026-11-08|251|95|Absolute BEST Mobile Game of 2026!!
 S7wMAEKJ5iY|2026-11-08|215|176|Oceanic Treasure
