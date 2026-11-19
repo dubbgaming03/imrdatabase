@@ -106,6 +106,7 @@ main{max-width:1100px;margin:0 auto;position:relative}
 <select id="ems" aria-label="Main stat"><!--MS--></select>
 <select id="efac" aria-label="Faction requirement"><!--FAC--></select>
 <select id="erar" aria-label="Rarity"><!--RAR--></select>
+<select id="esort" aria-label="Sort"><option value="">Sort: newest</option><option value="old">Sort: oldest</option><option value="name">Sort: name</option></select>
 </div>
 <p class="ecount" id="ecount" aria-live="polite"></p>
 <div class="grid pgrid egrid" id="egrid">
@@ -120,7 +121,7 @@ main{max-width:1100px;margin:0 auto;position:relative}
 /* filters: search, main stat, faction requirement (none / any / one faction), rarity; kept in the URL (?ms=&fac=&r=&q=) */
 (function(){
  const $=id=>document.getElementById(id),C=[...document.querySelectorAll(".ecard")],T=C.length;
- const F={q:$("eq"),ms:$("ems"),fac:$("efac"),r:$("erar")};
+ const F={q:$("eq"),ms:$("ems"),fac:$("efac"),r:$("erar"),sort:$("esort")};
  const P=new URLSearchParams(location.search);Object.keys(F).forEach(k=>{const v=P.get(k);if(v!=null&&(k==="q"||[...F[k].options].some(o=>o.value===v)))F[k].value=v});
  const pop=$("epop");let cur=null;
  function close(){pop.hidden=true;if(cur){cur.classList.remove("sel");cur.setAttribute("aria-expanded","false")}cur=null}
@@ -134,13 +135,15 @@ main{max-width:1100px;margin:0 auto;position:relative}
  pop.addEventListener("click",e=>e.stopPropagation());
  document.addEventListener("click",close);document.addEventListener("keydown",e=>{if(e.key==="Escape"){const c=cur;close();if(c)c.focus()}});
  addEventListener("resize",close);
- function run(){const q=F.q.value.trim().toLowerCase(),ms=F.ms.value,fac=F.fac.value,r=F.r.value;let n=0;
+ const G=$("egrid");
+ function order(){const s=F.sort.value;const A=C.slice().sort((a,b)=>s==="name"?a.dataset.n.localeCompare(b.dataset.n):s==="old"?a.dataset.id-b.dataset.id:b.dataset.id-a.dataset.id);A.forEach(c=>G.appendChild(c))}
+ function run(){const q=F.q.value.trim().toLowerCase(),ms=F.ms.value,fac=F.fac.value,r=F.r.value;let n=0;order();
   C.forEach(c=>{const f=c.dataset.f;const ok=(!ms||c.dataset.ms===ms)&&(!r||c.dataset.q===r)&&(!fac||(fac==="none"?!f:fac==="any"?!!f:f.split("|").includes(fac)))&&(!q||(c.dataset.n+" "+c.dataset.h+" "+c.querySelector(".ed").textContent.toLowerCase()).includes(q));c.hidden=!ok;if(!ok&&c===cur)close();if(ok)n++});
   ["ms","fac","r"].forEach(k=>F[k].classList.toggle("on",!!F[k].value));
   const any=q||ms||fac||r;$("ecount").textContent=any?n+" of "+T+" Echoes":T+" Echoes";
   if(any){const b=document.createElement("button");b.type="button";b.textContent="Clear filters";b.onclick=()=>{F.q.value="";F.ms.value="";F.fac.value="";F.r.value="";run()};$("ecount").appendChild(b)}
   $("enone").hidden=n>0;
-  const u=new URLSearchParams();if(q)u.set("q",F.q.value.trim());if(ms)u.set("ms",ms);if(fac)u.set("fac",fac);if(r)u.set("r",r);
+  const u=new URLSearchParams();if(q)u.set("q",F.q.value.trim());if(ms)u.set("ms",ms);if(fac)u.set("fac",fac);if(r)u.set("r",r);if(F.sort.value)u.set("sort",F.sort.value);
   history.replaceState(null,"",location.pathname+(u.toString()?"?"+u:""))}
  Object.values(F).forEach(e=>e.addEventListener("input",run));run();
 })();

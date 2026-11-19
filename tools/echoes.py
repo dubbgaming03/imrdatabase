@@ -66,7 +66,8 @@ rows = []
 for name, v in EQ.items():
     facs = faction_of(v["d"])
     rows.append((name, v, facs))
-rows.sort(key=lambda r: (-r[1]["q"], bool(not r[2]), r[0]))
+IDS = json.load(open(os.path.join(ROOT, "tools", "echo_ids.json"), encoding="utf-8"))  # stamp id: higher = newer
+rows.sort(key=lambda r: -IDS.get(r[0], 0))
 
 stats = sorted({v["ms"] for _, v, _ in rows})
 nfac = sum(1 for r in rows if r[2])
@@ -98,7 +99,7 @@ for name, v, facs in rows:
     otip = ('<div class="eown"><span>Hero:</span>' + "".join(ochip(h, "ehero") for h in ow) + "</div>") if ow else '<div class="eown"><span>Hero:</span><i>None (general Echo)</i></div>'
     mini = "".join(f'<img class="efi" src="/img/f-{slug(f)}.png" alt="" width="16" height="16" loading="lazy">{esc(f)}' for f in facs)
     cards.append(
-        f'<article class="pc ecard" tabindex="0" role="button" aria-haspopup="dialog" data-n="{esc(name.lower())}" data-q="{q}" data-ms="{esc(v["ms"])}" data-f="{esc("|".join(facs))}" data-h="{esc("|".join(hs + ow).lower())}">'
+        f'<article class="pc ecard" data-id="{IDS.get(name, 0)}" tabindex="0" role="button" aria-haspopup="dialog" data-n="{esc(name.lower())}" data-q="{q}" data-ms="{esc(v["ms"])}" data-f="{esc("|".join(facs))}" data-h="{esc("|".join(hs + ow).lower())}">'
         f'<div class="pph {rn}"><img class="eimg" src="/img/eq/{esc(v["i"])}.webp" alt="{esc(name)}" width="104" height="104" loading="lazy"></div>'
         f'<div class="pinfo"><h2 class="pn">{esc(name)}</h2><div class="prr {rn}">{rn} <span class="ems">· {esc(v["ms"])}</span></div>'
         + otile + (f'<div class="efm">{mini}</div>' if facs else '')
