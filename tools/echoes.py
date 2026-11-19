@@ -97,8 +97,7 @@ for name, v, facs in rows:
 
 opt = lambda val, lab: f'<option value="{esc(val)}">{esc(lab)}</option>'
 ms_opts = opt("", "All main stats") + "".join(opt(m, m) for m in stats)
-fac_opts = (opt("", "All factions") + opt("none", "No faction requirement") + opt("any", "Has a faction requirement")
-            + '<optgroup label="Faction">' + "".join(opt(f, f) for f in FACTIONS if any(f in r[2] for r in rows)) + "</optgroup>")
+fac_opts = opt("", "All factions") + "".join(opt(f, f) for f in FACTIONS if any(f in r[2] for r in rows))
 rar_opts = opt("", "All rarities") + "".join(opt(k, RAR[k]) for k in (5, 4, 3))
 
 N = len(rows)
