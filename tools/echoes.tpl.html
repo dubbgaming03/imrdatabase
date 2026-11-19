@@ -46,6 +46,13 @@ main{max-width:1100px;margin:0 auto;position:relative}
 .ecard .pn{font-size:14px;margin:0}
 .ecard .prr .ems{font-weight:500;color:var(--mute)}
 .prr.Legend,.erar.r5{color:var(--L)}.prr.Epic,.erar.r4{color:var(--E)}.prr.Elite,.erar.r3{color:#6ea8ff}
+.eow{display:flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;margin-top:4px;min-width:0}
+.eow img{width:20px;height:20px;border-radius:50%;object-fit:cover;flex:none}
+.eow span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.eow.none{color:var(--mute);font-weight:500}
+.eown{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px}
+.eown>span{color:var(--mute)}.eown i{color:var(--mute)}
+.eown .ehero{font-weight:700;font-size:13.5px}
 .efm{display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:var(--fink);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .efi{width:16px;height:16px;object-fit:contain;flex:none}
 /* tooltip */
@@ -91,7 +98,7 @@ main{max-width:1100px;margin:0 auto;position:relative}
 
 <header class="chead">
 <h1>Infinite Magicraid Echoes</h1>
-<p>Select an Echo to see its main stat, full effect and faction requirement.</p>
+<p>Select an Echo to see its hero, main stat, full effect and faction requirement.</p>
 </header>
 
 <div class="ebar" role="search">
@@ -106,7 +113,7 @@ main{max-width:1100px;margin:0 auto;position:relative}
 </div>
 <div id="epop" role="dialog" aria-modal="false" hidden></div>
 <p class="enone" id="enone" hidden>No Echoes match these filters.</p>
-<p class="enote">Effects are shown at max level. Source: game files. Hero builds are from Dubb’s stat cards.</p>
+<p class="enote">Effects are shown at max level. Echo heroes and effects: game files. Hero builds are from Dubb’s stat cards.</p>
 </main>
 <footer class="sitefoot">Infinite Magicraid Database is a fan-made site by <a href="https://www.youtube.com/@Dubb_Gaming" rel="noopener">Dubb</a>. It is not affiliated with or endorsed by the game's developer or publisher. Game names and images belong to their owners.<br><a href="/heroes/">Hero Tier List</a> · <a href="/bracket/">Bracket Challenge</a> · <a href="/privacy/">Privacy Policy</a></footer>
 <script>
