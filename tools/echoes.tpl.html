@@ -36,18 +36,31 @@ main{max-width:1100px;margin:0 auto;position:relative}
 .ebar select.on{border-color:#e9c765;box-shadow:0 0 0 2px rgba(233,199,101,.35)}
 .ecount{text-align:center;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.85);font-size:13px;margin:0 0 12px}
 .ecount button{font:inherit;font-size:13px;background:none;border:0;color:#e9c765;text-decoration:underline;cursor:pointer;padding:0 0 0 6px}
-.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;align-items:start}
-@media (max-width:400px){.egrid{grid-template-columns:1fr}}
-.ecard{background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(5px);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.egrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+@media (max-width:480px){.egrid{grid-template-columns:repeat(2,1fr)}}
 .ecard[hidden]{display:none}
-.etop{display:flex;gap:12px;align-items:flex-start}
+.ecard{transition:transform .12s,border-color .12s}
+.ecard:hover,.ecard:focus-visible,.ecard.sel{transform:translateY(-2px);border-color:#e9c765;outline:none}
+.ecard .pph{display:flex;align-items:center;justify-content:center;padding:14%}
+.eimg{width:100%;height:100%;object-fit:contain;border-radius:12px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6))}
+.ecard .pn{font-size:14px;margin:0}
+.ecard .prr .ems{font-weight:500;color:var(--mute)}
+.prr.Legend,.erar.r5{color:var(--L)}.prr.Epic,.erar.r4{color:var(--E)}.prr.Elite,.erar.r3{color:#6ea8ff}
+.efm{display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:var(--fink);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.efi{width:16px;height:16px;object-fit:contain;flex:none}
+/* tooltip */
+#epop{position:absolute;z-index:50;width:min(380px,calc(100vw - 24px));background:var(--card);color:var(--ink);border:1px solid #e9c765;border-radius:12px;padding:12px 14px;box-shadow:0 12px 40px rgba(0,0,0,.55);display:flex;flex-direction:column;gap:8px}
+#epop[hidden]{display:none}
+#epop .ex{position:absolute;top:6px;right:8px;border:0;background:none;color:var(--mute);font-size:20px;line-height:1;cursor:pointer;padding:4px}
+@media (max-width:560px){#epop{position:fixed;left:8px!important;right:8px;top:auto!important;bottom:8px;width:auto;max-height:70vh;overflow:auto}}
+.etop{display:flex;gap:12px;align-items:flex-start;padding-right:18px}
 .eic{flex:none;width:56px;height:56px;border-radius:10px;border:2px solid #888;background:#14121c}
 .q5 .eic{border-color:#e0a82e}.q4 .eic{border-color:#9b5de5}.q3 .eic{border-color:#3b82f6}
 .ehd{min-width:0;flex:1}
-.ehd h2{font-size:16px;margin:0 0 3px;line-height:1.25}
+.ehd h3{font-size:17px;margin:0 0 3px;line-height:1.25}
 .emeta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12.5px;align-items:center}
-.erar{font-weight:700}.erar.r5{color:var(--L)}.erar.r4{color:var(--E)}.erar.r3{color:#6ea8ff}
-.ems{color:var(--mute)}.ems b{color:var(--ink)}
+.erar{font-weight:700}
+.ems2{color:var(--mute)}.ems2 b{color:var(--ink)}
 .efrow{margin-top:5px;display:flex;flex-wrap:wrap;gap:4px}
 .efac{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:2px 8px 2px 3px;border-radius:999px;background:var(--fbg);border:1px solid var(--fbd);color:var(--fink)}
 .efac img{width:18px;height:18px;object-fit:contain}
@@ -58,9 +71,10 @@ main{max-width:1100px;margin:0 auto;position:relative}
 .ed .ef{font-weight:700;color:var(--fink);background:var(--fbg);border-radius:3px;padding:0 3px}
 .euse{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:12px;border-top:1px solid var(--line);padding-top:7px}
 .euse>span{color:var(--mute);margin-right:2px}
-.ehero{display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:inherit;background:rgba(255,255,255,.07);border-radius:999px;padding:1px 8px 1px 2px}
-.ehero:hover{background:rgba(233,199,101,.22)}
+.ehero{display:inline-flex;align-items:center;gap:4px;text-decoration:none;color:inherit;background:rgba(128,128,128,.14);border-radius:999px;padding:1px 8px 1px 2px}
+.ehero:hover{background:rgba(233,199,101,.3)}
 .ehero img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+.eml{font-size:11px;color:var(--mute);margin:0}
 .enone{text-align:center;color:#fff;padding:30px 0}
 .enote{font-size:12px;color:#ddd;text-align:center;margin:18px 0 0;text-shadow:0 1px 3px rgba(0,0,0,.85)}
 </style>
@@ -77,7 +91,7 @@ main{max-width:1100px;margin:0 auto;position:relative}
 
 <header class="chead">
 <h1>Infinite Magicraid Echoes</h1>
-<p>All <!--N--> Echoes with their main stat and full effect at max level. <!--NFAC--> of them have a faction requirement: part of their effect only works if the hero is from that faction.</p>
+<p>Select an Echo to see its main stat, full effect and faction requirement.</p>
 </header>
 
 <div class="ebar" role="search">
@@ -87,9 +101,10 @@ main{max-width:1100px;margin:0 auto;position:relative}
 <select id="erar" aria-label="Rarity"><!--RAR--></select>
 </div>
 <p class="ecount" id="ecount" aria-live="polite"></p>
-<div class="egrid" id="egrid">
+<div class="grid pgrid egrid" id="egrid">
 <!--CARDS-->
 </div>
+<div id="epop" role="dialog" aria-modal="false" hidden></div>
 <p class="enone" id="enone" hidden>No Echoes match these filters.</p>
 <p class="enote">Effects are shown at max level. Source: game files. Hero builds are from Dubb’s stat cards.</p>
 </main>
@@ -100,8 +115,20 @@ main{max-width:1100px;margin:0 auto;position:relative}
  const $=id=>document.getElementById(id),C=[...document.querySelectorAll(".ecard")],T=C.length;
  const F={q:$("eq"),ms:$("ems"),fac:$("efac"),r:$("erar")};
  const P=new URLSearchParams(location.search);Object.keys(F).forEach(k=>{const v=P.get(k);if(v!=null&&(k==="q"||[...F[k].options].some(o=>o.value===v)))F[k].value=v});
+ const pop=$("epop");let cur=null;
+ function close(){pop.hidden=true;if(cur){cur.classList.remove("sel");cur.setAttribute("aria-expanded","false")}cur=null}
+ function open(c){if(cur===c){close();return}close();cur=c;c.classList.add("sel");c.setAttribute("aria-expanded","true");
+  pop.innerHTML='<button class="ex" type="button" aria-label="Close">×</button>'+c.querySelector(".etip").innerHTML;pop.querySelector(".ex").onclick=close;pop.hidden=false;
+  pop.querySelectorAll("img[loading]").forEach(i=>i.loading="eager");
+  if(innerWidth>560){const r=c.getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight,sx=scrollX,sy=scrollY;
+   let x=r.left+r.width/2-w/2;x=Math.max(12,Math.min(x,document.documentElement.clientWidth-w-12));
+   let y=r.bottom+8;if(y+h>innerHeight&&r.top-h-8>0)y=r.top-h-8;pop.style.left=(x+sx)+"px";pop.style.top=(y+sy)+"px"}}
+ C.forEach(c=>{c.setAttribute("aria-expanded","false");c.addEventListener("click",e=>{e.stopPropagation();open(c)});c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open(c)}})});
+ pop.addEventListener("click",e=>e.stopPropagation());
+ document.addEventListener("click",close);document.addEventListener("keydown",e=>{if(e.key==="Escape"){const c=cur;close();if(c)c.focus()}});
+ addEventListener("resize",close);
  function run(){const q=F.q.value.trim().toLowerCase(),ms=F.ms.value,fac=F.fac.value,r=F.r.value;let n=0;
-  C.forEach(c=>{const f=c.dataset.f;const ok=(!ms||c.dataset.ms===ms)&&(!r||c.dataset.q===r)&&(!fac||(fac==="none"?!f:fac==="any"?!!f:f.split("|").includes(fac)))&&(!q||(c.dataset.n+" "+c.dataset.h+" "+c.querySelector(".ed").textContent.toLowerCase()).includes(q));c.hidden=!ok;if(ok)n++});
+  C.forEach(c=>{const f=c.dataset.f;const ok=(!ms||c.dataset.ms===ms)&&(!r||c.dataset.q===r)&&(!fac||(fac==="none"?!f:fac==="any"?!!f:f.split("|").includes(fac)))&&(!q||(c.dataset.n+" "+c.dataset.h+" "+c.querySelector(".ed").textContent.toLowerCase()).includes(q));c.hidden=!ok;if(!ok&&c===cur)close();if(ok)n++});
   ["ms","fac","r"].forEach(k=>F[k].classList.toggle("on",!!F[k].value));
   const any=q||ms||fac||r;$("ecount").textContent=any?n+" of "+T+" Echoes":T+" Echoes";
   if(any){const b=document.createElement("button");b.type="button";b.textContent="Clear filters";b.onclick=()=>{F.q.value="";F.ms.value="";F.fac.value="";F.r.value="";run()};$("ecount").appendChild(b)}

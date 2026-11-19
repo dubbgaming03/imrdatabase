@@ -88,12 +88,18 @@ for name, v, facs in rows:
             im = himg(h)
             chips.append(f'<a class="ehero" href="/heroes/{hslug(h)}/">' + (f'<img src="{im}" alt="" loading="lazy" width="22" height="22">' if im else "") + f"{esc(h)}</a>")
         us = f'<div class="euse"><span>In Dubb’s builds:</span>{"".join(chips)}</div>'
+    rn = RAR[q]
+    mini = "".join(f'<img class="efi" src="/img/f-{slug(f)}.png" alt="" width="16" height="16" loading="lazy">{esc(f)}' for f in facs)
     cards.append(
-        f'<article class="ecard q{q}" data-n="{esc(name.lower())}" data-q="{q}" data-ms="{esc(v["ms"])}" data-f="{esc("|".join(facs))}" data-h="{esc("|".join(hs).lower())}">'
-        f'<div class="etop"><img class="eic" src="/img/eq/{esc(v["i"])}.webp" alt="{esc(name)}" width="56" height="56" loading="lazy">'
-        f'<div class="ehd"><h2>{esc(name)}</h2><div class="emeta"><span class="erar r{q}">{RAR[q]}</span><span class="ems">Main stat: <b>{esc(v["ms"])}</b></span></div>'
+        f'<article class="pc ecard" tabindex="0" role="button" aria-haspopup="dialog" data-n="{esc(name.lower())}" data-q="{q}" data-ms="{esc(v["ms"])}" data-f="{esc("|".join(facs))}" data-h="{esc("|".join(hs).lower())}">'
+        f'<div class="pph {rn}"><img class="eimg" src="/img/eq/{esc(v["i"])}.webp" alt="{esc(name)}" width="104" height="104" loading="lazy"></div>'
+        f'<div class="pinfo"><h2 class="pn">{esc(name)}</h2><div class="prr {rn}">{rn} <span class="ems">· {esc(v["ms"])}</span></div>'
+        + (f'<div class="efm">{mini}</div>' if facs else '')
+        + '</div>'
+        f'<div class="etip" hidden><div class="etop"><img class="eic" src="/img/eq/{esc(v["i"])}.webp" alt="" width="56" height="56" loading="lazy">'
+        f'<div class="ehd"><h3>{esc(name)}</h3><div class="emeta"><span class="erar r{q}">{rn}</span><span class="ems2">Main stat: <b>{esc(v["ms"])}</b></span></div>'
         f'<div class="efrow">{fb}</div></div></div>'
-        f'<div class="ed">{rich(v["d"])}</div>{us}</article>')
+        f'<div class="ed">{rich(v["d"])}</div>{us}<p class="eml">At max level</p></div></article>')
 
 opt = lambda val, lab: f'<option value="{esc(val)}">{esc(lab)}</option>'
 ms_opts = opt("", "All main stats") + "".join(opt(m, m) for m in stats)
